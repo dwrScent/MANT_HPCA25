@@ -6,8 +6,14 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, AutoConfig, AutoMo
 import torch
 import argparse
 import os
+import json
 
-from mant.quantize.quantizer import pseudo_quant_output_mse, make_quant_linear,pseudo_quantize_model_int
+from mant.quantize.quantizer import (
+    pseudo_quant_output_mse,
+    make_quant_linear,
+    pseudo_quantize_model_int,
+    pseudo_quantize_model_mixed_mant,
+)
 
 import datetime
 import re
@@ -43,6 +49,19 @@ parser.add_argument('--quant_mode', type=str, default="mant")
 parser.add_argument('--quant_dtype', type=str, default="int")
 parser.add_argument('--w_low', type=int, default=75)
 parser.add_argument('--w_high', type=int, default=150)
+parser.add_argument(
+    '--layer_bit_config',
+    type=str,
+    default=None,
+    help='JSON file or comma-separated list with per-linear bit widths. Overrides --quant_bit_width w bits.',
+)
+parser.add_argument(
+    '--layer_a_bits',
+    type=str,
+    choices=['global', 'follow'],
+    default='global',
+    help='Use global a_bit from --quant_bit_width, or follow --layer_bit_config for activation bits.',
+)
 
 parser.add_argument('--a_stride', type=int, default=10)
 
@@ -64,11 +83,40 @@ def extract_bitwidths(quantization_string):
     v_bits = int(re.search(r'v(-?\d+)', quantization_string).group(1))
     return w_bits, a_bits, k_bits, v_bits
 
+
+def load_layer_bits(path_or_list):
+    if path_or_list is None:
+        return None
+    if os.path.exists(path_or_list):
+        with open(path_or_list, 'r', encoding='utf-8') as f:
+            payload = json.load(f)
+        if isinstance(payload, dict):
+            for key in ('w_bits', 'bits', 'pattern'):
+                if key in payload:
+                    payload = payload[key]
+                    break
+        if not isinstance(payload, list):
+            raise ValueError(f"{path_or_list} must contain a JSON list or an object with w_bits/bits/pattern")
+        return [int(x) for x in payload]
+    return [int(x.strip()) for x in path_or_list.split(',') if x.strip()]
+
+
+def has_low_precision(bit_spec):
+    if bit_spec is None:
+        return False
+    if isinstance(bit_spec, int):
+        return bit_spec != -1 and bit_spec < 16
+    return any(int(bit) != -1 and int(bit) < 16 for bit in bit_spec)
+
 args.w_bit, args.a_bit, args.k_bit, args.v_bit = extract_bitwidths(args.quant_bit_width)
+layer_w_bits = load_layer_bits(args.layer_bit_config)
+layer_a_bits = layer_w_bits if args.layer_a_bits == 'follow' else args.a_bit
 if args.k_bit < 16 or args.v_bit < 16:
     quant_config['quant_kv'] = True
 
 print("\nQuantization configuration:", quant_config)
+if layer_w_bits is not None:
+    print(f"Layer bit configuration: {len(layer_w_bits)} entries, activation_bits={args.layer_a_bits}")
 
 # Build model and tokenizer
 def build_model_and_enc(model_path):
@@ -111,15 +159,23 @@ def build_model_and_enc(model_path):
             model_path, config=config, **kwargs)
 
     # Weight quantization
-    if args.w_bit and args.w_bit != -1 and args.w_bit < 16:
+    weight_bit_spec = layer_w_bits if layer_w_bits is not None else args.w_bit
+    activation_bit_spec = layer_a_bits
+
+    if has_low_precision(weight_bit_spec):
         quant_mode = quant_config['quant_method']
 
         if quant_mode in ['ant', 'olive']:
             make_quant_linear(
-                model, args.w_bit, args.a_bit, quant_config=quant_config
+                model, weight_bit_spec, activation_bit_spec, quant_config=quant_config
             )
         elif quant_mode =='mant':
-            if args.w_bit == 8:
+            if layer_w_bits is not None:
+                pseudo_quantize_model_mixed_mant(
+                    model, enc, w_bits=layer_w_bits, quant_config=quant_config,
+                    n_samples=512, seqlen=512, a_stride=args.a_stride
+                )
+            elif args.w_bit == 8:
                 pseudo_quantize_model_int(model, w_bit=args.w_bit, q_group_size=args.q_group_size)
             elif args.w_bit == 4:
                 pseudo_quant_output_mse(
@@ -129,12 +185,12 @@ def build_model_and_enc(model_path):
                 print('not supported yet')
                 exit(0)
             make_quant_linear(
-                model, args.w_bit, args.a_bit, quant_config=quant_config
+                model, weight_bit_spec, activation_bit_spec, quant_config=quant_config
             )
         elif quant_mode == 'int':
-            pseudo_quantize_model_int(model, w_bit=args.w_bit, q_group_size=args.q_group_size)
+            pseudo_quantize_model_int(model, w_bit=weight_bit_spec, q_group_size=args.q_group_size)
             make_quant_linear(
-                model, args.w_bit, args.a_bit, quant_config=quant_config
+                model, weight_bit_spec, activation_bit_spec, quant_config=quant_config
             )
         else:
             raise NotImplementedError(f"{quant_mode} not supported yet!")

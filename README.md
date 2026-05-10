@@ -50,6 +50,36 @@ CUDA_VISIBLE_DEVICES=0 ./scripts/llama2_run.sh 7 wikitext 0 olive int -1 w8a8k16
 
 ```
 
+### Mixed-precision search against nvesm2
+
+For automatic accuracy matching, use perplexity (PPL) on `wikitext`, `c4`, or `ptb` as the primary metric. PPL is continuous and stable enough for greedy layer-bit search; downstream `lm_eval` accuracy tasks are better used as final validation after the layer precision pattern is selected.
+
+The search script first runs the nvesm2 implementation in `../mxfp_quant/pseudo_quantization` to get the SOTA target metric, then searches ANT, OliVe, and M-ANT per-linear bit settings. If a candidate is worse than nvesm2, it promotes one more tensor from 4-bit to 8-bit; if it is better, it tries demoting tensors back to 4-bit.
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python scripts/search_precision_config.py \
+  --model_path /path/to/llama-or-opt-model \
+  --tasks wikitext \
+  --methods olive,ant,mant \
+  --batch_size 32 \
+  --layer_a_bits follow \
+  --max_candidates_per_step 8
+```
+
+Outputs are written under `output/precision_search/<run_id>/`, including `summary.json` and `final_<method>.json`. Each final JSON contains a `w_bits` list that can be passed back to `run_evaluation.py`:
+
+```bash
+python -m run_evaluation \
+  --model_path /path/to/model \
+  --tasks wikitext \
+  --quant_mode ant \
+  --quant_dtype int-flint-pot-float \
+  --q_group_size 64 \
+  --quant_bit_width w4a4k16v16 \
+  --layer_bit_config output/precision_search/<run_id>/final_ant.json \
+  --layer_a_bits follow
+```
+
 ## Citation
 
 If you find this repository useful in your research or project, please kindly cite:
