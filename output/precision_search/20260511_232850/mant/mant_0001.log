@@ -1,0 +1,12 @@
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+2026-05-11:23:57:00,599 INFO     [modeling.py:987] We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+
+Quantization configuration: {'quant_dtype': 'int', 'q_group_size': 64, 'w_low': 75, 'w_high': 150, 'quant_method': 'mant', 'quant_kv': False}
+Layer bit configuration: 224 entries, activation_bits=follow
+
+args: Namespace(model_path='/cephfs/shared/model/llama-3-8b-hf', batch_size=32, tasks='wikitext', num_fewshot=0, limit_samples=64, quant_bit_width='w4a4k16v16', w_bit=4, a_bit=4, k_bit=16, v_bit=16, q_group_size=64, quant_mode='mant', quant_dtype='int', w_low=75, w_high=150, layer_bit_config='/root/llm-quan/MANT_HPCA25/output/precision_search/20260511_232850/mant/mant_0001.json', layer_a_bits='follow', a_stride=10) 
+
+* Building model /cephfs/shared/model/llama-3-8b-hf
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:06<00:19,  6.37s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:11<00:11,  5.69s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:16<00:05,  5.38s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:17<00:00,  3.77s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:17<00:00,  4.47s/it]
+ * Capture 61 samples for calibration
+Mixed MANT pseudo weight quantization...:   0%|          | 0/32 [00:00<?, ?it/s]Mixed MANT pseudo weight quantization...:   3%|▎         | 1/32 [00:19<09:49, 19.01s/it]Mixed MANT pseudo weight quantization...:   6%|▋         | 2/32 [00:37<09:21, 18.73s/it]Mixed MANT pseudo weight quantization...:   9%|▉         | 3/32 [00:56<09:00, 18.64s/it]Mixed MANT pseudo weight quantization...:  12%|█▎        | 4/32 [01:14<08:40, 18.59s/it]Mixed MANT pseudo weight quantization...:  16%|█▌        | 5/32 [01:32<08:18, 18.48s/it]Mixed MANT pseudo weight quantization...:  19%|█▉        | 6/32 [01:51<08:01, 18.52s/it]

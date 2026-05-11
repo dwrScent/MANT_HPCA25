@@ -36,6 +36,12 @@ parser.add_argument('--model_path', type=str, help='path of the hf model')
 parser.add_argument('--batch_size', type=int, default=32, help='batch size')
 parser.add_argument("--tasks", default=None, type=str)
 parser.add_argument('--num_fewshot', type=int, default=0)
+parser.add_argument(
+    '--limit_samples',
+    type=int,
+    default=None,
+    help='Limit evaluation to the first N samples. Useful for fast precision search.',
+)
 
 # quantization config
 parser.add_argument('--quant_bit_width', type=str, default='w16a16k16v16')
@@ -66,6 +72,9 @@ parser.add_argument(
 parser.add_argument('--a_stride', type=int, default=10)
 
 args = parser.parse_args()
+
+if args.limit_samples is not None and args.limit_samples <= 0:
+    raise ValueError("--limit_samples must be a positive integer")
 
 quant_config = {
     "quant_dtype": args.quant_dtype,  # specify the data type
@@ -217,6 +226,8 @@ def main():
             
             testenc = testenc.input_ids.to(model.device)
             nsamples = testenc.numel() // model.seqlen
+            if args.limit_samples is not None:
+                nsamples = min(nsamples, args.limit_samples)
             model = model.eval()
             nlls = []
             print_time('Start a task')
@@ -257,6 +268,7 @@ def main():
                 tasks=task_names,
                 batch_size=args.batch_size,
                 num_fewshot=args.num_fewshot,
+                limit=args.limit_samples,
             )
             print_time('Task finish!')
             print(make_table(results))

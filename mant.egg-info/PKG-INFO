@@ -1,3 +1,24 @@
+Metadata-Version: 2.4
+Name: mant
+Version: 0.1.0
+Summary: A lightweight pseudo-quantization framework for evaluating low-bit formats in LLMs.
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: Apache Software License
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: accelerate
+Requires-Dist: sentencepiece
+Requires-Dist: tokenizers>=0.12.1
+Requires-Dist: torch==2.0.1
+Requires-Dist: torchvision
+Requires-Dist: transformers==4.40.0
+Requires-Dist: lm_eval==0.4.4
+Requires-Dist: numpy==1.26.4
+Requires-Dist: peft==0.10.0
+Requires-Dist: protobuf
+Dynamic: license-file
+
 # M-ANT: Efficient Low-bit Group Quantization for LLMs via Mathematically Adaptive Numerical Type
 
 A lightweight pseudo-quantization framework for transformer models, implementing M-ANT, ANT, and OliVe quantization with configurable bit-widths and grouping strategies.
@@ -52,45 +73,24 @@ CUDA_VISIBLE_DEVICES=0 ./scripts/llama2_run.sh 7 wikitext 0 olive int -1 w8a8k16
 
 ### Mixed-precision search against nvesm2
 
-All precision-search defaults are set inside `scripts/run_precision_search.sh`.
-The command line only needs the nvesm2 target metric:
+For automatic accuracy matching, use perplexity (PPL) on `wikitext`, `c4`, or `ptb` as the primary metric. PPL is continuous and stable enough for greedy layer-bit search; downstream `lm_eval` accuracy tasks are better used as final validation after the layer precision pattern is selected.
+
+The search script first runs the nvesm2 implementation in `../mxfp_quant/pseudo_quantization` to get the SOTA target metric, then searches ANT, OliVe, and M-ANT per-linear bit settings. If a candidate is worse than nvesm2, it promotes one more tensor from 4-bit to 8-bit; if it is better, it tries demoting tensors back to 4-bit.
 
 ```bash
-CUDA_VISIBLE_DEVICES=0 ./scripts/run_precision_search.sh TARGET_METRIC
+CUDA_VISIBLE_DEVICES=0 python scripts/search_precision_config.py \
+  --model_path /path/to/llama-or-opt-model \
+  --tasks wikitext \
+  --methods olive,ant,mant \
+  --batch_size 32 \
+  --layer_a_bits follow \
+  --max_candidates_per_step 8
 ```
 
-Example:
+Outputs are written under `output/precision_search/<run_id>/`, including `summary.json` and `final_<method>.json`. Each final JSON contains a `w_bits` list that can be passed back to `run_evaluation.py`:
 
 ```bash
-CUDA_VISIBLE_DEVICES=0 ./scripts/run_precision_search.sh 5.87
-```
-
-The script searches ANT, OliVe, and M-ANT per-linear weight bit-widths against the
-given nvesm2 target. By default it uses:
-
-- `MODEL_PATH=/cephfs/shared/model/llama-3-8b-hf`
-- `TASKS=wikitext`
-- `SHOTS=0`
-- `METHODS=olive,ant,mant`
-- `SAMPLE=200`
-- `INITIAL_MODEL_LAYER_CONFIG=example`
-- `BATCH_SIZE=32`
-- `LAYER_A_BITS=follow`
-- `MAX_CANDIDATES_PER_STEP=8`
-
-Edit these defaults in `scripts/run_precision_search.sh`, or override them with
-environment variables:
-
-```bash
-MODEL_PATH=/path/to/model TASKS=c4 METHODS=ant,mant \
-CUDA_VISIBLE_DEVICES=0 ./scripts/run_precision_search.sh 6.12
-```
-
-Outputs are written under `output/precision_search/<run_id>/`. Use the generated
-`final_<method>.json` as `--layer_bit_config` for final evaluation:
-
-```bash
-CUDA_VISIBLE_DEVICES=0 python -m run_evaluation \
+python -m run_evaluation \
   --model_path /path/to/model \
   --tasks wikitext \
   --quant_mode ant \

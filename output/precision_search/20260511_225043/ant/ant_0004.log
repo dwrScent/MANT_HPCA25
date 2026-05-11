@@ -1,0 +1,694 @@
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+2026-05-11:23:12:10,939 INFO     [modeling.py:987] We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+
+Quantization configuration: {'quant_dtype': 'int-flint-pot-float', 'q_group_size': 64, 'w_low': 75, 'w_high': 150, 'quant_method': 'ant', 'quant_kv': False}
+Layer bit configuration: 224 entries, activation_bits=follow
+
+args: Namespace(model_path='/cephfs/shared/model/llama-3-8b-hf', batch_size=32, tasks='wikitext', num_fewshot=0, limit_samples=64, quant_bit_width='w4a4k16v16', w_bit=4, a_bit=4, k_bit=16, v_bit=16, q_group_size=64, quant_mode='ant', quant_dtype='int-flint-pot-float', w_low=75, w_high=150, layer_bit_config='/root/llm-quan/MANT_HPCA25/output/precision_search/20260511_225043/ant/ant_0004.json', layer_a_bits='follow', a_stride=10) 
+
+* Building model /cephfs/shared/model/llama-3-8b-hf
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:05<00:15,  5.10s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:10<00:10,  5.16s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:15<00:05,  5.17s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:16<00:00,  3.56s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:16<00:00,  4.14s/it]
+make quant linear...:   0%|          | 0/32 [00:00<?, ?it/s]make quant linear...: 100%|██████████| 32/32 [00:00<00:00, 1201.21it/s]
+2026-05-11:23:12:27,826 WARNING  [huggingface.py:96] `pretrained` model kwarg is not of type `str`. Many other model arguments may be ignored. Please do not launch via accelerate or use `parallelize=True` if passing an existing model this way.
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+2026-05-11:23:12:28,142 WARNING  [huggingface.py:276] Passed an already-initialized model through `pretrained`, assuming single-process call to evaluate() or custom distributed integration
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+2026-05-11 23:12:56 - Start a task
+Data Type Search...:   0%|          | 0/1 [00:00<?, ?it/s]/root/llm-quan/MANT_HPCA25/mant/quantize/quant_grid.py:165: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  quant_grid_set[key] = torch.tensor(value)
+layer: 0, tensor: self_attn.q_proj, weight quant, best mode: int, mse: 0.000843282853811481, alpha: 1.1500000000000001, bit_width: 4
+layer: 0, tensor: self_attn.q_proj, input quant, best mode: pot, mse: 0.010848679088714399, alpha: 0.85, bit_width: 4
+ant search data type and alpha.
+layer: 0, tensor: self_attn.k_proj, weight quant, best mode: int, mse: 4.047774014367284e-06, alpha: 0.75, bit_width: 8
+layer: 0, tensor: self_attn.k_proj, input quant, best mode: int, mse: 0.0010469447527279904, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 0, tensor: self_attn.v_proj, weight quant, best mode: int, mse: 1.8817852530069509e-07, alpha: 0.75, bit_width: 8
+layer: 0, tensor: self_attn.v_proj, input quant, best mode: int, mse: 5.301321309280234e-05, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 0, tensor: self_attn.o_proj, weight quant, best mode: int, mse: 2.1586647235318336e-07, alpha: 0.9500000000000001, bit_width: 4
+layer: 0, tensor: self_attn.o_proj, input quant, best mode: pot, mse: 9.599239657962875e-07, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 0, tensor: mlp.gate_proj, weight quant, best mode: float, mse: 7.233501122874676e-05, alpha: 0.9500000000000001, bit_width: 4
+layer: 0, tensor: mlp.gate_proj, input quant, best mode: pot, mse: 0.00027657047577235247, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 0, tensor: mlp.up_proj, weight quant, best mode: int, mse: 1.9393247527744408e-07, alpha: 0.75, bit_width: 8
+layer: 0, tensor: mlp.up_proj, input quant, best mode: int, mse: 2.9242181620611097e-05, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 0, tensor: mlp.down_proj, weight quant, best mode: int, mse: 2.3383793645658947e-09, alpha: 0.75, bit_width: 8
+layer: 0, tensor: mlp.down_proj, input quant, best mode: int, mse: 3.8165349082409786e-05, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 1, tensor: self_attn.q_proj, weight quant, best mode: int, mse: 0.0009841715062765856, alpha: 1.1500000000000001, bit_width: 4
+layer: 1, tensor: self_attn.q_proj, input quant, best mode: pot, mse: 0.005022205172983537, alpha: 0.85, bit_width: 4
+ant search data type and alpha.
+layer: 1, tensor: self_attn.k_proj, weight quant, best mode: int, mse: 4.957094161192546e-06, alpha: 0.75, bit_width: 8
+layer: 1, tensor: self_attn.k_proj, input quant, best mode: int, mse: 0.00044692272874158426, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 1, tensor: self_attn.v_proj, weight quant, best mode: int, mse: 3.634547734453709e-07, alpha: 0.75, bit_width: 8
+layer: 1, tensor: self_attn.v_proj, input quant, best mode: int, mse: 3.8731861175665114e-05, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 1, tensor: self_attn.o_proj, weight quant, best mode: float, mse: 9.006110087825467e-07, alpha: 0.9500000000000001, bit_width: 4
+layer: 1, tensor: self_attn.o_proj, input quant, best mode: pot, mse: 3.0071297823313964e-06, alpha: 0.85, bit_width: 4
+ant search data type and alpha.
+layer: 1, tensor: mlp.gate_proj, weight quant, best mode: float, mse: 0.00013298480802745763, alpha: 0.9500000000000001, bit_width: 4
+layer: 1, tensor: mlp.gate_proj, input quant, best mode: pot, mse: 0.00048763235322976596, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 1, tensor: mlp.up_proj, weight quant, best mode: int, mse: 3.63312599719696e-07, alpha: 0.75, bit_width: 8
+layer: 1, tensor: mlp.up_proj, input quant, best mode: int, mse: 4.0233179558109876e-05, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 1, tensor: mlp.down_proj, weight quant, best mode: int, mse: 2.2368729580645906e-07, alpha: 0.75, bit_width: 8
+layer: 1, tensor: mlp.down_proj, input quant, best mode: int, mse: 0.00012657548538054357, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 2, tensor: self_attn.q_proj, weight quant, best mode: float, mse: 0.002347884809653161, alpha: 1.05, bit_width: 4
+layer: 2, tensor: self_attn.q_proj, input quant, best mode: pot, mse: 0.009010887052425406, alpha: 0.9500000000000001, bit_width: 4
+ant search data type and alpha.
+layer: 2, tensor: self_attn.k_proj, weight quant, best mode: int, mse: 1.723502733317738e-05, alpha: 0.75, bit_width: 8
+layer: 2, tensor: self_attn.k_proj, input quant, best mode: int, mse: 0.0006276014981437486, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 2, tensor: self_attn.v_proj, weight quant, best mode: int, mse: 8.688136022890365e-07, alpha: 0.75, bit_width: 8
+layer: 2, tensor: self_attn.v_proj, input quant, best mode: int, mse: 3.6840596729322076e-05, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 2, tensor: self_attn.o_proj, weight quant, best mode: int, mse: 4.784049910110316e-06, alpha: 0.9500000000000001, bit_width: 4
+layer: 2, tensor: self_attn.o_proj, input quant, best mode: pot, mse: 1.7440653244833e-05, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 2, tensor: mlp.gate_proj, weight quant, best mode: int, mse: 0.00021477596354831406, alpha: 0.9500000000000001, bit_width: 4
+layer: 2, tensor: mlp.gate_proj, input quant, best mode: pot, mse: 0.0008225511847465032, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 2, tensor: mlp.up_proj, weight quant, best mode: int, mse: 5.416566935002711e-07, alpha: 0.75, bit_width: 8
+layer: 2, tensor: mlp.up_proj, input quant, best mode: int, mse: 7.932801411636415e-05, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 2, tensor: mlp.down_proj, weight quant, best mode: int, mse: 1.961060008472289e-08, alpha: 0.75, bit_width: 8
+layer: 2, tensor: mlp.down_proj, input quant, best mode: int, mse: 1.915086531797698e-05, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 3, tensor: self_attn.q_proj, weight quant, best mode: float, mse: 0.002772026355089864, alpha: 1.05, bit_width: 4
+layer: 3, tensor: self_attn.q_proj, input quant, best mode: flint, mse: 0.009176659785226124, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 3, tensor: self_attn.k_proj, weight quant, best mode: int, mse: 1.6209867412309162e-05, alpha: 0.75, bit_width: 8
+layer: 3, tensor: self_attn.k_proj, input quant, best mode: int, mse: 0.00037087148662660766, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 3, tensor: self_attn.v_proj, weight quant, best mode: int, mse: 1.3739692824460019e-06, alpha: 0.75, bit_width: 8
+layer: 3, tensor: self_attn.v_proj, input quant, best mode: int, mse: 3.0883617064865055e-05, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 3, tensor: self_attn.o_proj, weight quant, best mode: float, mse: 6.65225858658837e-07, alpha: 0.9500000000000001, bit_width: 4
+layer: 3, tensor: self_attn.o_proj, input quant, best mode: pot, mse: 2.4431797806486537e-06, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 3, tensor: mlp.gate_proj, weight quant, best mode: int, mse: 0.0003340502776186808, alpha: 0.9500000000000001, bit_width: 4
+layer: 3, tensor: mlp.gate_proj, input quant, best mode: pot, mse: 0.0013330223723282625, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 3, tensor: mlp.up_proj, weight quant, best mode: int, mse: 7.24266601090955e-07, alpha: 0.75, bit_width: 8
+layer: 3, tensor: mlp.up_proj, input quant, best mode: int, mse: 0.00011128958170034432, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 3, tensor: mlp.down_proj, weight quant, best mode: int, mse: 1.6294167979783627e-08, alpha: 0.75, bit_width: 8
+layer: 3, tensor: mlp.down_proj, input quant, best mode: int, mse: 4.800956727358103e-06, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 4, tensor: self_attn.q_proj, weight quant, best mode: float, mse: 0.002493665755142415, alpha: 1.05, bit_width: 4
+layer: 4, tensor: self_attn.q_proj, input quant, best mode: pot, mse: 0.0111928422762584, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 4, tensor: self_attn.k_proj, weight quant, best mode: int, mse: 1.587596267135321e-05, alpha: 0.75, bit_width: 8
+layer: 4, tensor: self_attn.k_proj, input quant, best mode: int, mse: 0.0005797970302552502, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 4, tensor: self_attn.v_proj, weight quant, best mode: int, mse: 1.5146287791333943e-06, alpha: 0.75, bit_width: 8
+layer: 4, tensor: self_attn.v_proj, input quant, best mode: int, mse: 5.7892019656083124e-05, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 4, tensor: self_attn.o_proj, weight quant, best mode: float, mse: 2.5660899901267955e-06, alpha: 0.9500000000000001, bit_width: 4
+layer: 4, tensor: self_attn.o_proj, input quant, best mode: pot, mse: 8.733890005614411e-06, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 4, tensor: mlp.gate_proj, weight quant, best mode: float, mse: 0.0005157108989750193, alpha: 0.9500000000000001, bit_width: 4
+layer: 4, tensor: mlp.gate_proj, input quant, best mode: pot, mse: 0.0019786174310251615, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 4, tensor: mlp.up_proj, weight quant, best mode: int, mse: 9.730541292293598e-07, alpha: 0.75, bit_width: 8
+layer: 4, tensor: mlp.up_proj, input quant, best mode: int, mse: 0.00016591376238487724, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 4, tensor: mlp.down_proj, weight quant, best mode: int, mse: 1.9153694977909823e-08, alpha: 0.75, bit_width: 8
+layer: 4, tensor: mlp.down_proj, input quant, best mode: int, mse: 1.090891496756159e-05, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 5, tensor: self_attn.q_proj, weight quant, best mode: float, mse: 0.00321669765494683, alpha: 1.05, bit_width: 4
+layer: 5, tensor: self_attn.q_proj, input quant, best mode: pot, mse: 0.013425083142852755, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 5, tensor: self_attn.k_proj, weight quant, best mode: int, mse: 2.309805910869897e-05, alpha: 0.75, bit_width: 8
+layer: 5, tensor: self_attn.k_proj, input quant, best mode: int, mse: 0.0017624974792399045, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 5, tensor: self_attn.v_proj, weight quant, best mode: int, mse: 1.4055414939992024e-06, alpha: 0.75, bit_width: 8
+layer: 5, tensor: self_attn.v_proj, input quant, best mode: int, mse: 0.00011970966999666603, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 5, tensor: self_attn.o_proj, weight quant, best mode: int, mse: 3.0937922985169274e-06, alpha: 0.9500000000000001, bit_width: 4
+layer: 5, tensor: self_attn.o_proj, input quant, best mode: pot, mse: 1.20264826709201e-05, alpha: 0.85, bit_width: 4
+ant search data type and alpha.
+layer: 5, tensor: mlp.gate_proj, weight quant, best mode: int, mse: 0.0006034278651407711, alpha: 0.9500000000000001, bit_width: 4
+layer: 5, tensor: mlp.gate_proj, input quant, best mode: pot, mse: 0.002350583332684422, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 5, tensor: mlp.up_proj, weight quant, best mode: int, mse: 1.1448272262036239e-06, alpha: 0.75, bit_width: 8
+layer: 5, tensor: mlp.up_proj, input quant, best mode: int, mse: 0.00018290153291121393, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 5, tensor: mlp.down_proj, weight quant, best mode: int, mse: 2.798901839085675e-08, alpha: 0.75, bit_width: 8
+layer: 5, tensor: mlp.down_proj, input quant, best mode: int, mse: 1.7747624234603127e-05, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 6, tensor: self_attn.q_proj, weight quant, best mode: float, mse: 0.00288740539326013, alpha: 1.05, bit_width: 4
+layer: 6, tensor: self_attn.q_proj, input quant, best mode: pot, mse: 0.012322015532747721, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 6, tensor: self_attn.k_proj, weight quant, best mode: int, mse: 1.9561362763769197e-05, alpha: 0.75, bit_width: 8
+layer: 6, tensor: self_attn.k_proj, input quant, best mode: int, mse: 0.0016470175986921833, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 6, tensor: self_attn.v_proj, weight quant, best mode: int, mse: 1.5107800604693682e-06, alpha: 0.75, bit_width: 8
+layer: 6, tensor: self_attn.v_proj, input quant, best mode: int, mse: 0.00013354812388200274, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 6, tensor: self_attn.o_proj, weight quant, best mode: float, mse: 5.935980256081125e-06, alpha: 0.9500000000000001, bit_width: 4
+layer: 6, tensor: self_attn.o_proj, input quant, best mode: pot, mse: 2.173454723700104e-05, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 6, tensor: mlp.gate_proj, weight quant, best mode: float, mse: 0.0006589433096633274, alpha: 0.9500000000000001, bit_width: 4
+layer: 6, tensor: mlp.gate_proj, input quant, best mode: pot, mse: 0.0025600658071370827, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 6, tensor: mlp.up_proj, weight quant, best mode: int, mse: 1.2282438906517985e-06, alpha: 0.75, bit_width: 8
+layer: 6, tensor: mlp.up_proj, input quant, best mode: int, mse: 0.0002242364129786314, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 6, tensor: mlp.down_proj, weight quant, best mode: int, mse: 3.686189950478884e-08, alpha: 0.75, bit_width: 8
+layer: 6, tensor: mlp.down_proj, input quant, best mode: int, mse: 1.975863603976236e-05, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 7, tensor: self_attn.q_proj, weight quant, best mode: float, mse: 0.0026564383633545276, alpha: 1.05, bit_width: 4
+layer: 7, tensor: self_attn.q_proj, input quant, best mode: pot, mse: 0.011367778371698885, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 7, tensor: self_attn.k_proj, weight quant, best mode: int, mse: 1.9960949496514784e-05, alpha: 0.75, bit_width: 8
+layer: 7, tensor: self_attn.k_proj, input quant, best mode: int, mse: 0.0020224209076779897, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 7, tensor: self_attn.v_proj, weight quant, best mode: int, mse: 1.5252257448305467e-06, alpha: 0.75, bit_width: 8
+layer: 7, tensor: self_attn.v_proj, input quant, best mode: int, mse: 0.00015797987810251872, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 7, tensor: self_attn.o_proj, weight quant, best mode: float, mse: 1.4724875769275045e-05, alpha: 0.9500000000000001, bit_width: 4
+layer: 7, tensor: self_attn.o_proj, input quant, best mode: pot, mse: 5.0880568120884884e-05, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 7, tensor: mlp.gate_proj, weight quant, best mode: float, mse: 0.0006308762080933067, alpha: 0.9500000000000001, bit_width: 4
+layer: 7, tensor: mlp.gate_proj, input quant, best mode: pot, mse: 0.002416743419735755, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 7, tensor: mlp.up_proj, weight quant, best mode: int, mse: 1.2577585028908951e-06, alpha: 0.75, bit_width: 8
+layer: 7, tensor: mlp.up_proj, input quant, best mode: int, mse: 0.00020752590194766073, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 7, tensor: mlp.down_proj, weight quant, best mode: int, mse: 4.4015291968666466e-08, alpha: 0.75, bit_width: 8
+layer: 7, tensor: mlp.down_proj, input quant, best mode: int, mse: 2.0554206685084192e-05, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 8, tensor: self_attn.q_proj, weight quant, best mode: float, mse: 0.0035200563984467076, alpha: 1.05, bit_width: 4
+layer: 8, tensor: self_attn.q_proj, input quant, best mode: pot, mse: 0.0138101279131276, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 8, tensor: self_attn.k_proj, weight quant, best mode: int, mse: 2.590148601633833e-05, alpha: 0.75, bit_width: 8
+layer: 8, tensor: self_attn.k_proj, input quant, best mode: int, mse: 0.0025616793886148806, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 8, tensor: self_attn.v_proj, weight quant, best mode: int, mse: 2.1259357571635954e-06, alpha: 0.75, bit_width: 8
+layer: 8, tensor: self_attn.v_proj, input quant, best mode: int, mse: 0.00022475061241032166, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 8, tensor: self_attn.o_proj, weight quant, best mode: int, mse: 1.6864628365091533e-05, alpha: 0.85, bit_width: 4
+layer: 8, tensor: self_attn.o_proj, input quant, best mode: pot, mse: 6.054040171872579e-05, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 8, tensor: mlp.gate_proj, weight quant, best mode: float, mse: 0.0006451174188676674, alpha: 0.9500000000000001, bit_width: 4
+layer: 8, tensor: mlp.gate_proj, input quant, best mode: pot, mse: 0.0025051449806325274, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 8, tensor: mlp.up_proj, weight quant, best mode: int, mse: 1.2669315734203096e-06, alpha: 0.75, bit_width: 8
+layer: 8, tensor: mlp.up_proj, input quant, best mode: int, mse: 0.0002156229961640619, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 8, tensor: mlp.down_proj, weight quant, best mode: int, mse: 3.915701749928338e-08, alpha: 0.75, bit_width: 8
+layer: 8, tensor: mlp.down_proj, input quant, best mode: int, mse: 1.6719188343955395e-05, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 9, tensor: self_attn.q_proj, weight quant, best mode: int, mse: 0.0035515317005180673, alpha: 0.9500000000000001, bit_width: 4
+layer: 9, tensor: self_attn.q_proj, input quant, best mode: pot, mse: 0.014232086569108869, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 9, tensor: self_attn.k_proj, weight quant, best mode: int, mse: 2.470350722846203e-05, alpha: 0.75, bit_width: 8
+layer: 9, tensor: self_attn.k_proj, input quant, best mode: int, mse: 0.002516433951094532, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 9, tensor: self_attn.v_proj, weight quant, best mode: int, mse: 2.9377874087137804e-06, alpha: 0.75, bit_width: 8
+layer: 9, tensor: self_attn.v_proj, input quant, best mode: int, mse: 0.00030061235977354745, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 9, tensor: self_attn.o_proj, weight quant, best mode: float, mse: 1.678800530881005e-05, alpha: 0.9500000000000001, bit_width: 4
+layer: 9, tensor: self_attn.o_proj, input quant, best mode: pot, mse: 5.77505030517715e-05, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 9, tensor: mlp.gate_proj, weight quant, best mode: float, mse: 0.0006746126291768983, alpha: 0.9500000000000001, bit_width: 4
+layer: 9, tensor: mlp.gate_proj, input quant, best mode: pot, mse: 0.002612716126134347, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 9, tensor: mlp.up_proj, weight quant, best mode: int, mse: 1.3144504428364472e-06, alpha: 0.75, bit_width: 8
+layer: 9, tensor: mlp.up_proj, input quant, best mode: int, mse: 0.0002193886144779253, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 9, tensor: mlp.down_proj, weight quant, best mode: int, mse: 4.62276983638578e-08, alpha: 0.75, bit_width: 8
+layer: 9, tensor: mlp.down_proj, input quant, best mode: int, mse: 7.154184510291314e-05, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 10, tensor: self_attn.q_proj, weight quant, best mode: float, mse: 0.003683422204808548, alpha: 1.05, bit_width: 4
+layer: 10, tensor: self_attn.q_proj, input quant, best mode: pot, mse: 0.014242201191165153, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 10, tensor: self_attn.k_proj, weight quant, best mode: int, mse: 3.0873593479235036e-05, alpha: 0.75, bit_width: 8
+layer: 10, tensor: self_attn.k_proj, input quant, best mode: int, mse: 0.00226450364672897, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 10, tensor: self_attn.v_proj, weight quant, best mode: int, mse: 2.280930653317196e-06, alpha: 0.75, bit_width: 8
+layer: 10, tensor: self_attn.v_proj, input quant, best mode: int, mse: 0.00019013838535715175, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 10, tensor: self_attn.o_proj, weight quant, best mode: float, mse: 2.698194913197103e-05, alpha: 0.9500000000000001, bit_width: 4
+layer: 10, tensor: self_attn.o_proj, input quant, best mode: pot, mse: 9.470298533119628e-05, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 10, tensor: mlp.gate_proj, weight quant, best mode: int, mse: 0.0006235292967032385, alpha: 0.9500000000000001, bit_width: 4
+layer: 10, tensor: mlp.gate_proj, input quant, best mode: pot, mse: 0.002405239616443754, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 10, tensor: mlp.up_proj, weight quant, best mode: int, mse: 1.3038155985952924e-06, alpha: 0.75, bit_width: 8
+layer: 10, tensor: mlp.up_proj, input quant, best mode: int, mse: 0.000156562080102776, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 10, tensor: mlp.down_proj, weight quant, best mode: int, mse: 5.0043108892561856e-08, alpha: 0.75, bit_width: 8
+layer: 10, tensor: mlp.down_proj, input quant, best mode: int, mse: 0.0001032212051648297, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 11, tensor: self_attn.q_proj, weight quant, best mode: float, mse: 0.0030352667949887597, alpha: 1.05, bit_width: 4
+layer: 11, tensor: self_attn.q_proj, input quant, best mode: pot, mse: 0.011892438917944382, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 11, tensor: self_attn.k_proj, weight quant, best mode: int, mse: 2.5887126925173677e-05, alpha: 0.75, bit_width: 8
+layer: 11, tensor: self_attn.k_proj, input quant, best mode: int, mse: 0.0020050558649193266, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 11, tensor: self_attn.v_proj, weight quant, best mode: int, mse: 2.0860255734530673e-06, alpha: 0.75, bit_width: 8
+layer: 11, tensor: self_attn.v_proj, input quant, best mode: int, mse: 0.00016891138817615574, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 11, tensor: self_attn.o_proj, weight quant, best mode: float, mse: 2.7794360764331696e-05, alpha: 0.9500000000000001, bit_width: 4
+layer: 11, tensor: self_attn.o_proj, input quant, best mode: pot, mse: 9.607429209494811e-05, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 11, tensor: mlp.gate_proj, weight quant, best mode: int, mse: 0.0006447206700684297, alpha: 0.9500000000000001, bit_width: 4
+layer: 11, tensor: mlp.gate_proj, input quant, best mode: pot, mse: 0.0025246825814087396, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 11, tensor: mlp.up_proj, weight quant, best mode: int, mse: 1.3935718786626747e-06, alpha: 0.75, bit_width: 8
+layer: 11, tensor: mlp.up_proj, input quant, best mode: int, mse: 0.0001898757810237155, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 11, tensor: mlp.down_proj, weight quant, best mode: int, mse: 5.737137236519909e-08, alpha: 0.75, bit_width: 8
+layer: 11, tensor: mlp.down_proj, input quant, best mode: int, mse: 4.513290859670684e-05, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 12, tensor: self_attn.q_proj, weight quant, best mode: float, mse: 0.0026678762155100772, alpha: 1.05, bit_width: 4
+layer: 12, tensor: self_attn.q_proj, input quant, best mode: pot, mse: 0.011032737874549847, alpha: 1.05, bit_width: 4
+ant search data type and alpha.
+layer: 12, tensor: self_attn.k_proj, weight quant, best mode: int, mse: 1.9261629769289886e-05, alpha: 0.75, bit_width: 8
+layer: 12, tensor: self_attn.k_proj, input quant, best mode: int, mse: 0.0014297519969934261, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 12, tensor: self_attn.v_proj, weight quant, best mode: int, mse: 2.3712961657528073e-06, alpha: 0.75, bit_width: 8
+layer: 12, tensor: self_attn.v_proj, input quant, best mode: int, mse: 0.00017673501782549696, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 12, tensor: self_attn.o_proj, weight quant, best mode: int, mse: 2.9251154672018698e-05, alpha: 0.9500000000000001, bit_width: 4
+layer: 12, tensor: self_attn.o_proj, input quant, best mode: pot, mse: 0.00010180040140699927, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 12, tensor: mlp.gate_proj, weight quant, best mode: float, mse: 0.0006119175718466022, alpha: 0.9500000000000001, bit_width: 4
+layer: 12, tensor: mlp.gate_proj, input quant, best mode: pot, mse: 0.002397937728335633, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 12, tensor: mlp.up_proj, weight quant, best mode: int, mse: 1.4231754094853031e-06, alpha: 0.75, bit_width: 8
+layer: 12, tensor: mlp.up_proj, input quant, best mode: int, mse: 0.00023534177594900367, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 12, tensor: mlp.down_proj, weight quant, best mode: int, mse: 6.953468674828645e-08, alpha: 0.75, bit_width: 8
+layer: 12, tensor: mlp.down_proj, input quant, best mode: int, mse: 3.051595211075749e-05, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 13, tensor: self_attn.q_proj, weight quant, best mode: float, mse: 0.003341856460157411, alpha: 1.05, bit_width: 4
+layer: 13, tensor: self_attn.q_proj, input quant, best mode: pot, mse: 0.013012887378018041, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 13, tensor: self_attn.k_proj, weight quant, best mode: int, mse: 2.900680128153242e-05, alpha: 0.75, bit_width: 8
+layer: 13, tensor: self_attn.k_proj, input quant, best mode: int, mse: 0.002857707505507087, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 13, tensor: self_attn.v_proj, weight quant, best mode: int, mse: 2.7106824867518065e-06, alpha: 0.75, bit_width: 8
+layer: 13, tensor: self_attn.v_proj, input quant, best mode: int, mse: 0.00028011070281617643, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 13, tensor: self_attn.o_proj, weight quant, best mode: float, mse: 3.511417020811024e-05, alpha: 0.9500000000000001, bit_width: 4
+layer: 13, tensor: self_attn.o_proj, input quant, best mode: pot, mse: 0.00012069095049368838, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 13, tensor: mlp.gate_proj, weight quant, best mode: float, mse: 0.0006351791047845834, alpha: 0.9500000000000001, bit_width: 4
+layer: 13, tensor: mlp.gate_proj, input quant, best mode: pot, mse: 0.0025100127410877544, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 13, tensor: mlp.up_proj, weight quant, best mode: int, mse: 1.465207973071637e-06, alpha: 0.75, bit_width: 8
+layer: 13, tensor: mlp.up_proj, input quant, best mode: int, mse: 0.00020699785275699547, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 13, tensor: mlp.down_proj, weight quant, best mode: int, mse: 7.673819950782486e-08, alpha: 0.75, bit_width: 8
+layer: 13, tensor: mlp.down_proj, input quant, best mode: int, mse: 3.586852722826959e-05, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 14, tensor: self_attn.q_proj, weight quant, best mode: float, mse: 0.0032910603442861527, alpha: 1.05, bit_width: 4
+layer: 14, tensor: self_attn.q_proj, input quant, best mode: pot, mse: 0.012925669245744578, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 14, tensor: self_attn.k_proj, weight quant, best mode: int, mse: 3.2962965607754536e-05, alpha: 0.75, bit_width: 8
+layer: 14, tensor: self_attn.k_proj, input quant, best mode: int, mse: 0.003463269407571507, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 14, tensor: self_attn.v_proj, weight quant, best mode: int, mse: 2.9632790372497275e-06, alpha: 0.75, bit_width: 8
+layer: 14, tensor: self_attn.v_proj, input quant, best mode: int, mse: 0.000338916385874513, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 14, tensor: self_attn.o_proj, weight quant, best mode: float, mse: 3.2680179887439816e-05, alpha: 0.9500000000000001, bit_width: 4
+layer: 14, tensor: self_attn.o_proj, input quant, best mode: pot, mse: 0.00011697002692138984, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 14, tensor: mlp.gate_proj, weight quant, best mode: float, mse: 0.0007596604056215639, alpha: 0.9500000000000001, bit_width: 4
+layer: 14, tensor: mlp.gate_proj, input quant, best mode: pot, mse: 0.0029870024050239175, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 14, tensor: mlp.up_proj, weight quant, best mode: int, mse: 1.646686763578945e-06, alpha: 0.75, bit_width: 8
+layer: 14, tensor: mlp.up_proj, input quant, best mode: int, mse: 0.00021807126007280907, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 14, tensor: mlp.down_proj, weight quant, best mode: int, mse: 9.391169796978627e-08, alpha: 0.75, bit_width: 8
+layer: 14, tensor: mlp.down_proj, input quant, best mode: int, mse: 0.00010743467295168856, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 15, tensor: self_attn.q_proj, weight quant, best mode: int, mse: 0.003964697166166471, alpha: 0.9500000000000001, bit_width: 4
+layer: 15, tensor: self_attn.q_proj, input quant, best mode: pot, mse: 0.01649752156398201, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 15, tensor: self_attn.k_proj, weight quant, best mode: int, mse: 2.6023294854751934e-05, alpha: 0.75, bit_width: 8
+layer: 15, tensor: self_attn.k_proj, input quant, best mode: int, mse: 0.0026335733874604966, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 15, tensor: self_attn.v_proj, weight quant, best mode: int, mse: 3.19217261299534e-06, alpha: 0.75, bit_width: 8
+layer: 15, tensor: self_attn.v_proj, input quant, best mode: int, mse: 0.00031472217628487816, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 15, tensor: self_attn.o_proj, weight quant, best mode: float, mse: 4.1402493375479734e-05, alpha: 0.9500000000000001, bit_width: 4
+layer: 15, tensor: self_attn.o_proj, input quant, best mode: pot, mse: 0.00014636787099442662, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 15, tensor: mlp.gate_proj, weight quant, best mode: float, mse: 0.0009090688173869876, alpha: 0.9500000000000001, bit_width: 4
+layer: 15, tensor: mlp.gate_proj, input quant, best mode: pot, mse: 0.0035013872585544087, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 15, tensor: mlp.up_proj, weight quant, best mode: int, mse: 1.8286240061493976e-06, alpha: 0.75, bit_width: 8
+layer: 15, tensor: mlp.up_proj, input quant, best mode: int, mse: 0.0001904431347837812, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 15, tensor: mlp.down_proj, weight quant, best mode: int, mse: 1.1231868842856627e-07, alpha: 0.75, bit_width: 8
+layer: 15, tensor: mlp.down_proj, input quant, best mode: int, mse: 0.00020021473111355836, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 16, tensor: self_attn.q_proj, weight quant, best mode: float, mse: 0.0035517754849162418, alpha: 0.9500000000000001, bit_width: 4
+layer: 16, tensor: self_attn.q_proj, input quant, best mode: pot, mse: 0.014596085583199551, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 16, tensor: self_attn.k_proj, weight quant, best mode: int, mse: 2.7845233504217035e-05, alpha: 0.75, bit_width: 8
+layer: 16, tensor: self_attn.k_proj, input quant, best mode: int, mse: 0.0031495210223304437, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 16, tensor: self_attn.v_proj, weight quant, best mode: int, mse: 2.943280887375981e-06, alpha: 0.75, bit_width: 8
+layer: 16, tensor: self_attn.v_proj, input quant, best mode: int, mse: 0.0003252215878706971, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 16, tensor: self_attn.o_proj, weight quant, best mode: int, mse: 3.3103886382038485e-05, alpha: 0.9500000000000001, bit_width: 4
+layer: 16, tensor: self_attn.o_proj, input quant, best mode: pot, mse: 0.0001189018885543402, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 16, tensor: mlp.gate_proj, weight quant, best mode: float, mse: 0.0009890336106108209, alpha: 0.9500000000000001, bit_width: 4
+layer: 16, tensor: mlp.gate_proj, input quant, best mode: pot, mse: 0.003722647130951847, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 16, tensor: mlp.up_proj, weight quant, best mode: int, mse: 1.8662885758736158e-06, alpha: 0.75, bit_width: 8
+layer: 16, tensor: mlp.up_proj, input quant, best mode: int, mse: 0.0001738019725199949, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 16, tensor: mlp.down_proj, weight quant, best mode: int, mse: 1.1495053223807542e-07, alpha: 0.75, bit_width: 8
+layer: 16, tensor: mlp.down_proj, input quant, best mode: int, mse: 0.0003092931758013987, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 17, tensor: self_attn.q_proj, weight quant, best mode: int, mse: 0.003767635946829036, alpha: 0.9500000000000001, bit_width: 4
+layer: 17, tensor: self_attn.q_proj, input quant, best mode: pot, mse: 0.015570938327131197, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 17, tensor: self_attn.k_proj, weight quant, best mode: int, mse: 2.7769904524453196e-05, alpha: 0.75, bit_width: 8
+layer: 17, tensor: self_attn.k_proj, input quant, best mode: int, mse: 0.0030173248841838234, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 17, tensor: self_attn.v_proj, weight quant, best mode: int, mse: 3.2488533547085756e-06, alpha: 0.75, bit_width: 8
+layer: 17, tensor: self_attn.v_proj, input quant, best mode: int, mse: 0.0003732852504478122, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 17, tensor: self_attn.o_proj, weight quant, best mode: int, mse: 2.3138998452721686e-05, alpha: 0.9500000000000001, bit_width: 4
+layer: 17, tensor: self_attn.o_proj, input quant, best mode: pot, mse: 8.266025149679756e-05, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 17, tensor: mlp.gate_proj, weight quant, best mode: int, mse: 0.0010869280958132827, alpha: 0.9500000000000001, bit_width: 4
+layer: 17, tensor: mlp.gate_proj, input quant, best mode: pot, mse: 0.004079839817685458, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 17, tensor: mlp.up_proj, weight quant, best mode: int, mse: 1.9788514727448612e-06, alpha: 0.75, bit_width: 8
+layer: 17, tensor: mlp.up_proj, input quant, best mode: int, mse: 0.00014992233802638933, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 17, tensor: mlp.down_proj, weight quant, best mode: int, mse: 1.3306850477919846e-07, alpha: 0.75, bit_width: 8
+layer: 17, tensor: mlp.down_proj, input quant, best mode: int, mse: 0.00037515577384677947, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 18, tensor: self_attn.q_proj, weight quant, best mode: float, mse: 0.0037422201847120235, alpha: 0.9500000000000001, bit_width: 4
+layer: 18, tensor: self_attn.q_proj, input quant, best mode: pot, mse: 0.01517012439328326, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 18, tensor: self_attn.k_proj, weight quant, best mode: int, mse: 3.126101870204626e-05, alpha: 0.75, bit_width: 8
+layer: 18, tensor: self_attn.k_proj, input quant, best mode: int, mse: 0.0037060147731436577, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 18, tensor: self_attn.v_proj, weight quant, best mode: int, mse: 3.079570826268678e-06, alpha: 0.75, bit_width: 8
+layer: 18, tensor: self_attn.v_proj, input quant, best mode: int, mse: 0.0003546540428227791, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 18, tensor: self_attn.o_proj, weight quant, best mode: float, mse: 1.5290618395779988e-05, alpha: 0.9500000000000001, bit_width: 4
+layer: 18, tensor: self_attn.o_proj, input quant, best mode: pot, mse: 6.259639418855523e-05, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 18, tensor: mlp.gate_proj, weight quant, best mode: int, mse: 0.0011197966616912618, alpha: 0.9500000000000001, bit_width: 4
+layer: 18, tensor: mlp.gate_proj, input quant, best mode: pot, mse: 0.004168758062747178, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 18, tensor: mlp.up_proj, weight quant, best mode: int, mse: 2.0279720717006313e-06, alpha: 0.75, bit_width: 8
+layer: 18, tensor: mlp.up_proj, input quant, best mode: int, mse: 0.00012370516889662154, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 18, tensor: mlp.down_proj, weight quant, best mode: int, mse: 1.2790976381183833e-07, alpha: 0.75, bit_width: 8
+layer: 18, tensor: mlp.down_proj, input quant, best mode: int, mse: 0.00032384125657481375, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 19, tensor: self_attn.q_proj, weight quant, best mode: int, mse: 0.003864799415997308, alpha: 0.9500000000000001, bit_width: 4
+layer: 19, tensor: self_attn.q_proj, input quant, best mode: pot, mse: 0.01603626188683304, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 19, tensor: self_attn.k_proj, weight quant, best mode: int, mse: 2.8224619978591353e-05, alpha: 0.75, bit_width: 8
+layer: 19, tensor: self_attn.k_proj, input quant, best mode: int, mse: 0.0029166579227926656, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 19, tensor: self_attn.v_proj, weight quant, best mode: int, mse: 3.2832487564172683e-06, alpha: 0.75, bit_width: 8
+layer: 19, tensor: self_attn.v_proj, input quant, best mode: int, mse: 0.00033891916622975796, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 19, tensor: self_attn.o_proj, weight quant, best mode: float, mse: 1.6174842021667165e-05, alpha: 0.9500000000000001, bit_width: 4
+layer: 19, tensor: self_attn.o_proj, input quant, best mode: pot, mse: 6.547961353260104e-05, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 19, tensor: mlp.gate_proj, weight quant, best mode: int, mse: 0.0011948411586985824, alpha: 0.9500000000000001, bit_width: 4
+layer: 19, tensor: mlp.gate_proj, input quant, best mode: pot, mse: 0.0043930578879740325, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 19, tensor: mlp.up_proj, weight quant, best mode: int, mse: 2.112671912066145e-06, alpha: 0.75, bit_width: 8
+layer: 19, tensor: mlp.up_proj, input quant, best mode: int, mse: 0.00013769034036667695, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 19, tensor: mlp.down_proj, weight quant, best mode: int, mse: 1.2697135016699917e-07, alpha: 0.75, bit_width: 8
+layer: 19, tensor: mlp.down_proj, input quant, best mode: int, mse: 0.0003446684367163281, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 20, tensor: self_attn.q_proj, weight quant, best mode: float, mse: 0.004087271335551356, alpha: 0.9500000000000001, bit_width: 4
+layer: 20, tensor: self_attn.q_proj, input quant, best mode: pot, mse: 0.01683623566234746, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 20, tensor: self_attn.k_proj, weight quant, best mode: int, mse: 3.0148267867834037e-05, alpha: 0.75, bit_width: 8
+layer: 20, tensor: self_attn.k_proj, input quant, best mode: int, mse: 0.003766379908218994, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 20, tensor: self_attn.v_proj, weight quant, best mode: int, mse: 3.7390105370369337e-06, alpha: 0.75, bit_width: 8
+layer: 20, tensor: self_attn.v_proj, input quant, best mode: int, mse: 0.0004944548082914404, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 20, tensor: self_attn.o_proj, weight quant, best mode: float, mse: 1.4217656825613018e-05, alpha: 0.9500000000000001, bit_width: 4
+layer: 20, tensor: self_attn.o_proj, input quant, best mode: pot, mse: 5.267614268940726e-05, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 20, tensor: mlp.gate_proj, weight quant, best mode: int, mse: 0.0012564837404416952, alpha: 0.9500000000000001, bit_width: 4
+layer: 20, tensor: mlp.gate_proj, input quant, best mode: pot, mse: 0.004642160369113391, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 20, tensor: mlp.up_proj, weight quant, best mode: int, mse: 2.2586283912097563e-06, alpha: 0.75, bit_width: 8
+layer: 20, tensor: mlp.up_proj, input quant, best mode: int, mse: 0.00014249735514738478, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 20, tensor: mlp.down_proj, weight quant, best mode: int, mse: 1.3923378737259638e-07, alpha: 0.75, bit_width: 8
+layer: 20, tensor: mlp.down_proj, input quant, best mode: int, mse: 0.000535435738818837, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 21, tensor: self_attn.q_proj, weight quant, best mode: int, mse: 0.004068875832308756, alpha: 0.9500000000000001, bit_width: 4
+layer: 21, tensor: self_attn.q_proj, input quant, best mode: pot, mse: 0.016982910283145122, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 21, tensor: self_attn.k_proj, weight quant, best mode: int, mse: 2.9166171545196537e-05, alpha: 0.75, bit_width: 8
+layer: 21, tensor: self_attn.k_proj, input quant, best mode: int, mse: 0.00342113743510785, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 21, tensor: self_attn.v_proj, weight quant, best mode: int, mse: 4.006080520168162e-06, alpha: 0.75, bit_width: 8
+layer: 21, tensor: self_attn.v_proj, input quant, best mode: int, mse: 0.00047416690309872415, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 21, tensor: self_attn.o_proj, weight quant, best mode: int, mse: 2.243731866624106e-05, alpha: 0.9500000000000001, bit_width: 4
+layer: 21, tensor: self_attn.o_proj, input quant, best mode: pot, mse: 9.370648016034486e-05, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 21, tensor: mlp.gate_proj, weight quant, best mode: int, mse: 0.0013562488067528295, alpha: 0.9500000000000001, bit_width: 4
+layer: 21, tensor: mlp.gate_proj, input quant, best mode: pot, mse: 0.004942586193833539, alpha: 0.85, bit_width: 4
+ant search data type and alpha.
+layer: 21, tensor: mlp.up_proj, weight quant, best mode: int, mse: 2.389808741797667e-06, alpha: 0.75, bit_width: 8
+layer: 21, tensor: mlp.up_proj, input quant, best mode: int, mse: 0.0001331629834460872, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 21, tensor: mlp.down_proj, weight quant, best mode: int, mse: 1.5665447184096505e-07, alpha: 0.75, bit_width: 8
+layer: 21, tensor: mlp.down_proj, input quant, best mode: int, mse: 0.00023372850035200307, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 22, tensor: self_attn.q_proj, weight quant, best mode: float, mse: 0.004039762543185938, alpha: 0.9500000000000001, bit_width: 4
+layer: 22, tensor: self_attn.q_proj, input quant, best mode: pot, mse: 0.01710215823744422, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 22, tensor: self_attn.k_proj, weight quant, best mode: int, mse: 3.082364209914343e-05, alpha: 0.75, bit_width: 8
+layer: 22, tensor: self_attn.k_proj, input quant, best mode: int, mse: 0.004347503979243245, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 22, tensor: self_attn.v_proj, weight quant, best mode: int, mse: 4.711440218386093e-06, alpha: 0.75, bit_width: 8
+layer: 22, tensor: self_attn.v_proj, input quant, best mode: int, mse: 0.0006950099251150272, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 22, tensor: self_attn.o_proj, weight quant, best mode: float, mse: 1.865186849572189e-05, alpha: 0.9500000000000001, bit_width: 4
+layer: 22, tensor: self_attn.o_proj, input quant, best mode: pot, mse: 7.333322079983384e-05, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 22, tensor: mlp.gate_proj, weight quant, best mode: int, mse: 0.0013696357957063716, alpha: 0.9500000000000001, bit_width: 4
+layer: 22, tensor: mlp.gate_proj, input quant, best mode: pot, mse: 0.0050304343244724, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 22, tensor: mlp.up_proj, weight quant, best mode: int, mse: 2.44688468602586e-06, alpha: 0.75, bit_width: 8
+layer: 22, tensor: mlp.up_proj, input quant, best mode: int, mse: 0.00015106357372419912, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 22, tensor: mlp.down_proj, weight quant, best mode: int, mse: 1.4903605825446766e-07, alpha: 0.75, bit_width: 8
+layer: 22, tensor: mlp.down_proj, input quant, best mode: int, mse: 0.00035226098130207233, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 23, tensor: self_attn.q_proj, weight quant, best mode: int, mse: 0.00408800398473376, alpha: 0.9500000000000001, bit_width: 4
+layer: 23, tensor: self_attn.q_proj, input quant, best mode: pot, mse: 0.017467845662536615, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 23, tensor: self_attn.k_proj, weight quant, best mode: int, mse: 3.033544921223917e-05, alpha: 0.75, bit_width: 8
+layer: 23, tensor: self_attn.k_proj, input quant, best mode: int, mse: 0.0036375073370511785, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 23, tensor: self_attn.v_proj, weight quant, best mode: int, mse: 4.940133065825426e-06, alpha: 0.75, bit_width: 8
+layer: 23, tensor: self_attn.v_proj, input quant, best mode: int, mse: 0.0006496134000604588, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 23, tensor: self_attn.o_proj, weight quant, best mode: int, mse: 1.490278326139273e-05, alpha: 0.9500000000000001, bit_width: 4
+layer: 23, tensor: self_attn.o_proj, input quant, best mode: pot, mse: 6.153011581354276e-05, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 23, tensor: mlp.gate_proj, weight quant, best mode: int, mse: 0.0014070559195005425, alpha: 0.9500000000000001, bit_width: 4
+layer: 23, tensor: mlp.gate_proj, input quant, best mode: pot, mse: 0.00511058120766299, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 23, tensor: mlp.up_proj, weight quant, best mode: int, mse: 2.5224979102579103e-06, alpha: 0.75, bit_width: 8
+layer: 23, tensor: mlp.up_proj, input quant, best mode: int, mse: 0.0001427858406245516, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 23, tensor: mlp.down_proj, weight quant, best mode: int, mse: 1.4727786770261142e-07, alpha: 0.75, bit_width: 8
+layer: 23, tensor: mlp.down_proj, input quant, best mode: int, mse: 0.000446254047470562, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 24, tensor: self_attn.q_proj, weight quant, best mode: int, mse: 0.004104576677587196, alpha: 0.9500000000000001, bit_width: 4
+layer: 24, tensor: self_attn.q_proj, input quant, best mode: pot, mse: 0.01757445703202319, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 24, tensor: self_attn.k_proj, weight quant, best mode: int, mse: 2.8556698078625777e-05, alpha: 0.75, bit_width: 8
+layer: 24, tensor: self_attn.k_proj, input quant, best mode: int, mse: 0.0034859887431369536, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 24, tensor: self_attn.v_proj, weight quant, best mode: int, mse: 6.259972452565844e-06, alpha: 0.75, bit_width: 8
+layer: 24, tensor: self_attn.v_proj, input quant, best mode: int, mse: 0.0008302430546859696, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 24, tensor: self_attn.o_proj, weight quant, best mode: float, mse: 1.889468216484263e-05, alpha: 0.9500000000000001, bit_width: 4
+layer: 24, tensor: self_attn.o_proj, input quant, best mode: pot, mse: 9.291640269079208e-05, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 24, tensor: mlp.gate_proj, weight quant, best mode: int, mse: 0.0014529159891956181, alpha: 0.9500000000000001, bit_width: 4
+layer: 24, tensor: mlp.gate_proj, input quant, best mode: pot, mse: 0.005314945680991206, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 24, tensor: mlp.up_proj, weight quant, best mode: int, mse: 2.6237121166192877e-06, alpha: 0.75, bit_width: 8
+layer: 24, tensor: mlp.up_proj, input quant, best mode: int, mse: 0.0001575010400342335, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 24, tensor: mlp.down_proj, weight quant, best mode: int, mse: 1.5700896340937774e-07, alpha: 0.75, bit_width: 8
+layer: 24, tensor: mlp.down_proj, input quant, best mode: int, mse: 0.0003816319423555612, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 25, tensor: self_attn.q_proj, weight quant, best mode: int, mse: 0.004187289617889041, alpha: 0.9500000000000001, bit_width: 4
+layer: 25, tensor: self_attn.q_proj, input quant, best mode: pot, mse: 0.017660314565625525, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 25, tensor: self_attn.k_proj, weight quant, best mode: int, mse: 2.79487273450511e-05, alpha: 0.75, bit_width: 8
+layer: 25, tensor: self_attn.k_proj, input quant, best mode: int, mse: 0.0030169078118820786, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 25, tensor: self_attn.v_proj, weight quant, best mode: int, mse: 6.404909553305377e-06, alpha: 0.75, bit_width: 8
+layer: 25, tensor: self_attn.v_proj, input quant, best mode: int, mse: 0.0007369860770286261, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 25, tensor: self_attn.o_proj, weight quant, best mode: int, mse: 2.8840216341562742e-05, alpha: 0.9500000000000001, bit_width: 4
+layer: 25, tensor: self_attn.o_proj, input quant, best mode: pot, mse: 0.00012972656670001632, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 25, tensor: mlp.gate_proj, weight quant, best mode: int, mse: 0.001528470280467474, alpha: 0.9500000000000001, bit_width: 4
+layer: 25, tensor: mlp.gate_proj, input quant, best mode: pot, mse: 0.005546120419733765, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 25, tensor: mlp.up_proj, weight quant, best mode: int, mse: 2.751887541673196e-06, alpha: 0.75, bit_width: 8
+layer: 25, tensor: mlp.up_proj, input quant, best mode: int, mse: 0.00016998189513888918, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 25, tensor: mlp.down_proj, weight quant, best mode: int, mse: 1.844513123144437e-07, alpha: 0.75, bit_width: 8
+layer: 25, tensor: mlp.down_proj, input quant, best mode: int, mse: 0.000857807455440643, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 26, tensor: self_attn.q_proj, weight quant, best mode: int, mse: 0.00415154145408724, alpha: 0.9500000000000001, bit_width: 4
+layer: 26, tensor: self_attn.q_proj, input quant, best mode: pot, mse: 0.018651765505247355, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 26, tensor: self_attn.k_proj, weight quant, best mode: int, mse: 3.110265859422465e-05, alpha: 0.75, bit_width: 8
+layer: 26, tensor: self_attn.k_proj, input quant, best mode: int, mse: 0.003879365219353564, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 26, tensor: self_attn.v_proj, weight quant, best mode: int, mse: 6.770408164711612e-06, alpha: 0.75, bit_width: 8
+layer: 26, tensor: self_attn.v_proj, input quant, best mode: int, mse: 0.0009759077924284035, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 26, tensor: self_attn.o_proj, weight quant, best mode: float, mse: 3.3712079199921705e-05, alpha: 0.9500000000000001, bit_width: 4
+layer: 26, tensor: self_attn.o_proj, input quant, best mode: pot, mse: 0.00013490604103259812, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 26, tensor: mlp.gate_proj, weight quant, best mode: int, mse: 0.0016508048852892478, alpha: 0.9500000000000001, bit_width: 4
+layer: 26, tensor: mlp.gate_proj, input quant, best mode: pot, mse: 0.006081051844130208, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 26, tensor: mlp.up_proj, weight quant, best mode: int, mse: 2.9646535151015053e-06, alpha: 0.75, bit_width: 8
+layer: 26, tensor: mlp.up_proj, input quant, best mode: int, mse: 0.00021561281831890768, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 26, tensor: mlp.down_proj, weight quant, best mode: int, mse: 2.1877271028730323e-07, alpha: 0.75, bit_width: 8
+layer: 26, tensor: mlp.down_proj, input quant, best mode: int, mse: 0.0011727902179785204, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 27, tensor: self_attn.q_proj, weight quant, best mode: float, mse: 0.0040231969674122525, alpha: 0.9500000000000001, bit_width: 4
+layer: 27, tensor: self_attn.q_proj, input quant, best mode: pot, mse: 0.017495834443479606, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 27, tensor: self_attn.k_proj, weight quant, best mode: int, mse: 3.163662536491214e-05, alpha: 0.75, bit_width: 8
+layer: 27, tensor: self_attn.k_proj, input quant, best mode: int, mse: 0.0033380603585016263, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 27, tensor: self_attn.v_proj, weight quant, best mode: int, mse: 8.555348018094091e-06, alpha: 0.75, bit_width: 8
+layer: 27, tensor: self_attn.v_proj, input quant, best mode: int, mse: 0.0009970438268278978, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 27, tensor: self_attn.o_proj, weight quant, best mode: float, mse: 5.8854025617492986e-05, alpha: 0.9500000000000001, bit_width: 4
+layer: 27, tensor: self_attn.o_proj, input quant, best mode: pot, mse: 0.00022746448676124264, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 27, tensor: mlp.gate_proj, weight quant, best mode: int, mse: 0.0017772945720713439, alpha: 0.9500000000000001, bit_width: 4
+layer: 27, tensor: mlp.gate_proj, input quant, best mode: pot, mse: 0.006726157474236018, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 27, tensor: mlp.up_proj, weight quant, best mode: int, mse: 3.2327679232916144e-06, alpha: 0.75, bit_width: 8
+layer: 27, tensor: mlp.up_proj, input quant, best mode: int, mse: 0.0002789489537456882, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 27, tensor: mlp.down_proj, weight quant, best mode: int, mse: 3.4866169670142895e-07, alpha: 0.75, bit_width: 8
+layer: 27, tensor: mlp.down_proj, input quant, best mode: int, mse: 0.0008779562386612878, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 28, tensor: self_attn.q_proj, weight quant, best mode: int, mse: 0.003757261016752276, alpha: 0.9500000000000001, bit_width: 4
+layer: 28, tensor: self_attn.q_proj, input quant, best mode: pot, mse: 0.017606508852183088, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 28, tensor: self_attn.k_proj, weight quant, best mode: int, mse: 2.587278210134711e-05, alpha: 0.75, bit_width: 8
+layer: 28, tensor: self_attn.k_proj, input quant, best mode: int, mse: 0.0029854529056649896, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 28, tensor: self_attn.v_proj, weight quant, best mode: int, mse: 8.41968152764284e-06, alpha: 0.75, bit_width: 8
+layer: 28, tensor: self_attn.v_proj, input quant, best mode: int, mse: 0.0010571383257597423, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 28, tensor: self_attn.o_proj, weight quant, best mode: float, mse: 5.747092038006286e-05, alpha: 0.9500000000000001, bit_width: 4
+layer: 28, tensor: self_attn.o_proj, input quant, best mode: pot, mse: 0.00021440383530778, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 28, tensor: mlp.gate_proj, weight quant, best mode: int, mse: 0.0019502829015568678, alpha: 0.9500000000000001, bit_width: 4
+layer: 28, tensor: mlp.gate_proj, input quant, best mode: pot, mse: 0.007179848497441952, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 28, tensor: mlp.up_proj, weight quant, best mode: int, mse: 3.723995982805069e-06, alpha: 0.75, bit_width: 8
+layer: 28, tensor: mlp.up_proj, input quant, best mode: int, mse: 0.00024345497117970642, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 28, tensor: mlp.down_proj, weight quant, best mode: int, mse: 4.4542793041877637e-07, alpha: 0.75, bit_width: 8
+layer: 28, tensor: mlp.down_proj, input quant, best mode: int, mse: 0.0008008185671002294, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 29, tensor: self_attn.q_proj, weight quant, best mode: int, mse: 0.0036792549769376166, alpha: 0.9500000000000001, bit_width: 4
+layer: 29, tensor: self_attn.q_proj, input quant, best mode: pot, mse: 0.016063771674604703, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 29, tensor: self_attn.k_proj, weight quant, best mode: int, mse: 2.7931498316424766e-05, alpha: 0.75, bit_width: 8
+layer: 29, tensor: self_attn.k_proj, input quant, best mode: int, mse: 0.0020067182424927396, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 29, tensor: self_attn.v_proj, weight quant, best mode: int, mse: 9.62208815580311e-06, alpha: 0.75, bit_width: 8
+layer: 29, tensor: self_attn.v_proj, input quant, best mode: int, mse: 0.0007021783044417713, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 29, tensor: self_attn.o_proj, weight quant, best mode: int, mse: 0.00010175590176181613, alpha: 0.9500000000000001, bit_width: 4
+layer: 29, tensor: self_attn.o_proj, input quant, best mode: pot, mse: 0.00040473630067905945, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 29, tensor: mlp.gate_proj, weight quant, best mode: int, mse: 0.0019694046271464902, alpha: 0.9500000000000001, bit_width: 4
+Data Type Search...: 100%|██████████| 1/1 [04:19<00:00, 259.36s/it]Data Type Search...: 100%|██████████| 1/1 [04:19<00:00, 259.36s/it]
+layer: 29, tensor: mlp.gate_proj, input quant, best mode: pot, mse: 0.007417326142222981, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 29, tensor: mlp.up_proj, weight quant, best mode: int, mse: 3.962457018677357e-06, alpha: 0.75, bit_width: 8
+layer: 29, tensor: mlp.up_proj, input quant, best mode: int, mse: 0.00041363677781788654, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 29, tensor: mlp.down_proj, weight quant, best mode: int, mse: 7.465056802651084e-07, alpha: 0.75, bit_width: 8
+layer: 29, tensor: mlp.down_proj, input quant, best mode: int, mse: 0.0007295394055339887, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 30, tensor: self_attn.q_proj, weight quant, best mode: int, mse: 0.0035010120891279897, alpha: 0.9500000000000001, bit_width: 4
+layer: 30, tensor: self_attn.q_proj, input quant, best mode: pot, mse: 0.018588200623317123, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 30, tensor: self_attn.k_proj, weight quant, best mode: int, mse: 2.6615974757637967e-05, alpha: 0.75, bit_width: 8
+layer: 30, tensor: self_attn.k_proj, input quant, best mode: int, mse: 0.0019837847386621273, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 30, tensor: self_attn.v_proj, weight quant, best mode: int, mse: 1.389032675450951e-05, alpha: 0.75, bit_width: 8
+layer: 30, tensor: self_attn.v_proj, input quant, best mode: int, mse: 0.0013043958380316318, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 30, tensor: self_attn.o_proj, weight quant, best mode: float, mse: 0.0001688844611348032, alpha: 0.9500000000000001, bit_width: 4
+layer: 30, tensor: self_attn.o_proj, input quant, best mode: pot, mse: 0.0006101996176020314, alpha: 0.85, bit_width: 4
+ant search data type and alpha.
+layer: 30, tensor: mlp.gate_proj, weight quant, best mode: int, mse: 0.002132951710311902, alpha: 0.9500000000000001, bit_width: 4
+layer: 30, tensor: mlp.gate_proj, input quant, best mode: pot, mse: 0.008358867513183573, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 30, tensor: mlp.up_proj, weight quant, best mode: int, mse: 4.166838560144786e-06, alpha: 0.75, bit_width: 8
+layer: 30, tensor: mlp.up_proj, input quant, best mode: int, mse: 0.0004740580706454341, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 30, tensor: mlp.down_proj, weight quant, best mode: int, mse: 1.8123140293271533e-06, alpha: 0.75, bit_width: 8
+layer: 30, tensor: mlp.down_proj, input quant, best mode: int, mse: 0.0018720075403828862, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 31, tensor: self_attn.q_proj, weight quant, best mode: int, mse: 0.002741964423260638, alpha: 0.9500000000000001, bit_width: 4
+layer: 31, tensor: self_attn.q_proj, input quant, best mode: pot, mse: 0.013398821738155781, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 31, tensor: self_attn.k_proj, weight quant, best mode: int, mse: 1.9137035896531448e-05, alpha: 0.75, bit_width: 8
+layer: 31, tensor: self_attn.k_proj, input quant, best mode: int, mse: 0.0011014630993357749, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 31, tensor: self_attn.v_proj, weight quant, best mode: int, mse: 7.5285813406307396e-06, alpha: 0.75, bit_width: 8
+layer: 31, tensor: self_attn.v_proj, input quant, best mode: int, mse: 0.00048524443742477394, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 31, tensor: self_attn.o_proj, weight quant, best mode: float, mse: 0.0004106748129203231, alpha: 0.9500000000000001, bit_width: 4
+layer: 31, tensor: self_attn.o_proj, input quant, best mode: pot, mse: 0.001648635418717949, alpha: 0.75, bit_width: 4
+ant search data type and alpha.
+layer: 31, tensor: mlp.gate_proj, weight quant, best mode: int, mse: 0.0020430550233475823, alpha: 0.9500000000000001, bit_width: 4
+layer: 31, tensor: mlp.gate_proj, input quant, best mode: pot, mse: 0.00918080824777039, alpha: 0.85, bit_width: 4
+ant search data type and alpha.
+layer: 31, tensor: mlp.up_proj, weight quant, best mode: int, mse: 4.292134636467076e-06, alpha: 0.75, bit_width: 8
+layer: 31, tensor: mlp.up_proj, input quant, best mode: int, mse: 0.0006794474430297429, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+layer: 31, tensor: mlp.down_proj, weight quant, best mode: int, mse: 1.910791655190951e-05, alpha: 0.75, bit_width: 8
+layer: 31, tensor: mlp.down_proj, input quant, best mode: int, mse: 0.06460083807383665, alpha: 0.75, bit_width: 8
+ant search data type and alpha.
+Task Evaluating...:   0%|          | 0/64 [00:00<?, ?it/s]Task Evaluating...:   2%|▏         | 1/64 [00:03<03:15,  3.10s/it]Task Evaluating...:   3%|▎         | 2/64 [00:05<02:49,  2.74s/it]Task Evaluating...:   5%|▍         | 3/64 [00:06<02:07,  2.09s/it]Task Evaluating...:   6%|▋         | 4/64 [00:08<01:45,  1.76s/it]Task Evaluating...:   8%|▊         | 5/64 [00:09<01:33,  1.58s/it]Task Evaluating...:   9%|▉         | 6/64 [00:10<01:28,  1.52s/it]Task Evaluating...:  11%|█         | 7/64 [00:12<01:38,  1.72s/it]Task Evaluating...:  12%|█▎        | 8/64 [00:15<01:43,  1.84s/it]Task Evaluating...:  14%|█▍        | 9/64 [00:16<01:41,  1.85s/it]Task Evaluating...:  16%|█▌        | 10/64 [00:19<01:45,  1.95s/it]Task Evaluating...:  17%|█▋        | 11/64 [00:21<01:43,  1.95s/it]Task Evaluating...:  19%|█▉        | 12/64 [00:23<01:43,  1.99s/it]Task Evaluating...:  20%|██        | 13/64 [00:25<01:43,  2.03s/it]Task Evaluating...:  22%|██▏       | 14/64 [00:27<01:39,  1.99s/it]Task Evaluating...:  23%|██▎       | 15/64 [00:28<01:27,  1.79s/it]Task Evaluating...:  25%|██▌       | 16/64 [00:29<01:18,  1.63s/it]Task Evaluating...:  27%|██▋       | 17/64 [00:31<01:11,  1.52s/it]Task Evaluating...:  28%|██▊       | 18/64 [00:32<01:06,  1.45s/it]Task Evaluating...:  30%|██▉       | 19/64 [00:33<01:02,  1.39s/it]Task Evaluating...:  31%|███▏      | 20/64 [00:34<00:59,  1.36s/it]Task Evaluating...:  33%|███▎      | 21/64 [00:36<00:57,  1.33s/it]Task Evaluating...:  34%|███▍      | 22/64 [00:37<00:54,  1.31s/it]Task Evaluating...:  36%|███▌      | 23/64 [00:38<00:53,  1.29s/it]Task Evaluating...:  38%|███▊      | 24/64 [00:39<00:51,  1.28s/it]Task Evaluating...:  39%|███▉      | 25/64 [00:41<00:49,  1.28s/it]Task Evaluating...:  41%|████      | 26/64 [00:42<00:48,  1.27s/it]Task Evaluating...:  42%|████▏     | 27/64 [00:43<00:46,  1.27s/it]Task Evaluating...:  44%|████▍     | 28/64 [00:44<00:45,  1.27s/it]Task Evaluating...:  45%|████▌     | 29/64 [00:46<00:44,  1.27s/it]Task Evaluating...:  47%|████▋     | 30/64 [00:47<00:43,  1.27s/it]Task Evaluating...:  48%|████▊     | 31/64 [00:48<00:41,  1.26s/it]Task Evaluating...:  50%|█████     | 32/64 [00:49<00:40,  1.26s/it]Task Evaluating...:  52%|█████▏    | 33/64 [00:51<00:39,  1.26s/it]Task Evaluating...:  53%|█████▎    | 34/64 [00:52<00:37,  1.26s/it]Task Evaluating...:  55%|█████▍    | 35/64 [00:53<00:36,  1.26s/it]Task Evaluating...:  56%|█████▋    | 36/64 [00:55<00:35,  1.26s/it]Task Evaluating...:  58%|█████▊    | 37/64 [00:56<00:34,  1.26s/it]Task Evaluating...:  59%|█████▉    | 38/64 [00:57<00:32,  1.26s/it]Task Evaluating...:  61%|██████    | 39/64 [00:58<00:31,  1.26s/it]Task Evaluating...:  62%|██████▎   | 40/64 [01:00<00:30,  1.26s/it]Task Evaluating...:  64%|██████▍   | 41/64 [01:02<00:36,  1.60s/it]Task Evaluating...:  66%|██████▌   | 42/64 [01:06<00:50,  2.30s/it]Task Evaluating...:  67%|██████▋   | 43/64 [01:09<00:55,  2.62s/it]Task Evaluating...:  69%|██████▉   | 44/64 [01:13<00:58,  2.94s/it]Task Evaluating...:  70%|███████   | 45/64 [01:17<00:59,  3.14s/it]Task Evaluating...:  72%|███████▏  | 46/64 [01:20<00:58,  3.23s/it]Task Evaluating...:  73%|███████▎  | 47/64 [01:24<00:57,  3.41s/it]Task Evaluating...:  75%|███████▌  | 48/64 [01:27<00:54,  3.42s/it]Task Evaluating...:  77%|███████▋  | 49/64 [01:31<00:53,  3.55s/it]Task Evaluating...:  78%|███████▊  | 50/64 [01:35<00:49,  3.52s/it]Task Evaluating...:  80%|███████▉  | 51/64 [01:38<00:46,  3.61s/it]Task Evaluating...:  81%|████████▏ | 52/64 [01:42<00:42,  3.55s/it]Task Evaluating...:  83%|████████▎ | 53/64 [01:46<00:40,  3.65s/it]Task Evaluating...:  84%|████████▍ | 54/64 [01:49<00:35,  3.51s/it]Task Evaluating...:  86%|████████▌ | 55/64 [01:53<00:32,  3.61s/it]Task Evaluating...:  88%|████████▊ | 56/64 [01:56<00:28,  3.50s/it]Task Evaluating...:  89%|████████▉ | 57/64 [02:00<00:25,  3.69s/it]Task Evaluating...:  91%|█████████ | 58/64 [02:03<00:20,  3.39s/it]Task Evaluating...:  92%|█████████▏| 59/64 [02:04<00:13,  2.76s/it]Task Evaluating...:  94%|█████████▍| 60/64 [02:05<00:09,  2.31s/it]Task Evaluating...:  95%|█████████▌| 61/64 [02:07<00:05,  2.00s/it]Task Evaluating...:  97%|█████████▋| 62/64 [02:08<00:03,  1.78s/it]Task Evaluating...:  98%|█████████▊| 63/64 [02:09<00:01,  1.63s/it]Task Evaluating...: 100%|██████████| 64/64 [02:10<00:00,  1.52s/it]Task Evaluating...: 100%|██████████| 64/64 [02:10<00:00,  2.05s/it]
+2026-05-11 23:19:26 - Task finish!
+6.623632431030273

@@ -1,0 +1,10 @@
+accelerate
+sentencepiece
+tokenizers>=0.12.1
+torch==2.0.1
+torchvision
+transformers==4.40.0
+lm_eval==0.4.4
+numpy==1.26.4
+peft==0.10.0
+protobuf

@@ -1,0 +1,47 @@
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+2026-05-11:23:53:08,534 INFO     [modeling.py:987] We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+
+Quantization configuration: {'quant_dtype': 'int', 'q_group_size': 64, 'w_low': 75, 'w_high': 150, 'quant_method': 'mant', 'quant_kv': False}
+Layer bit configuration: 224 entries, activation_bits=follow
+
+args: Namespace(model_path='/cephfs/shared/model/llama-3-8b-hf', batch_size=32, tasks='wikitext', num_fewshot=0, limit_samples=200, quant_bit_width='w4a4k16v16', w_bit=4, a_bit=4, k_bit=16, v_bit=16, q_group_size=64, quant_mode='mant', quant_dtype='int', w_low=75, w_high=150, layer_bit_config='/root/llm-quan/MANT_HPCA25/output/precision_search/20260511_232303/mant/mant_0001.json', layer_a_bits='follow', a_stride=10) 
+
+* Building model /cephfs/shared/model/llama-3-8b-hf
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:09<00:29,  9.87s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:16<00:16,  8.15s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:25<00:08,  8.25s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:26<00:00,  5.51s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:26<00:00,  6.63s/it]
+ * Capture 61 samples for calibration
+Mixed MANT pseudo weight quantization...:   0%|          | 0/32 [00:00<?, ?it/s]Mixed MANT pseudo weight quantization...:   3%|▎         | 1/32 [00:35<18:27, 35.72s/it]Mixed MANT pseudo weight quantization...:   6%|▋         | 2/32 [01:19<20:17, 40.59s/it]Mixed MANT pseudo weight quantization...:   9%|▉         | 3/32 [01:56<18:42, 38.71s/it]Mixed MANT pseudo weight quantization...:   9%|▉         | 3/32 [02:09<20:55, 43.29s/it]
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/mant/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/root/miniconda3/envs/mant/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/root/llm-quan/MANT_HPCA25/run_evaluation.py", line 278, in <module>
+    main()
+  File "/root/llm-quan/MANT_HPCA25/run_evaluation.py", line 217, in main
+    model, enc = build_model_and_enc(args.model_path)
+  File "/root/llm-quan/MANT_HPCA25/run_evaluation.py", line 183, in build_model_and_enc
+    pseudo_quantize_model_mixed_mant(
+  File "/root/miniconda3/envs/mant/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/root/llm-quan/MANT_HPCA25/mant/quantize/quantizer.py", line 175, in pseudo_quantize_model_mixed_mant
+    w_group_deq = quantize_rows(org_group_w, quant_grid).half()
+  File "/root/miniconda3/envs/mant/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/root/llm-quan/MANT_HPCA25/mant/quantize/quant_func.py", line 11, in quantize_rows
+    quant_grid = quant_grid.to(w.device)
+KeyboardInterrupt
+layer: 0, self_attn.k_proj, bit_width: 4, tensor_mse: 0.000468668295070529
+layer: 0, self_attn.o_proj, bit_width: 4, tensor_mse: 1.5133991837501526e-08
+layer: 0, mlp.gate_proj, bit_width: 4, tensor_mse: 4.9667312850942835e-05
+layer: 0, mlp.up_proj, bit_width: 4, tensor_mse: 4.040430940221995e-05
+layer: 1, self_attn.k_proj, bit_width: 4, tensor_mse: 0.0007175355567596853
+layer: 1, self_attn.o_proj, bit_width: 4, tensor_mse: 3.444438334554434e-08
+layer: 1, mlp.gate_proj, bit_width: 4, tensor_mse: 8.682805491844192e-05
+layer: 1, mlp.up_proj, bit_width: 4, tensor_mse: 7.165204442571849e-05
+layer: 2, self_attn.k_proj, bit_width: 4, tensor_mse: 0.0029892907477915287
+layer: 2, self_attn.o_proj, bit_width: 4, tensor_mse: 1.1903466656804085e-08
+layer: 2, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0001361282484140247
+layer: 2, mlp.up_proj, bit_width: 4, tensor_mse: 0.00010528490383876488
+layer: 3, self_attn.k_proj, bit_width: 4, tensor_mse: 0.0026950181927531958
+layer: 3, self_attn.o_proj, bit_width: 4, tensor_mse: 9.853101801127195e-08
+layer: 3, mlp.gate_proj, bit_width: 4, tensor_mse: 0.00021987949730828404
