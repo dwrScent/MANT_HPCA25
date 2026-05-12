@@ -15,7 +15,7 @@ import subprocess
 import sys
 import time
 from pathlib import Path
-from typing import Dict, Iterable, List, Optional, Tuple
+from typing import Dict, Iterable, List, Optional, Set, Tuple
 
 
 PPL_TASKS = {"wikitext", "c4", "ptb"}
@@ -615,21 +615,6 @@ def evaluate_sota(args: argparse.Namespace, repo_root: Path, run_dir: Path, kind
     )
 
 
-def choose_candidate(
-    current_value: float,
-    target: float,
-    kind: str,
-    candidates: List[Tuple[List[int], float]],
-) -> Tuple[List[int], float]:
-    if lower_is_better(kind):
-        if current_value > target:
-            return min(candidates, key=lambda item: (abs(item[1] - target), item[1]))
-        return min(candidates, key=lambda item: (abs(item[1] - target), -item[1]))
-    if current_value < target:
-        return min(candidates, key=lambda item: (abs(item[1] - target), -item[1]))
-    return min(candidates, key=lambda item: (abs(item[1] - target), item[1]))
-
-
 def search_method(
     args: argparse.Namespace,
     repo_root: Path,
@@ -649,6 +634,7 @@ def search_method(
             "1;34",
         )
     cache: Dict[str, float] = {}
+    visited_selected: Set[str] = {pattern_key(bits)}
     eval_count = 0
 
     for step in range(args.max_steps + 1):
@@ -683,50 +669,63 @@ def search_method(
                 "1;33",
             )
             return bits, value
-        if args.max_evals > 0:
-            planned_trial_evals = min(len(changes), max(args.max_evals - eval_count, 0))
-        else:
-            planned_trial_evals = len(changes)
+        candidate = bits.copy()
+        candidate_items = []
+        skipped_cycle_labels = []
+        for label, change_indices in changes:
+            for idx in change_indices:
+                candidate[idx] = to_bit
+            candidate_key = pattern_key(candidate)
+            if candidate_key in visited_selected:
+                skipped_cycle_labels.append(label)
+                continue
+            candidate_items.append((label, change_indices, candidate.copy()))
+        if not candidate_items:
+            important(
+                "NEXT",
+                f"method={method} step={step} action=stop reason=no_unvisited_candidates "
+                f"from_bit={from_bit} to_bit={to_bit} skipped_cycle_candidates={skipped_cycle_labels} "
+                f"visited_selected={len(visited_selected)} completed_evals={eval_count} "
+                f"remaining_evals={remaining_evals_text(args, eval_count)}",
+                "1;33",
+            )
+            return bits, value
+        label, change_indices, candidate_bits = candidate_items[0]
         important(
             "NEXT",
             f"method={method} step={step} action={'increase' if promote else 'decrease'}_precision "
             f"from_bit={from_bit} to_bit={to_bit} "
-            f"candidate_changes={[label for label, _ in changes]} "
-            f"planned_trial_evals={planned_trial_evals} completed_evals={eval_count} "
+            f"candidate={label} "
+            f"queued_candidates={[item_label for item_label, _, _ in candidate_items]} "
+            f"skipped_cycle_candidates={skipped_cycle_labels} "
+            f"completed_evals={eval_count} "
             f"remaining_evals={remaining_evals_text(args, eval_count)}",
             "1;33",
         )
 
-        candidates = []
-        trial = bits.copy()
-        for trial_no, (label, change_indices) in enumerate(changes, start=1):
-            for idx in change_indices:
-                trial[idx] = to_bit
-            section(
-                "TRIAL",
-                f"method={method} step={step} trial={trial_no}/{planned_trial_evals} "
-                f"{label} changed_indices={change_indices} change={from_bit}->{to_bit}",
-                "1;36",
+        section(
+            "CANDIDATE",
+            f"method={method} step={step} "
+            f"{label} changed_indices={change_indices} change={from_bit}->{to_bit}",
+            "1;36",
+        )
+        candidate_value = evaluate_method(args, repo_root, run_dir, method, candidate_bits, kind, target, cache)
+        eval_count = len(cache)
+        if within_tolerance(candidate_value, target, args):
+            important(
+                "NEXT",
+                f"method={method} step={step} action=stop reason=reached_tolerance "
+                f"candidate={label} completed_evals={eval_count} "
+                f"remaining_evals={remaining_evals_text(args, eval_count)}",
+                "1;33",
             )
-            trial_value = evaluate_method(args, repo_root, run_dir, method, trial, kind, target, cache)
-            candidates.append((trial.copy(), trial_value))
-            eval_count = len(cache)
-            if args.max_evals > 0 and eval_count >= args.max_evals:
-                important(
-                    "NEXT",
-                    f"method={method} step={step} action=stop reason=max_evals "
-                    f"completed_evals={eval_count} remaining_evals={remaining_evals_text(args, eval_count)}",
-                    "1;33",
-                )
-                break
+            return candidate_bits, candidate_value
 
-        new_bits, new_value = choose_candidate(value, target, kind, candidates)
-        if pattern_key(new_bits) == pattern_key(bits):
-            return bits, value
-        bits = new_bits
+        bits = candidate_bits
+        visited_selected.add(pattern_key(bits))
         important(
             "SELECT",
-            f"method={method} step={step} selected_metric={new_value} "
+            f"method={method} step={step} selected_metric={candidate_value} "
             f"high_bits={sum(bit == args.high_bit for bit in bits)} "
             f"low_bits={sum(bit == args.initial_bit for bit in bits)} "
             f"w_bits={bits_display(bits, args.high_bit)} "
@@ -734,6 +733,12 @@ def search_method(
             "1;32",
         )
         if args.max_evals > 0 and eval_count >= args.max_evals:
+            important(
+                "NEXT",
+                f"method={method} step={step} action=stop reason=max_evals "
+                f"completed_evals={eval_count} remaining_evals={remaining_evals_text(args, eval_count)}",
+                "1;33",
+            )
             break
 
     final_value = evaluate_method(args, repo_root, run_dir, method, bits, kind, target, cache)
