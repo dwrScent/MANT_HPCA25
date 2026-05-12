@@ -1,0 +1,12 @@
+{
+  "target": 6.555898666381836,
+  "metric": "ppl",
+  "methods": {
+    "mant": {
+      "metric": 6.570427417755127,
+      "high_bit_count": 96,
+      "w_bits": "[8,4,8,4,4,4,8]*32",
+      "config": "/root/llm-quan/MANT_HPCA25/output/precision_search/20260512_175445/final_mant.json"
+    }
+  }
+}

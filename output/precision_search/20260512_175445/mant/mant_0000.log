@@ -1,0 +1,150 @@
+
+Quantization configuration: {'quant_dtype': 'int', 'q_group_size': 64, 'w_low': 75, 'w_high': 150, 'quant_method': 'mant', 'quant_kv': False}
+Layer bit configuration: 224 entries, activation_bits=follow
+
+args: Namespace(model_path='/cephfs/shared/model/llama-3-8b-hf', batch_size=32, tasks='wikitext', num_fewshot=0, limit_samples=64, quant_bit_width='w4a4k16v16', w_bit=4, a_bit=4, k_bit=16, v_bit=16, q_group_size=64, quant_mode='mant', quant_dtype='int', w_low=75, w_high=150, layer_bit_config='/root/llm-quan/MANT_HPCA25/output/precision_search/20260512_175445/mant/mant_0000.json', layer_a_bits='follow', a_stride=10) 
+
+* Building model /cephfs/shared/model/llama-3-8b-hf
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+2026-05-12:17:54:51,262 INFO     [modeling.py:987] We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+Loading checkpoint shards:   0% 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25% 1/4 [00:05<00:15,  5.14s/it]Loading checkpoint shards:  50% 2/4 [00:10<00:10,  5.17s/it]Loading checkpoint shards:  75% 3/4 [00:15<00:05,  5.13s/it]Loading checkpoint shards: 100% 4/4 [00:16<00:00,  3.60s/it]Loading checkpoint shards: 100% 4/4 [00:16<00:00,  4.17s/it]
+ * Capture 61 samples for calibration
+Mixed MANT pseudo weight quantization...:   0% 0/32 [00:00<?, ?it/s]layer: 0, self_attn.k_proj, bit_width: 4, tensor_mse: 0.000468668295070529
+layer: 0, self_attn.o_proj, bit_width: 4, tensor_mse: 1.5133991837501526e-08
+layer: 0, mlp.gate_proj, bit_width: 4, tensor_mse: 4.9667312850942835e-05
+layer: 0, mlp.up_proj, bit_width: 4, tensor_mse: 4.040430940221995e-05
+Mixed MANT pseudo weight quantization...:   3% 1/32 [00:15<08:05, 15.67s/it]layer: 1, self_attn.k_proj, bit_width: 4, tensor_mse: 0.0007175355567596853
+layer: 1, self_attn.o_proj, bit_width: 4, tensor_mse: 3.444438334554434e-08
+layer: 1, mlp.gate_proj, bit_width: 4, tensor_mse: 8.682805491844192e-05
+layer: 1, mlp.up_proj, bit_width: 4, tensor_mse: 7.165204442571849e-05
+Mixed MANT pseudo weight quantization...:   6% 2/32 [00:30<07:42, 15.40s/it]layer: 2, self_attn.k_proj, bit_width: 4, tensor_mse: 0.0029892907477915287
+layer: 2, self_attn.o_proj, bit_width: 4, tensor_mse: 1.1903466656804085e-08
+layer: 2, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0001361282484140247
+layer: 2, mlp.up_proj, bit_width: 4, tensor_mse: 0.00010528490383876488
+Mixed MANT pseudo weight quantization...:   9% 3/32 [00:46<07:26, 15.40s/it]layer: 3, self_attn.k_proj, bit_width: 4, tensor_mse: 0.0026950181927531958
+layer: 3, self_attn.o_proj, bit_width: 4, tensor_mse: 9.853101801127195e-08
+layer: 3, mlp.gate_proj, bit_width: 4, tensor_mse: 0.00021987949730828404
+layer: 3, mlp.up_proj, bit_width: 4, tensor_mse: 0.0001452805008739233
+Mixed MANT pseudo weight quantization...:  12% 4/32 [01:01<07:07, 15.28s/it]layer: 4, self_attn.k_proj, bit_width: 4, tensor_mse: 0.0023816036991775036
+layer: 4, self_attn.o_proj, bit_width: 4, tensor_mse: 1.2281961971893907e-06
+layer: 4, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0003120488254353404
+layer: 4, mlp.up_proj, bit_width: 4, tensor_mse: 0.00017627378110773861
+Mixed MANT pseudo weight quantization...:  16% 5/32 [01:16<06:51, 15.25s/it]layer: 5, self_attn.k_proj, bit_width: 4, tensor_mse: 0.003338220529258251
+layer: 5, self_attn.o_proj, bit_width: 4, tensor_mse: 2.3461179807782173e-06
+layer: 5, mlp.gate_proj, bit_width: 4, tensor_mse: 0.00037074205465614796
+layer: 5, mlp.up_proj, bit_width: 4, tensor_mse: 0.0002118180855177343
+Mixed MANT pseudo weight quantization...:  19% 6/32 [01:31<06:35, 15.20s/it]layer: 6, self_attn.k_proj, bit_width: 4, tensor_mse: 0.003028897102922201
+layer: 6, self_attn.o_proj, bit_width: 4, tensor_mse: 4.1233288357034326e-06
+layer: 6, mlp.gate_proj, bit_width: 4, tensor_mse: 0.00041018094634637237
+layer: 6, mlp.up_proj, bit_width: 4, tensor_mse: 0.0002312209107913077
+Mixed MANT pseudo weight quantization...:  22% 7/32 [01:46<06:20, 15.23s/it]layer: 7, self_attn.k_proj, bit_width: 4, tensor_mse: 0.0031159434001892805
+layer: 7, self_attn.o_proj, bit_width: 4, tensor_mse: 6.7040236899629235e-06
+layer: 7, mlp.gate_proj, bit_width: 4, tensor_mse: 0.00040642134263180196
+layer: 7, mlp.up_proj, bit_width: 4, tensor_mse: 0.00024507567286491394
+Mixed MANT pseudo weight quantization...:  25% 8/32 [02:02<06:06, 15.25s/it]layer: 8, self_attn.k_proj, bit_width: 4, tensor_mse: 0.00364128639921546
+layer: 8, self_attn.o_proj, bit_width: 4, tensor_mse: 8.975024684332311e-06
+layer: 8, mlp.gate_proj, bit_width: 4, tensor_mse: 0.00042608502553775907
+layer: 8, mlp.up_proj, bit_width: 4, tensor_mse: 0.00025194065528921783
+Mixed MANT pseudo weight quantization...:  28% 9/32 [02:17<05:49, 15.18s/it]layer: 9, self_attn.k_proj, bit_width: 4, tensor_mse: 0.0034565036185085773
+layer: 9, self_attn.o_proj, bit_width: 4, tensor_mse: 1.157044607680291e-05
+layer: 9, mlp.gate_proj, bit_width: 4, tensor_mse: 0.00044773114495910704
+layer: 9, mlp.up_proj, bit_width: 4, tensor_mse: 0.000262914109043777
+Mixed MANT pseudo weight quantization...:  31% 10/32 [02:32<05:33, 15.16s/it]layer: 10, self_attn.k_proj, bit_width: 4, tensor_mse: 0.004133894573897123
+layer: 10, self_attn.o_proj, bit_width: 4, tensor_mse: 9.512848919257522e-06
+layer: 10, mlp.gate_proj, bit_width: 4, tensor_mse: 0.00043066602665930986
+layer: 10, mlp.up_proj, bit_width: 4, tensor_mse: 0.0002734412846621126
+Mixed MANT pseudo weight quantization...:  34% 11/32 [02:47<05:19, 15.20s/it]layer: 11, self_attn.k_proj, bit_width: 4, tensor_mse: 0.0038299434818327427
+layer: 11, self_attn.o_proj, bit_width: 4, tensor_mse: 1.2816220987588167e-05
+layer: 11, mlp.gate_proj, bit_width: 4, tensor_mse: 0.00043527528760023415
+layer: 11, mlp.up_proj, bit_width: 4, tensor_mse: 0.0002868640294764191
+Mixed MANT pseudo weight quantization...:  38% 12/32 [03:02<05:04, 15.21s/it]layer: 12, self_attn.k_proj, bit_width: 4, tensor_mse: 0.003023336175829172
+layer: 12, self_attn.o_proj, bit_width: 4, tensor_mse: 1.4724559150636196e-05
+layer: 12, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0004181576950941235
+layer: 12, mlp.up_proj, bit_width: 4, tensor_mse: 0.0002923508873209357
+Mixed MANT pseudo weight quantization...:  41% 13/32 [03:17<04:48, 15.16s/it]layer: 13, self_attn.k_proj, bit_width: 4, tensor_mse: 0.004271012730896473
+layer: 13, self_attn.o_proj, bit_width: 4, tensor_mse: 1.8716935301199555e-05
+layer: 13, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0004513023013714701
+layer: 13, mlp.up_proj, bit_width: 4, tensor_mse: 0.00031456895521841943
+Mixed MANT pseudo weight quantization...:  44% 14/32 [03:33<04:32, 15.17s/it]layer: 14, self_attn.k_proj, bit_width: 4, tensor_mse: 0.00441164243966341
+layer: 14, self_attn.o_proj, bit_width: 4, tensor_mse: 1.87584082596004e-05
+layer: 14, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0005261775804683566
+layer: 14, mlp.up_proj, bit_width: 4, tensor_mse: 0.0003430705692153424
+Mixed MANT pseudo weight quantization...:  47% 15/32 [03:48<04:16, 15.11s/it]layer: 15, self_attn.k_proj, bit_width: 4, tensor_mse: 0.004035586956888437
+layer: 15, self_attn.o_proj, bit_width: 4, tensor_mse: 1.815447467379272e-05
+layer: 15, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0005952774081379175
+layer: 15, mlp.up_proj, bit_width: 4, tensor_mse: 0.00036487786564975977
+Mixed MANT pseudo weight quantization...:  50% 16/32 [04:03<04:01, 15.12s/it]layer: 16, self_attn.k_proj, bit_width: 4, tensor_mse: 0.004055877216160297
+layer: 16, self_attn.o_proj, bit_width: 4, tensor_mse: 1.5486220945604146e-05
+layer: 16, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0006833017687313259
+layer: 16, mlp.up_proj, bit_width: 4, tensor_mse: 0.00039179244777187705
+Mixed MANT pseudo weight quantization...:  53% 17/32 [04:18<03:47, 15.15s/it]layer: 17, self_attn.k_proj, bit_width: 4, tensor_mse: 0.004316707141697407
+layer: 17, self_attn.o_proj, bit_width: 4, tensor_mse: 1.207548484671861e-05
+layer: 17, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0007449474069289863
+layer: 17, mlp.up_proj, bit_width: 4, tensor_mse: 0.000415543356211856
+Mixed MANT pseudo weight quantization...:  56% 18/32 [04:33<03:31, 15.12s/it]layer: 18, self_attn.k_proj, bit_width: 4, tensor_mse: 0.004936074838042259
+layer: 18, self_attn.o_proj, bit_width: 4, tensor_mse: 7.622249540872872e-06
+layer: 18, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0007980148657225072
+layer: 18, mlp.up_proj, bit_width: 4, tensor_mse: 0.0004396810254547745
+Mixed MANT pseudo weight quantization...:  59% 19/32 [04:48<03:16, 15.12s/it]layer: 19, self_attn.k_proj, bit_width: 4, tensor_mse: 0.004605610854923725
+layer: 19, self_attn.o_proj, bit_width: 4, tensor_mse: 6.735936040058732e-06
+layer: 19, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0008497932576574385
+layer: 19, mlp.up_proj, bit_width: 4, tensor_mse: 0.00045954136294312775
+Mixed MANT pseudo weight quantization...:  62% 20/32 [05:03<03:01, 15.14s/it]layer: 20, self_attn.k_proj, bit_width: 4, tensor_mse: 0.004725338891148567
+layer: 20, self_attn.o_proj, bit_width: 4, tensor_mse: 6.971866241656244e-06
+layer: 20, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0009054960682988167
+layer: 20, mlp.up_proj, bit_width: 4, tensor_mse: 0.0004934692988172174
+Mixed MANT pseudo weight quantization...:  66% 21/32 [05:19<02:46, 15.15s/it]layer: 21, self_attn.k_proj, bit_width: 4, tensor_mse: 0.004562044516205788
+layer: 21, self_attn.o_proj, bit_width: 4, tensor_mse: 1.137137587647885e-05
+layer: 21, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0009849827038124204
+layer: 21, mlp.up_proj, bit_width: 4, tensor_mse: 0.000530761550180614
+Mixed MANT pseudo weight quantization...:  69% 22/32 [05:34<02:31, 15.14s/it]layer: 22, self_attn.k_proj, bit_width: 4, tensor_mse: 0.004775987006723881
+layer: 22, self_attn.o_proj, bit_width: 4, tensor_mse: 1.030562270898372e-05
+layer: 22, mlp.gate_proj, bit_width: 4, tensor_mse: 0.001025535399094224
+layer: 22, mlp.up_proj, bit_width: 4, tensor_mse: 0.0005574564565904438
+Mixed MANT pseudo weight quantization...:  72% 23/32 [05:49<02:16, 15.12s/it]layer: 23, self_attn.k_proj, bit_width: 4, tensor_mse: 0.004828781820833683
+layer: 23, self_attn.o_proj, bit_width: 4, tensor_mse: 8.796137990429997e-06
+layer: 23, mlp.gate_proj, bit_width: 4, tensor_mse: 0.001080849440768361
+layer: 23, mlp.up_proj, bit_width: 4, tensor_mse: 0.0005901956465095282
+Mixed MANT pseudo weight quantization...:  75% 24/32 [06:04<02:01, 15.13s/it]layer: 24, self_attn.k_proj, bit_width: 4, tensor_mse: 0.004435333888977766
+layer: 24, self_attn.o_proj, bit_width: 4, tensor_mse: 1.023415825329721e-05
+layer: 24, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0011417893692851067
+layer: 24, mlp.up_proj, bit_width: 4, tensor_mse: 0.0006241437513381243
+Mixed MANT pseudo weight quantization...:  78% 25/32 [06:19<01:45, 15.12s/it]layer: 25, self_attn.k_proj, bit_width: 4, tensor_mse: 0.004419183358550072
+layer: 25, self_attn.o_proj, bit_width: 4, tensor_mse: 1.0356627171859145e-05
+layer: 25, mlp.gate_proj, bit_width: 4, tensor_mse: 0.001209942507557571
+layer: 25, mlp.up_proj, bit_width: 4, tensor_mse: 0.0006636051693931222
+Mixed MANT pseudo weight quantization...:  81% 26/32 [06:34<01:30, 15.12s/it]layer: 26, self_attn.k_proj, bit_width: 4, tensor_mse: 0.0044355085119605064
+layer: 26, self_attn.o_proj, bit_width: 4, tensor_mse: 1.6560661606490612e-05
+layer: 26, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0012945380294695497
+layer: 26, mlp.up_proj, bit_width: 4, tensor_mse: 0.0007104756077751517
+Mixed MANT pseudo weight quantization...:  84% 27/32 [06:49<01:15, 15.12s/it]layer: 27, self_attn.k_proj, bit_width: 4, tensor_mse: 0.004790979437530041
+layer: 27, self_attn.o_proj, bit_width: 4, tensor_mse: 2.1007406758144498e-05
+layer: 27, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0014165766770020127
+layer: 27, mlp.up_proj, bit_width: 4, tensor_mse: 0.0007853955612517893
+Mixed MANT pseudo weight quantization...:  88% 28/32 [07:04<01:00, 15.12s/it]layer: 28, self_attn.k_proj, bit_width: 4, tensor_mse: 0.004109904170036316
+layer: 28, self_attn.o_proj, bit_width: 4, tensor_mse: 3.1297546229325235e-05
+layer: 28, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0015445773024111986
+layer: 28, mlp.up_proj, bit_width: 4, tensor_mse: 0.0009016339317895472
+Mixed MANT pseudo weight quantization...:  91% 29/32 [07:19<00:45, 15.12s/it]layer: 29, self_attn.k_proj, bit_width: 4, tensor_mse: 0.004781420808285475
+layer: 29, self_attn.o_proj, bit_width: 4, tensor_mse: 3.604905214160681e-05
+layer: 29, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0015837893588468432
+layer: 29, mlp.up_proj, bit_width: 4, tensor_mse: 0.000981224817223847
+Mixed MANT pseudo weight quantization...:  94% 30/32 [07:35<00:30, 15.13s/it]layer: 30, self_attn.k_proj, bit_width: 4, tensor_mse: 0.0037537850439548492
+layer: 30, self_attn.o_proj, bit_width: 4, tensor_mse: 6.696009950246662e-05
+layer: 30, mlp.gate_proj, bit_width: 4, tensor_mse: 0.001706638839095831
+layer: 30, mlp.up_proj, bit_width: 4, tensor_mse: 0.0010387948714196682
+Mixed MANT pseudo weight quantization...:  97% 31/32 [07:50<00:15, 15.12s/it]layer: 31, self_attn.k_proj, bit_width: 4, tensor_mse: 0.0031526878010481596
+layer: 31, self_attn.o_proj, bit_width: 4, tensor_mse: 0.00013902640785090625
+layer: 31, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0015406241873279214
+layer: 31, mlp.up_proj, bit_width: 4, tensor_mse: 0.0009824823355302215
+Mixed MANT pseudo weight quantization...: 100% 32/32 [08:05<00:00, 15.16s/it]Mixed MANT pseudo weight quantization...: 100% 32/32 [08:05<00:00, 15.17s/it]
+make quant linear...:   0% 0/32 [00:00<?, ?it/s]make quant linear...: 100% 32/32 [00:00<00:00, 1219.33it/s]
+2026-05-12:18:03:17,967 WARNING  [huggingface.py:96] `pretrained` model kwarg is not of type `str`. Many other model arguments may be ignored. Please do not launch via accelerate or use `parallelize=True` if passing an existing model this way.
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+2026-05-12:18:03:18,252 WARNING  [huggingface.py:276] Passed an already-initialized model through `pretrained`, assuming single-process call to evaluate() or custom distributed integration
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+2026-05-12 18:03:41 - Start a task
+Data Type Search...:   0% 0/1 [00:00<?, ?it/s]Data Type Search...: 100% 1/1 [00:00<00:00,  1.06it/s]Data Type Search...: 100% 1/1 [00:00<00:00,  1.06it/s]
+Task Evaluating...:   0% 0/64 [00:00<?, ?it/s]Task Evaluating...:   2% 1/64 [00:00<01:00,  1.05it/s]Task Evaluating...:   3% 2/64 [00:01<00:59,  1.05it/s]Task Evaluating...:   5% 3/64 [00:02<00:58,  1.05it/s]Task Evaluating...:   6% 4/64 [00:03<00:57,  1.05it/s]Task Evaluating...:   8% 5/64 [00:04<00:56,  1.05it/s]Task Evaluating...:   9% 6/64 [00:05<00:55,  1.05it/s]Task Evaluating...:  11% 7/64 [00:06<00:54,  1.05it/s]Task Evaluating...:  12% 8/64 [00:07<00:53,  1.05it/s]Task Evaluating...:  14% 9/64 [00:08<00:52,  1.05it/s]Task Evaluating...:  16% 10/64 [00:09<00:51,  1.05it/s]Task Evaluating...:  17% 11/64 [00:10<00:50,  1.05it/s]Task Evaluating...:  19% 12/64 [00:11<00:49,  1.05it/s]Task Evaluating...:  20% 13/64 [00:12<00:48,  1.05it/s]Task Evaluating...:  22% 14/64 [00:13<00:47,  1.05it/s]Task Evaluating...:  23% 15/64 [00:14<00:46,  1.05it/s]Task Evaluating...:  25% 16/64 [00:15<00:45,  1.05it/s]Task Evaluating...:  27% 17/64 [00:16<00:44,  1.05it/s]Task Evaluating...:  28% 18/64 [00:17<00:43,  1.05it/s]Task Evaluating...:  30% 19/64 [00:18<00:42,  1.05it/s]Task Evaluating...:  31% 20/64 [00:19<00:41,  1.05it/s]Task Evaluating...:  33% 21/64 [00:20<00:40,  1.05it/s]Task Evaluating...:  34% 22/64 [00:20<00:40,  1.05it/s]Task Evaluating...:  36% 23/64 [00:21<00:39,  1.05it/s]Task Evaluating...:  38% 24/64 [00:22<00:38,  1.05it/s]Task Evaluating...:  39% 25/64 [00:23<00:37,  1.05it/s]Task Evaluating...:  41% 26/64 [00:24<00:36,  1.05it/s]Task Evaluating...:  42% 27/64 [00:25<00:35,  1.05it/s]Task Evaluating...:  44% 28/64 [00:26<00:34,  1.05it/s]Task Evaluating...:  45% 29/64 [00:27<00:33,  1.05it/s]Task Evaluating...:  47% 30/64 [00:28<00:32,  1.05it/s]Task Evaluating...:  48% 31/64 [00:29<00:31,  1.05it/s]Task Evaluating...:  50% 32/64 [00:30<00:30,  1.05it/s]Task Evaluating...:  52% 33/64 [00:31<00:29,  1.05it/s]Task Evaluating...:  53% 34/64 [00:32<00:28,  1.05it/s]Task Evaluating...:  55% 35/64 [00:33<00:27,  1.05it/s]Task Evaluating...:  56% 36/64 [00:34<00:26,  1.05it/s]Task Evaluating...:  58% 37/64 [00:35<00:25,  1.05it/s]Task Evaluating...:  59% 38/64 [00:36<00:24,  1.05it/s]Task Evaluating...:  61% 39/64 [00:37<00:23,  1.05it/s]Task Evaluating...:  62% 40/64 [00:38<00:22,  1.05it/s]Task Evaluating...:  64% 41/64 [00:39<00:21,  1.05it/s]Task Evaluating...:  66% 42/64 [00:40<00:21,  1.05it/s]Task Evaluating...:  67% 43/64 [00:41<00:20,  1.05it/s]Task Evaluating...:  69% 44/64 [00:41<00:19,  1.05it/s]Task Evaluating...:  70% 45/64 [00:42<00:18,  1.05it/s]Task Evaluating...:  72% 46/64 [00:43<00:17,  1.05it/s]Task Evaluating...:  73% 47/64 [00:44<00:16,  1.05it/s]Task Evaluating...:  75% 48/64 [00:45<00:15,  1.05it/s]Task Evaluating...:  77% 49/64 [00:46<00:14,  1.05it/s]Task Evaluating...:  78% 50/64 [00:47<00:13,  1.05it/s]Task Evaluating...:  80% 51/64 [00:48<00:12,  1.05it/s]Task Evaluating...:  81% 52/64 [00:49<00:11,  1.05it/s]Task Evaluating...:  83% 53/64 [00:50<00:10,  1.05it/s]Task Evaluating...:  84% 54/64 [00:51<00:09,  1.05it/s]Task Evaluating...:  86% 55/64 [00:52<00:08,  1.05it/s]Task Evaluating...:  88% 56/64 [00:53<00:07,  1.05it/s]Task Evaluating...:  89% 57/64 [00:54<00:06,  1.05it/s]Task Evaluating...:  91% 58/64 [00:55<00:05,  1.05it/s]Task Evaluating...:  92% 59/64 [00:56<00:04,  1.05it/s]Task Evaluating...:  94% 60/64 [00:57<00:03,  1.05it/s]Task Evaluating...:  95% 61/64 [00:58<00:02,  1.04it/s]Task Evaluating...:  97% 62/64 [00:59<00:01,  1.05it/s]Task Evaluating...:  98% 63/64 [01:00<00:00,  1.05it/s]Task Evaluating...: 100% 64/64 [01:00<00:00,  1.05it/s]Task Evaluating...: 100% 64/64 [01:00<00:00,  1.05it/s]
+2026-05-12 18:04:43 - Task finish!
+6.570427417755127

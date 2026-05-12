@@ -61,7 +61,7 @@ mant_cfg = AcceleratorConfig("mant", {
     "falcon_7b":  [8, 4, 4, 8] * 7 + [8, 4, 4, 4],
     # 1 block
     # "llama3_8b":  [4, 4, 8, 4, 4, 4, 8],
-    "llama3_8b":  [8, 8, 8, 4, 4, 4, 4],
+    "llama3_8b":  [8, 4, 8, 4, 4, 4, 8],
     # 2 blocks: [4,4,8,4,4,4,8] + [4,8,8,4,4,4,8]
     "llama3_70b": [4, 4, 8, 4, 4, 4, 8] + [4, 8, 8, 4, 4, 4, 8],
     # mistral_7b: first 6 block [4,8,4,4,4,4,8], last 1 block 4bit
