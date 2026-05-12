@@ -1,0 +1,17 @@
+
+Quantization configuration: {'quant_dtype': 'int-flint', 'q_group_size': 64, 'w_low': 75, 'w_high': 150, 'quant_method': 'olive', 'quant_kv': False}
+Layer bit configuration: 224 entries, activation_bits=follow
+
+args: Namespace(model_path='/cephfs/shared/model/llama-3-8b-hf', batch_size=32, tasks='wikitext', num_fewshot=0, limit_samples=64, quant_bit_width='w4a4k16v16', w_bit=4, a_bit=4, k_bit=16, v_bit=16, q_group_size=64, quant_mode='olive', quant_dtype='int-flint', w_low=75, w_high=150, layer_bit_config='/root/llm-quan/MANT_HPCA25/output/precision_search/20260512_114723/olive/olive_0000.json', layer_a_bits='follow', a_stride=10) 
+
+* Building model /cephfs/shared/model/llama-3-8b-hf
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+2026-05-12:11:50:54,663 INFO     [modeling.py:987] We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+Loading checkpoint shards:   0% 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25% 1/4 [00:04<00:14,  4.75s/it]Loading checkpoint shards:  50% 2/4 [00:09<00:09,  4.84s/it]Loading checkpoint shards:  75% 3/4 [00:14<00:04,  4.82s/it]Loading checkpoint shards: 100% 4/4 [00:15<00:00,  3.39s/it]Loading checkpoint shards: 100% 4/4 [00:15<00:00,  3.91s/it]
+make quant linear...:   0% 0/32 [00:00<?, ?it/s]make quant linear...: 100% 32/32 [00:00<00:00, 1113.15it/s]
+2026-05-12:11:51:10,574 WARNING  [huggingface.py:96] `pretrained` model kwarg is not of type `str`. Many other model arguments may be ignored. Please do not launch via accelerate or use `parallelize=True` if passing an existing model this way.
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+2026-05-12:11:51:10,853 WARNING  [huggingface.py:276] Passed an already-initialized model through `pretrained`, assuming single-process call to evaluate() or custom distributed integration
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+2026-05-12 12:12:39 - Task finish!
+6.80820369720459

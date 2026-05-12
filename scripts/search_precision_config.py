@@ -15,7 +15,7 @@ import subprocess
 import sys
 import time
 from pathlib import Path
-from typing import Dict, Iterable, List, Optional, Tuple
+from typing import Dict, Iterable, List, Optional, Set, Tuple
 
 
 PPL_TASKS = {"wikitext", "c4", "ptb"}
@@ -400,8 +400,91 @@ def write_pattern(path: Path, method: str, bits: List[int], metric_value: Option
     path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
 
 
+def init_result_summary(
+    path: Path,
+    args: argparse.Namespace,
+    run_dir: Path,
+    kind: str,
+    target: float,
+) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "run_dir": str(run_dir),
+        "metric": kind,
+        "target": target,
+        "tasks": args.tasks,
+        "limit_samples": args.limit_samples,
+        "sota_limit_samples": args.sota_limit_samples,
+        "methods": [m.strip() for m in args.methods.split(",") if m.strip()],
+    }
+    path.write_text(
+        "# Precision Search Result Summary\n\n"
+        "This file is updated after each completed evaluation result.\n\n"
+        "```json\n"
+        f"{json.dumps(payload, indent=2)}\n"
+        "```\n",
+        encoding="utf-8",
+    )
+
+
+def append_result_summary(
+    path: Path,
+    args: argparse.Namespace,
+    method: str,
+    eval_id: int,
+    bits: List[int],
+    kind: str,
+    value: float,
+    target: float,
+    pattern_path: Path,
+    log_path: Path,
+    visited_patterns: Iterable[str],
+) -> None:
+    tensors_per_layer = args.tensors_per_layer or 7
+    compact = compact_bits_expr(bits, tensors_per_layer) or "mixed"
+    visited_pattern_lines = format_visited_patterns(visited_patterns, tensors_per_layer)
+    delta = value - target
+    payload = {
+        "method": method,
+        "eval": eval_id,
+        kind: value,
+        "target": target,
+        "delta": delta,
+        "abs_delta": abs(delta),
+        "direction_if_selected": direction_for_value(value, target, kind, args),
+        "high_bit": args.high_bit,
+        "high_bit_count": sum(bit == args.high_bit for bit in bits),
+        "low_bit": args.initial_bit,
+        "low_bit_count": sum(bit == args.initial_bit for bit in bits),
+        "compact_w_bits": compact,
+        "visited_pattern_count": len(visited_pattern_lines),
+        "config": str(pattern_path),
+        "log": str(log_path),
+    }
+    with path.open("a", encoding="utf-8") as f:
+        f.write(f"\n## {method} #{eval_id}\n\n")
+        f.write("```json\n")
+        f.write(json.dumps(payload, indent=2))
+        f.write("\n```\n\n")
+        f.write("visited_pattern:\n\n")
+        f.write("```text\n")
+        f.write("\n".join(visited_pattern_lines))
+        f.write("\n```\n")
+
+
 def pattern_key(bits: Iterable[int]) -> str:
     return ",".join(str(x) for x in bits)
+
+
+def bits_from_pattern_key(key: str) -> List[int]:
+    return [int(bit) for bit in key.split(",") if bit]
+
+
+def format_visited_patterns(patterns: Iterable[str], tensors_per_layer: int = 7) -> List[str]:
+    return [
+        f"{idx}: {compact_bits_expr(bits_from_pattern_key(pattern), tensors_per_layer) or pattern}"
+        for idx, pattern in enumerate(patterns)
+    ]
 
 
 def compact_bits_expr(bits: List[int], tensors_per_layer: int = 7) -> Optional[str]:
@@ -410,8 +493,34 @@ def compact_bits_expr(bits: List[int], tensors_per_layer: int = 7) -> Optional[s
     template = bits[:tensors_per_layer]
     repeats = len(bits) // tensors_per_layer
     if template * repeats != bits:
-        return None
+        return compact_layer_runs_expr(bits, tensors_per_layer)
     return f"[{','.join(str(bit) for bit in template)}]*{repeats}"
+
+
+def compact_layer_runs_expr(bits: List[int], tensors_per_layer: int) -> Optional[str]:
+    layers = [
+        bits[start : start + tensors_per_layer]
+        for start in range(0, len(bits), tensors_per_layer)
+    ]
+    if not layers:
+        return "[]"
+
+    parts = []
+    idx = 0
+    while idx < len(layers):
+        layer = layers[idx]
+        repeat = 1
+        while idx + repeat < len(layers) and layers[idx + repeat] == layer:
+            repeat += 1
+        expr = f"[{','.join(str(bit) for bit in layer)}]"
+        if repeat > 1:
+            expr = f"{expr}*{repeat}"
+        parts.append(expr)
+        idx += repeat
+
+    if len(parts) == len(layers):
+        return None
+    return " + ".join(parts)
 
 
 def llama3_8b_grouped_search(args: argparse.Namespace, num_tensors: int) -> bool:
@@ -514,6 +623,7 @@ def evaluate_method(
     args: argparse.Namespace,
     repo_root: Path,
     run_dir: Path,
+    result_summary_path: Path,
     method: str,
     bits: List[int],
     kind: str,
@@ -563,6 +673,19 @@ def evaluate_method(
     )
     cache[key] = value
     write_pattern(pattern_path, method, bits, value)
+    append_result_summary(
+        result_summary_path,
+        args,
+        method,
+        eval_id,
+        bits,
+        kind,
+        value,
+        target,
+        pattern_path,
+        log_path,
+        cache.keys(),
+    )
     important(
         "EVAL RESULT",
         (
@@ -615,25 +738,11 @@ def evaluate_sota(args: argparse.Namespace, repo_root: Path, run_dir: Path, kind
     )
 
 
-def choose_candidate(
-    current_value: float,
-    target: float,
-    kind: str,
-    candidates: List[Tuple[List[int], float]],
-) -> Tuple[List[int], float]:
-    if lower_is_better(kind):
-        if current_value > target:
-            return min(candidates, key=lambda item: (abs(item[1] - target), item[1]))
-        return min(candidates, key=lambda item: (abs(item[1] - target), -item[1]))
-    if current_value < target:
-        return min(candidates, key=lambda item: (abs(item[1] - target), -item[1]))
-    return min(candidates, key=lambda item: (abs(item[1] - target), item[1]))
-
-
 def search_method(
     args: argparse.Namespace,
     repo_root: Path,
     run_dir: Path,
+    result_summary_path: Path,
     method: str,
     target: float,
     kind: str,
@@ -649,10 +758,13 @@ def search_method(
             "1;34",
         )
     cache: Dict[str, float] = {}
+    visited_selected: Set[str] = {pattern_key(bits)}
     eval_count = 0
 
     for step in range(args.max_steps + 1):
-        value = evaluate_method(args, repo_root, run_dir, method, bits, kind, target, cache)
+        value = evaluate_method(
+            args, repo_root, run_dir, result_summary_path, method, bits, kind, target, cache
+        )
         eval_count = len(cache)
         if within_tolerance(value, target, args):
             important(
@@ -683,50 +795,65 @@ def search_method(
                 "1;33",
             )
             return bits, value
-        if args.max_evals > 0:
-            planned_trial_evals = min(len(changes), max(args.max_evals - eval_count, 0))
-        else:
-            planned_trial_evals = len(changes)
+        candidate = bits.copy()
+        candidate_items = []
+        skipped_cycle_labels = []
+        for label, change_indices in changes:
+            for idx in change_indices:
+                candidate[idx] = to_bit
+            candidate_key = pattern_key(candidate)
+            if candidate_key in visited_selected:
+                skipped_cycle_labels.append(label)
+                continue
+            candidate_items.append((label, change_indices, candidate.copy()))
+        if not candidate_items:
+            important(
+                "NEXT",
+                f"method={method} step={step} action=stop reason=no_unvisited_candidates "
+                f"from_bit={from_bit} to_bit={to_bit} skipped_cycle_candidates={skipped_cycle_labels} "
+                f"visited_selected={len(visited_selected)} completed_evals={eval_count} "
+                f"remaining_evals={remaining_evals_text(args, eval_count)}",
+                "1;33",
+            )
+            return bits, value
+        label, change_indices, candidate_bits = candidate_items[0]
         important(
             "NEXT",
             f"method={method} step={step} action={'increase' if promote else 'decrease'}_precision "
             f"from_bit={from_bit} to_bit={to_bit} "
-            f"candidate_changes={[label for label, _ in changes]} "
-            f"planned_trial_evals={planned_trial_evals} completed_evals={eval_count} "
+            f"candidate={label} "
+            f"queued_candidates={[item_label for item_label, _, _ in candidate_items]} "
+            f"skipped_cycle_candidates={skipped_cycle_labels} "
+            f"completed_evals={eval_count} "
             f"remaining_evals={remaining_evals_text(args, eval_count)}",
             "1;33",
         )
 
-        candidates = []
-        trial = bits.copy()
-        for trial_no, (label, change_indices) in enumerate(changes, start=1):
-            for idx in change_indices:
-                trial[idx] = to_bit
-            section(
-                "TRIAL",
-                f"method={method} step={step} trial={trial_no}/{planned_trial_evals} "
-                f"{label} changed_indices={change_indices} change={from_bit}->{to_bit}",
-                "1;36",
+        section(
+            "CANDIDATE",
+            f"method={method} step={step} "
+            f"{label} changed_indices={change_indices} change={from_bit}->{to_bit}",
+            "1;36",
+        )
+        candidate_value = evaluate_method(
+            args, repo_root, run_dir, result_summary_path, method, candidate_bits, kind, target, cache
+        )
+        eval_count = len(cache)
+        if within_tolerance(candidate_value, target, args):
+            important(
+                "NEXT",
+                f"method={method} step={step} action=stop reason=reached_tolerance "
+                f"candidate={label} completed_evals={eval_count} "
+                f"remaining_evals={remaining_evals_text(args, eval_count)}",
+                "1;33",
             )
-            trial_value = evaluate_method(args, repo_root, run_dir, method, trial, kind, target, cache)
-            candidates.append((trial.copy(), trial_value))
-            eval_count = len(cache)
-            if args.max_evals > 0 and eval_count >= args.max_evals:
-                important(
-                    "NEXT",
-                    f"method={method} step={step} action=stop reason=max_evals "
-                    f"completed_evals={eval_count} remaining_evals={remaining_evals_text(args, eval_count)}",
-                    "1;33",
-                )
-                break
+            return candidate_bits, candidate_value
 
-        new_bits, new_value = choose_candidate(value, target, kind, candidates)
-        if pattern_key(new_bits) == pattern_key(bits):
-            return bits, value
-        bits = new_bits
+        bits = candidate_bits
+        visited_selected.add(pattern_key(bits))
         important(
             "SELECT",
-            f"method={method} step={step} selected_metric={new_value} "
+            f"method={method} step={step} selected_metric={candidate_value} "
             f"high_bits={sum(bit == args.high_bit for bit in bits)} "
             f"low_bits={sum(bit == args.initial_bit for bit in bits)} "
             f"w_bits={bits_display(bits, args.high_bit)} "
@@ -734,9 +861,17 @@ def search_method(
             "1;32",
         )
         if args.max_evals > 0 and eval_count >= args.max_evals:
+            important(
+                "NEXT",
+                f"method={method} step={step} action=stop reason=max_evals "
+                f"completed_evals={eval_count} remaining_evals={remaining_evals_text(args, eval_count)}",
+                "1;33",
+            )
             break
 
-    final_value = evaluate_method(args, repo_root, run_dir, method, bits, kind, target, cache)
+    final_value = evaluate_method(
+        args, repo_root, run_dir, result_summary_path, method, bits, kind, target, cache
+    )
     return bits, final_value
 
 
@@ -745,6 +880,7 @@ def main() -> None:
     repo_root = Path(__file__).resolve().parents[1]
     run_id = time.strftime("%Y%m%d_%H%M%S")
     run_dir = (repo_root / args.output_dir / run_id).resolve()
+    result_summary_path = run_dir.with_name(f"{run_dir.name}_result_summary.md")
     run_dir.mkdir(parents=True, exist_ok=True)
 
     kind = metric_kind(args)
@@ -761,12 +897,16 @@ def main() -> None:
 
     target = evaluate_sota(args, repo_root, run_dir, kind)
     important("SOTA TARGET", f"nvesm2 {kind}={target}", "1;33")
+    init_result_summary(result_summary_path, args, run_dir, kind, target)
+    important("RESULT SUMMARY", f"incremental results: {result_summary_path}", "1;34")
 
     summary = {"target": target, "metric": kind, "methods": {}}
     for method in [m.strip() for m in args.methods.split(",") if m.strip()]:
         method_dir = run_dir / method
         method_dir.mkdir(parents=True, exist_ok=True)
-        bits, value = search_method(args, repo_root, method_dir, method, target, kind, num_tensors)
+        bits, value = search_method(
+            args, repo_root, method_dir, result_summary_path, method, target, kind, num_tensors
+        )
         out_path = run_dir / f"final_{method}.json"
         write_pattern(out_path, method, bits, value)
         summary["methods"][method] = {
