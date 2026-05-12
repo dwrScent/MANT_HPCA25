@@ -1,183 +1,0 @@
-Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
-2026-05-11:23:23:13,103 INFO     [modeling.py:987] We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
-
-Quantization configuration: {'quant_dtype': 'int', 'q_group_size': 64, 'w_low': 75, 'w_high': 150, 'quant_method': 'mant', 'quant_kv': False}
-Layer bit configuration: 224 entries, activation_bits=follow
-
-args: Namespace(model_path='/cephfs/shared/model/llama-3-8b-hf', batch_size=32, tasks='wikitext', num_fewshot=0, limit_samples=200, quant_bit_width='w4a4k16v16', w_bit=4, a_bit=4, k_bit=16, v_bit=16, q_group_size=64, quant_mode='mant', quant_dtype='int', w_low=75, w_high=150, layer_bit_config='/root/llm-quan/MANT_HPCA25/output/precision_search/20260511_232303/mant/mant_0000.json', layer_a_bits='follow', a_stride=10) 
-
-* Building model /cephfs/shared/model/llama-3-8b-hf
-Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:09<00:28,  9.65s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:15<00:15,  7.69s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:21<00:06,  6.48s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:22<00:00,  4.38s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:22<00:00,  5.54s/it]
-Generating train split: 0 examples [00:00, ? examples/s]Generating train split: 1565 examples [00:00, 15564.81 examples/s]Generating train split: 4376 examples [00:00, 17876.85 examples/s]Generating train split: 7777 examples [00:00, 19895.80 examples/s]Generating train split: 11341 examples [00:00, 18364.36 examples/s]Generating train split: 14460 examples [00:00, 18398.67 examples/s]Generating train split: 17867 examples [00:01, 10940.67 examples/s]Generating train split: 19728 examples [00:01, 11397.58 examples/s]Generating train split: 22719 examples [00:01, 13416.41 examples/s]Generating train split: 25519 examples [00:01, 14736.46 examples/s]Generating train split: 29160 examples [00:01, 16224.91 examples/s]Generating train split: 31638 examples [00:02, 10098.01 examples/s]Generating train split: 34526 examples [00:02, 12070.64 examples/s]Generating train split: 36245 examples [00:03, 7860.13 examples/s] Generating train split: 39295 examples [00:04, 4984.96 examples/s]Generating train split: 42764 examples [00:04, 6720.34 examples/s]Generating train split: 46117 examples [00:04, 8554.80 examples/s]Generating train split: 49203 examples [00:05, 4863.39 examples/s]Generating train split: 51065 examples [00:05, 5567.38 examples/s]Generating train split: 54542 examples [00:06, 7745.17 examples/s]Generating train split: 57886 examples [00:06, 10143.70 examples/s]Generating train split: 61094 examples [00:06, 6940.46 examples/s] Generating train split: 62713 examples [00:07, 5817.33 examples/s]Generating train split: 63955 examples [00:07, 6227.58 examples/s]Generating train split: 65584 examples [00:08, 3276.82 examples/s]Generating train split: 68960 examples [00:08, 5108.29 examples/s]Generating train split: 71960 examples [00:09, 6930.49 examples/s]Generating train split: 75298 examples [00:09, 9178.67 examples/s]Generating train split: 78322 examples [00:09, 8205.11 examples/s]Generating train split: 79825 examples [00:10, 5886.43 examples/s]Generating train split: 83277 examples [00:10, 8209.11 examples/s]Generating train split: 86173 examples [00:10, 10287.56 examples/s]Generating train split: 89426 examples [00:10, 10877.78 examples/s]Generating train split: 91850 examples [00:10, 11225.54 examples/s]Generating train split: 93622 examples [00:11, 11555.74 examples/s]Generating train split: 95590 examples [00:11, 12649.43 examples/s]Generating train split: 99019 examples [00:11, 15163.75 examples/s]Generating train split: 102602 examples [00:11, 13656.70 examples/s]Generating train split: 105534 examples [00:13, 4080.27 examples/s] Generating train split: 107311 examples [00:14, 4142.72 examples/s]Generating train split: 110794 examples [00:14, 5906.91 examples/s]Generating train split: 112241 examples [00:14, 6175.20 examples/s]Generating train split: 115830 examples [00:14, 8825.69 examples/s]Generating train split: 118704 examples [00:14, 7436.22 examples/s]Generating train split: 121316 examples [00:15, 9072.79 examples/s]Generating train split: 124288 examples [00:15, 10587.71 examples/s]Generating train split: 125859 examples [00:15, 10513.68 examples/s]Generating train split: 129183 examples [00:15, 13019.78 examples/s]Generating train split: 132521 examples [00:15, 14639.89 examples/s]Generating train split: 135278 examples [00:16, 8944.90 examples/s] Generating train split: 138944 examples [00:16, 7856.96 examples/s]Generating train split: 141994 examples [00:17, 9437.63 examples/s]Generating train split: 145574 examples [00:17, 11672.87 examples/s]Generating train split: 148987 examples [00:17, 13223.33 examples/s]Generating train split: 152424 examples [00:17, 14964.95 examples/s]Generating train split: 155284 examples [00:18, 7114.48 examples/s] Generating train split: 156831 examples [00:18, 7802.07 examples/s]Generating train split: 160019 examples [00:19, 7345.64 examples/s]Generating train split: 162645 examples [00:19, 8093.97 examples/s]Generating train split: 165981 examples [00:20, 6951.87 examples/s]Generating train split: 169113 examples [00:20, 8943.23 examples/s]Generating train split: 172633 examples [00:20, 9190.44 examples/s]Generating train split: 176490 examples [00:20, 10830.82 examples/s]Generating train split: 180051 examples [00:21, 10915.03 examples/s]Generating train split: 183150 examples [00:21, 12888.79 examples/s]Generating train split: 186530 examples [00:21, 14704.04 examples/s]Generating train split: 189433 examples [00:21, 15324.49 examples/s]Generating train split: 192764 examples [00:21, 16654.43 examples/s]Generating train split: 195877 examples [00:21, 17846.33 examples/s]Generating train split: 199116 examples [00:22, 18533.26 examples/s]Generating train split: 202730 examples [00:22, 20576.73 examples/s]Generating train split: 205984 examples [00:22, 21401.91 examples/s]Generating train split: 209642 examples [00:22, 22646.35 examples/s]Generating train split: 212637 examples [00:22, 22732.98 examples/s]Generating train split: 214670 examples [00:22, 9483.22 examples/s] 
- * Capture 61 samples for calibration
-Mixed MANT pseudo weight quantization...:   0%|          | 0/32 [00:00<?, ?it/s]Mixed MANT pseudo weight quantization...:   3%|▎         | 1/32 [01:26<44:29, 86.11s/it]Mixed MANT pseudo weight quantization...:   6%|▋         | 2/32 [02:48<42:03, 84.10s/it]Mixed MANT pseudo weight quantization...:   9%|▉         | 3/32 [03:34<32:11, 66.62s/it]Mixed MANT pseudo weight quantization...:  12%|█▎        | 4/32 [03:51<21:58, 47.10s/it]Mixed MANT pseudo weight quantization...:  16%|█▌        | 5/32 [04:09<16:20, 36.32s/it]Mixed MANT pseudo weight quantization...:  19%|█▉        | 6/32 [04:26<12:59, 29.97s/it]Mixed MANT pseudo weight quantization...:  22%|██▏       | 7/32 [04:44<10:47, 25.89s/it]Mixed MANT pseudo weight quantization...:  25%|██▌       | 8/32 [05:10<10:22, 25.94s/it]Mixed MANT pseudo weight quantization...:  28%|██▊       | 9/32 [05:31<09:21, 24.40s/it]Mixed MANT pseudo weight quantization...:  31%|███▏      | 10/32 [06:24<12:13, 33.33s/it]Mixed MANT pseudo weight quantization...:  34%|███▍      | 11/32 [07:17<13:47, 39.39s/it]Mixed MANT pseudo weight quantization...:  38%|███▊      | 12/32 [08:09<14:25, 43.26s/it]Mixed MANT pseudo weight quantization...:  41%|████      | 13/32 [09:01<14:27, 45.68s/it]Mixed MANT pseudo weight quantization...:  44%|████▍     | 14/32 [09:52<14:12, 47.34s/it]Mixed MANT pseudo weight quantization...:  47%|████▋     | 15/32 [10:42<13:40, 48.29s/it]Mixed MANT pseudo weight quantization...:  50%|█████     | 16/32 [11:33<13:04, 49.02s/it]Mixed MANT pseudo weight quantization...:  53%|█████▎    | 17/32 [12:24<12:25, 49.69s/it]Mixed MANT pseudo weight quantization...:  56%|█████▋    | 18/32 [13:15<11:42, 50.17s/it]Mixed MANT pseudo weight quantization...:  59%|█████▉    | 19/32 [14:06<10:55, 50.39s/it]Mixed MANT pseudo weight quantization...:  62%|██████▎   | 20/32 [14:57<10:05, 50.47s/it]Mixed MANT pseudo weight quantization...:  66%|██████▌   | 21/32 [15:48<09:16, 50.57s/it]layer: 0, self_attn.q_proj, bit_width: 4, tensor_mse: 0.00021422069403342903
-layer: 0, self_attn.k_proj, bit_width: 4, tensor_mse: 0.000468668295070529
-layer: 0, self_attn.o_proj, bit_width: 4, tensor_mse: 1.5133991837501526e-08
-layer: 0, mlp.gate_proj, bit_width: 4, tensor_mse: 4.9667312850942835e-05
-layer: 0, mlp.up_proj, bit_width: 4, tensor_mse: 4.040430940221995e-05
-layer: 1, self_attn.q_proj, bit_width: 4, tensor_mse: 0.00030988268554210663
-layer: 1, self_attn.k_proj, bit_width: 4, tensor_mse: 0.0007175555801950395
-layer: 1, self_attn.o_proj, bit_width: 4, tensor_mse: 3.444438334554434e-08
-layer: 1, mlp.gate_proj, bit_width: 4, tensor_mse: 8.68295319378376e-05
-layer: 1, mlp.up_proj, bit_width: 4, tensor_mse: 7.165296847233549e-05
-layer: 2, self_attn.q_proj, bit_width: 4, tensor_mse: 0.0011693162377923727
-layer: 2, self_attn.k_proj, bit_width: 4, tensor_mse: 0.002989685395732522
-layer: 2, self_attn.o_proj, bit_width: 4, tensor_mse: 1.1903466656804085e-08
-layer: 2, mlp.gate_proj, bit_width: 4, tensor_mse: 0.00013606557331513613
-layer: 2, mlp.up_proj, bit_width: 4, tensor_mse: 0.0001052355146384798
-layer: 3, self_attn.q_proj, bit_width: 4, tensor_mse: 0.0011379127390682697
-layer: 3, self_attn.k_proj, bit_width: 4, tensor_mse: 0.0026956922374665737
-layer: 3, self_attn.o_proj, bit_width: 4, tensor_mse: 9.813811630010605e-08
-layer: 3, mlp.gate_proj, bit_width: 4, tensor_mse: 0.00021993473637849092
-layer: 3, mlp.up_proj, bit_width: 4, tensor_mse: 0.0001453176373615861
-layer: 4, self_attn.q_proj, bit_width: 4, tensor_mse: 0.0009913991671055555
-layer: 4, self_attn.k_proj, bit_width: 4, tensor_mse: 0.0023818525951355696
-layer: 4, self_attn.o_proj, bit_width: 4, tensor_mse: 1.2230739230290055e-06
-layer: 4, mlp.gate_proj, bit_width: 4, tensor_mse: 0.00031211969326250255
-layer: 4, mlp.up_proj, bit_width: 4, tensor_mse: 0.00017631278024055064
-layer: 5, self_attn.q_proj, bit_width: 4, tensor_mse: 0.0013493207516148686
-layer: 5, self_attn.k_proj, bit_width: 4, tensor_mse: 0.0033381457906216383
-layer: 5, self_attn.o_proj, bit_width: 4, tensor_mse: 2.362881787121296e-06
-layer: 5, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0003707932191900909
-layer: 5, mlp.up_proj, bit_width: 4, tensor_mse: 0.00021184796059969813
-layer: 6, self_attn.q_proj, bit_width: 4, tensor_mse: 0.0012922220630571246
-layer: 6, self_attn.k_proj, bit_width: 4, tensor_mse: 0.003029715036973357
-layer: 6, self_attn.o_proj, bit_width: 4, tensor_mse: 4.1143212001770735e-06
-layer: 6, mlp.gate_proj, bit_width: 4, tensor_mse: 0.00041028964915312827
-layer: 6, mlp.up_proj, bit_width: 4, tensor_mse: 0.00023128373140934855
-layer: 7, self_attn.q_proj, bit_width: 4, tensor_mse: 0.0012164341751486063
-layer: 7, self_attn.k_proj, bit_width: 4, tensor_mse: 0.0031161606311798096
-layer: 7, self_attn.o_proj, bit_width: 4, tensor_mse: 6.72767055220902e-06
-layer: 7, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0004064286476932466
-layer: 7, mlp.up_proj, bit_width: 4, tensor_mse: 0.0002450797474011779
-layer: 8, self_attn.q_proj, bit_width: 4, tensor_mse: 0.0014381249202415347
-layer: 8, self_attn.k_proj, bit_width: 4, tensor_mse: 0.003642196301370859
-layer: 8, self_attn.o_proj, bit_width: 4, tensor_mse: 8.988703484646976e-06
-layer: 8, mlp.gate_proj, bit_width: 4, tensor_mse: 0.00042624090565368533
-layer: 8, mlp.up_proj, bit_width: 4, tensor_mse: 0.0002520311390981078
-layer: 9, self_attn.q_proj, bit_width: 4, tensor_mse: 0.001391172525472939
-layer: 9, self_attn.k_proj, bit_width: 4, tensor_mse: 0.0034576207399368286
-layer: 9, self_attn.o_proj, bit_width: 4, tensor_mse: 1.1594020179472864e-05
-layer: 9, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0004478810587897897
-layer: 9, mlp.up_proj, bit_width: 4, tensor_mse: 0.0002630020317155868
-layer: 10, self_attn.q_proj, bit_width: 4, tensor_mse: 0.0016433079726994038
-layer: 10, self_attn.k_proj, bit_width: 4, tensor_mse: 0.004135779105126858
-layer: 10, self_attn.o_proj, bit_width: 4, tensor_mse: 9.521623724140227e-06
-layer: 10, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0004308918723836541
-layer: 10, mlp.up_proj, bit_width: 4, tensor_mse: 0.0002735838934313506
-layer: 11, self_attn.q_proj, bit_width: 4, tensor_mse: 0.0014376250328496099
-layer: 11, self_attn.k_proj, bit_width: 4, tensor_mse: 0.0038314370904117823
-layer: 11, self_attn.o_proj, bit_width: 4, tensor_mse: 1.2809134204871953e-05
-layer: 11, mlp.gate_proj, bit_width: 4, tensor_mse: 0.00043539877515286207
-layer: 11, mlp.up_proj, bit_width: 4, tensor_mse: 0.00028694301727227867
-layer: 12, self_attn.q_proj, bit_width: 4, tensor_mse: 0.0012473920360207558
-layer: 12, self_attn.k_proj, bit_width: 4, tensor_mse: 0.003024125937372446
-layer: 12, self_attn.o_proj, bit_width: 4, tensor_mse: 1.4726101653650403e-05
-layer: 12, mlp.gate_proj, bit_width: 4, tensor_mse: 0.00041828639223240316
-layer: 12, mlp.up_proj, bit_width: 4, tensor_mse: 0.0002924397704191506
-layer: 13, self_attn.q_proj, bit_width: 4, tensor_mse: 0.0016198698431253433
-layer: 13, self_attn.k_proj, bit_width: 4, tensor_mse: 0.004271344747394323
-layer: 13, self_attn.o_proj, bit_width: 4, tensor_mse: 1.8714257748797536e-05
-layer: 13, mlp.gate_proj, bit_width: 4, tensor_mse: 0.00045138635323382914
-layer: 13, mlp.up_proj, bit_width: 4, tensor_mse: 0.0003146227390971035
-layer: 14, self_attn.q_proj, bit_width: 4, tensor_mse: 0.0016098060877993703
-layer: 14, self_attn.k_proj, bit_width: 4, tensor_mse: 0.004412099253386259
-layer: 14, self_attn.o_proj, bit_width: 4, tensor_mse: 1.8772829207591712e-05
-layer: 14, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0005262129125185311
-layer: 14, mlp.up_proj, bit_width: 4, tensor_mse: 0.0003430873330216855
-layer: 15, self_attn.q_proj, bit_width: 4, tensor_mse: 0.0018894628155976534
-layer: 15, self_attn.k_proj, bit_width: 4, tensor_mse: 0.004035975784063339
-layer: 15, self_attn.o_proj, bit_width: 4, tensor_mse: 1.8132326658815145e-05
-layer: 15, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0005952768260613084
-layer: 15, mlp.up_proj, bit_width: 4, tensor_mse: 0.0003648789133876562
-layer: 16, self_attn.q_proj, bit_width: 4, tensor_mse: 0.0017238056752830744
-layer: 16, self_attn.k_proj, bit_width: 4, tensor_mse: 0.004055945202708244
-layer: 16, self_attn.o_proj, bit_width: 4, tensor_mse: 1.5470010112039745e-05
-layer: 16, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0006833614897914231
-layer: 16, mlp.up_proj, bit_width: 4, tensor_mse: 0.0003918278671335429
-layer: 17, self_attn.q_proj, bit_width: 4, tensor_mse: 0.0018347610021010041
-layer: 17, self_attn.k_proj, bit_width: 4, tensor_mse: 0.0043172710575163364
-layer: 17, self_attn.o_proj, bit_width: 4, tensor_mse: 1.2107353541068733e-05
-layer: 17, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0007450520643033087
-layer: 17, mlp.up_proj, bit_width: 4, tensor_mse: 0.0004156008653808385
-layer: 18, self_attn.q_proj, bit_width: 4, tensor_mse: 0.0019080316415056586
-layer: 18, self_attn.k_proj, bit_width: 4, tensor_mse: 0.00493684271350503
-layer: 18, self_attn.o_proj, bit_width: 4, tensor_mse: 7.637529051862657e-06
-layer: 18, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0007980884402059019
-layer: 18, mlp.up_proj, bit_width: 4, tensor_mse: 0.0004397234006319195
-layer: 19, self_attn.q_proj, bit_width: 4, tensor_mse: 0.0019639492966234684
-layer: 19, self_attn.k_proj, bit_width: 4, tensor_mse: 0.0046062651090323925
-layer: 19, self_attn.o_proj, bit_width: 4, tensor_mse: 6.767033482901752e-06
-layer: 19, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0008498516981489956
-layer: 19, mlp.up_proj, bit_width: 4, tensor_mse: 0.0004595716018229723
-layer: 20, self_attn.q_proj, bit_width: 4, tensor_mse: 0.001975536812096834
-layer: 20, self_attn.k_proj, bit_width: 4, tensor_mse: 0.004726300947368145
-layer: 20, self_attn.o_proj, bit_width: 4, tensor_mse: 6.9815723691135645e-06
-layer: 20, mlp.gate_proj, bit_width: 4, tensor_mse: 0.000905504624824971
-layer: 20, mlp.up_proj, bit_width: 4, tensor_mse: 0.0004934734315611422
-layer: 21, self_attn.q_proj, bit_width: 4, tensor_mse: 0.001880007330328226
-layer: 21, self_attn.k_proj, bit_width: 4, tensor_mse: 0.0045633455738425255
-layer: 21, self_attn.o_proj, bit_width: 4, tensor_mse: 1.1382566299289465e-05
-layer: 21, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0009850828209891915
-Mixed MANT pseudo weight quantization...:  69%|██████▉   | 22/32 [16:39<08:27, 50.73s/it]Mixed MANT pseudo weight quantization...:  72%|███████▏  | 23/32 [17:30<07:36, 50.74s/it]Mixed MANT pseudo weight quantization...:  75%|███████▌  | 24/32 [18:20<06:45, 50.66s/it]Mixed MANT pseudo weight quantization...:  78%|███████▊  | 25/32 [19:11<05:55, 50.81s/it]Mixed MANT pseudo weight quantization...:  81%|████████▏ | 26/32 [20:02<05:04, 50.80s/it]Mixed MANT pseudo weight quantization...:  84%|████████▍ | 27/32 [20:53<04:14, 50.92s/it]Mixed MANT pseudo weight quantization...:  88%|████████▊ | 28/32 [21:44<03:23, 50.81s/it]Mixed MANT pseudo weight quantization...:  91%|█████████ | 29/32 [22:35<02:32, 50.92s/it]Mixed MANT pseudo weight quantization...:  94%|█████████▍| 30/32 [23:26<01:41, 50.86s/it]Mixed MANT pseudo weight quantization...:  97%|█████████▋| 31/32 [24:17<00:50, 50.90s/it]Mixed MANT pseudo weight quantization...: 100%|██████████| 32/32 [25:08<00:00, 51.03s/it]Mixed MANT pseudo weight quantization...: 100%|██████████| 32/32 [25:08<00:00, 47.14s/it]
-layer: 21, mlp.up_proj, bit_width: 4, tensor_mse: 0.000530813995283097
-layer: 22, self_attn.q_proj, bit_width: 4, tensor_mse: 0.0019153710454702377
-layer: 22, self_attn.k_proj, bit_width: 4, tensor_mse: 0.004777233116328716
-layer: 22, self_attn.o_proj, bit_width: 4, tensor_mse: 1.0329953511245549e-05
-layer: 22, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0010256709065288305
-layer: 22, mlp.up_proj, bit_width: 4, tensor_mse: 0.000557528343051672
-layer: 23, self_attn.q_proj, bit_width: 4, tensor_mse: 0.001998509746044874
-layer: 23, self_attn.k_proj, bit_width: 4, tensor_mse: 0.004830054473131895
-layer: 23, self_attn.o_proj, bit_width: 4, tensor_mse: 8.802511729300022e-06
-layer: 23, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0010811089305207133
-layer: 23, mlp.up_proj, bit_width: 4, tensor_mse: 0.0005903352284803987
-layer: 24, self_attn.q_proj, bit_width: 4, tensor_mse: 0.001950405421666801
-layer: 24, self_attn.k_proj, bit_width: 4, tensor_mse: 0.004436733666807413
-layer: 24, self_attn.o_proj, bit_width: 4, tensor_mse: 1.0242554708383977e-05
-layer: 24, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0011420861119404435
-layer: 24, mlp.up_proj, bit_width: 4, tensor_mse: 0.0006243084790185094
-layer: 25, self_attn.q_proj, bit_width: 4, tensor_mse: 0.0019458684837445617
-layer: 25, self_attn.k_proj, bit_width: 4, tensor_mse: 0.004420452751219273
-layer: 25, self_attn.o_proj, bit_width: 4, tensor_mse: 1.037975016515702e-05
-layer: 25, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0012102365726605058
-layer: 25, mlp.up_proj, bit_width: 4, tensor_mse: 0.0006637671613134444
-layer: 26, self_attn.q_proj, bit_width: 4, tensor_mse: 0.0018046846380457282
-layer: 26, self_attn.k_proj, bit_width: 4, tensor_mse: 0.004436700139194727
-layer: 26, self_attn.o_proj, bit_width: 4, tensor_mse: 1.6593592590652406e-05
-layer: 26, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0012947525829076767
-layer: 26, mlp.up_proj, bit_width: 4, tensor_mse: 0.0007105906843207777
-layer: 27, self_attn.q_proj, bit_width: 4, tensor_mse: 0.0019220391986891627
-layer: 27, self_attn.k_proj, bit_width: 4, tensor_mse: 0.004792101681232452
-layer: 27, self_attn.o_proj, bit_width: 4, tensor_mse: 2.1013693185523152e-05
-layer: 27, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0014166418695822358
-layer: 27, mlp.up_proj, bit_width: 4, tensor_mse: 0.0007854335708543658
-layer: 28, self_attn.q_proj, bit_width: 4, tensor_mse: 0.0018282517557963729
-layer: 28, self_attn.k_proj, bit_width: 4, tensor_mse: 0.0041099912486970425
-layer: 28, self_attn.o_proj, bit_width: 4, tensor_mse: 3.1339077395386994e-05
-layer: 28, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0015445209573954344
-layer: 28, mlp.up_proj, bit_width: 4, tensor_mse: 0.0009016050607897341
-layer: 29, self_attn.q_proj, bit_width: 4, tensor_mse: 0.0019900512415915728
-layer: 29, self_attn.k_proj, bit_width: 4, tensor_mse: 0.0047818319872021675
-layer: 29, self_attn.o_proj, bit_width: 4, tensor_mse: 3.6070268834009767e-05
-layer: 29, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0015840878477320075
-layer: 29, mlp.up_proj, bit_width: 4, tensor_mse: 0.000981406425125897
-layer: 30, self_attn.q_proj, bit_width: 4, tensor_mse: 0.0017063681734725833
-layer: 30, self_attn.k_proj, bit_width: 4, tensor_mse: 0.0037553817965090275
-layer: 30, self_attn.o_proj, bit_width: 4, tensor_mse: 6.701768143102527e-05
-layer: 30, mlp.gate_proj, bit_width: 4, tensor_mse: 0.0017068416345864534
-layer: 30, mlp.up_proj, bit_width: 4, tensor_mse: 0.0010389195522293448
-layer: 31, self_attn.q_proj, bit_width: 4, tensor_mse: 0.0015290760202333331
-layer: 31, self_attn.k_proj, bit_width: 4, tensor_mse: 0.00315317721106112
-layer: 31, self_attn.o_proj, bit_width: 4, tensor_mse: 0.0001390620891470462
-layer: 31, mlp.gate_proj, bit_width: 4, tensor_mse: 0.001540998462587595
-layer: 31, mlp.up_proj, bit_width: 4, tensor_mse: 0.0009827172616496682
-make quant linear...:   0%|          | 0/32 [00:00<?, ?it/s]make quant linear...: 100%|██████████| 32/32 [00:00<00:00, 1358.04it/s]
-2026-05-11:23:49:14,107 WARNING  [huggingface.py:96] `pretrained` model kwarg is not of type `str`. Many other model arguments may be ignored. Please do not launch via accelerate or use `parallelize=True` if passing an existing model this way.
-Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
-2026-05-11:23:49:14,414 WARNING  [huggingface.py:276] Passed an already-initialized model through `pretrained`, assuming single-process call to evaluate() or custom distributed integration
-Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
-2026-05-11 23:49:48 - Start a task
-Data Type Search...:   0%|          | 0/1 [00:00<?, ?it/s]Data Type Search...: 100%|██████████| 1/1 [00:01<00:00,  1.39s/it]Data Type Search...: 100%|██████████| 1/1 [00:01<00:00,  1.39s/it]
-Task Evaluating...:   0%|          | 0/141 [00:00<?, ?it/s]Task Evaluating...:   1%|          | 1/141 [00:01<03:00,  1.29s/it]Task Evaluating...:   1%|▏         | 2/141 [00:02<02:58,  1.28s/it]Task Evaluating...:   2%|▏         | 3/141 [00:03<03:03,  1.33s/it]Task Evaluating...:   3%|▎         | 4/141 [00:05<03:11,  1.40s/it]Task Evaluating...:   4%|▎         | 5/141 [00:06<03:15,  1.43s/it]Task Evaluating...:   4%|▍         | 6/141 [00:08<03:17,  1.46s/it]Task Evaluating...:   5%|▍         | 7/141 [00:09<03:17,  1.47s/it]Task Evaluating...:   6%|▌         | 8/141 [00:11<03:16,  1.48s/it]Task Evaluating...:   6%|▋         | 9/141 [00:12<03:17,  1.49s/it]Task Evaluating...:   7%|▋         | 10/141 [00:14<03:16,  1.50s/it]Task Evaluating...:   8%|▊         | 11/141 [00:15<03:13,  1.49s/it]Task Evaluating...:   9%|▊         | 12/141 [00:17<03:12,  1.49s/it]Task Evaluating...:   9%|▉         | 13/141 [00:18<03:12,  1.50s/it]Task Evaluating...:  10%|▉         | 14/141 [00:20<03:10,  1.50s/it]Task Evaluating...:  11%|█         | 15/141 [00:21<03:08,  1.49s/it]Task Evaluating...:  11%|█▏        | 16/141 [00:23<03:06,  1.49s/it]Task Evaluating...:  12%|█▏        | 17/141 [00:24<03:05,  1.50s/it]Task Evaluating...:  13%|█▎        | 18/141 [00:26<03:04,  1.50s/it]Task Evaluating...:  13%|█▎        | 19/141 [00:27<03:01,  1.49s/it]Task Evaluating...:  14%|█▍        | 20/141 [00:29<03:00,  1.49s/it]Task Evaluating...:  15%|█▍        | 21/141 [00:30<02:58,  1.49s/it]Task Evaluating...:  16%|█▌        | 22/141 [00:32<02:57,  1.49s/it]Task Evaluating...:  16%|█▋        | 23/141 [00:33<02:56,  1.50s/it]Task Evaluating...:  17%|█▋        | 24/141 [00:35<02:54,  1.50s/it]Task Evaluating...:  18%|█▊        | 25/141 [00:36<02:54,  1.50s/it]Task Evaluating...:  18%|█▊        | 26/141 [00:38<02:53,  1.51s/it]Task Evaluating...:  19%|█▉        | 27/141 [00:39<02:45,  1.45s/it]Task Evaluating...:  20%|█▉        | 28/141 [00:40<02:32,  1.35s/it]Task Evaluating...:  21%|██        | 29/141 [00:42<02:28,  1.32s/it]Task Evaluating...:  21%|██▏       | 30/141 [00:43<02:24,  1.30s/it]Task Evaluating...:  22%|██▏       | 31/141 [00:44<02:22,  1.29s/it]Task Evaluating...:  23%|██▎       | 32/141 [00:45<02:20,  1.29s/it]Task Evaluating...:  23%|██▎       | 33/141 [00:47<02:17,  1.27s/it]Task Evaluating...:  24%|██▍       | 34/141 [00:48<02:16,  1.28s/it]Task Evaluating...:  25%|██▍       | 35/141 [00:49<02:15,  1.28s/it]Task Evaluating...:  26%|██▌       | 36/141 [00:51<02:14,  1.28s/it]Task Evaluating...:  26%|██▌       | 37/141 [00:52<02:12,  1.27s/it]Task Evaluating...:  27%|██▋       | 38/141 [00:53<02:09,  1.26s/it]Task Evaluating...:  28%|██▊       | 39/141 [00:54<02:06,  1.24s/it]Task Evaluating...:  28%|██▊       | 40/141 [00:55<02:03,  1.22s/it]Task Evaluating...:  29%|██▉       | 41/141 [00:57<02:00,  1.21s/it]Task Evaluating...:  30%|██▉       | 42/141 [00:58<01:58,  1.20s/it]Task Evaluating...:  30%|███       | 43/141 [00:59<01:57,  1.20s/it]Task Evaluating...:  31%|███       | 44/141 [01:00<01:55,  1.19s/it]Task Evaluating...:  32%|███▏      | 45/141 [01:01<01:54,  1.20s/it]Task Evaluating...:  33%|███▎      | 46/141 [01:03<01:55,  1.21s/it]Task Evaluating...:  33%|███▎      | 47/141 [01:04<01:55,  1.23s/it]Task Evaluating...:  34%|███▍      | 48/141 [01:05<01:54,  1.23s/it]Task Evaluating...:  35%|███▍      | 49/141 [01:06<01:54,  1.24s/it]Task Evaluating...:  35%|███▌      | 50/141 [01:08<01:52,  1.24s/it]Task Evaluating...:  36%|███▌      | 51/141 [01:09<01:51,  1.24s/it]Task Evaluating...:  37%|███▋      | 52/141 [01:10<01:50,  1.25s/it]Task Evaluating...:  38%|███▊      | 53/141 [01:11<01:50,  1.25s/it]Task Evaluating...:  38%|███▊      | 54/141 [01:13<01:50,  1.27s/it]Task Evaluating...:  39%|███▉      | 55/141 [01:14<01:55,  1.35s/it]Task Evaluating...:  40%|███▉      | 56/141 [01:16<01:58,  1.39s/it]Task Evaluating...:  40%|████      | 57/141 [01:17<02:00,  1.43s/it]Task Evaluating...:  41%|████      | 58/141 [01:19<02:00,  1.45s/it]Task Evaluating...:  42%|████▏     | 59/141 [01:20<02:00,  1.47s/it]Task Evaluating...:  43%|████▎     | 60/141 [01:22<01:59,  1.48s/it]Task Evaluating...:  43%|████▎     | 61/141 [01:23<01:58,  1.48s/it]Task Evaluating...:  44%|████▍     | 62/141 [01:25<01:58,  1.49s/it]Task Evaluating...:  45%|████▍     | 63/141 [01:26<01:57,  1.50s/it]Task Evaluating...:  45%|████▌     | 64/141 [01:28<01:56,  1.51s/it]Task Evaluating...:  46%|████▌     | 65/141 [01:29<01:54,  1.51s/it]Task Evaluating...:  47%|████▋     | 66/141 [01:31<01:53,  1.51s/it]Task Evaluating...:  48%|████▊     | 67/141 [01:32<01:51,  1.50s/it]Task Evaluating...:  48%|████▊     | 68/141 [01:34<01:49,  1.50s/it]Task Evaluating...:  49%|████▉     | 69/141 [01:35<01:48,  1.50s/it]Task Evaluating...:  50%|████▉     | 70/141 [01:37<01:46,  1.50s/it]Task Evaluating...:  50%|█████     | 71/141 [01:38<01:45,  1.50s/it]Task Evaluating...:  51%|█████     | 72/141 [01:40<01:43,  1.50s/it]Task Evaluating...:  52%|█████▏    | 73/141 [01:41<01:42,  1.51s/it]Task Evaluating...:  52%|█████▏    | 74/141 [01:43<01:41,  1.52s/it]Task Evaluating...:  53%|█████▎    | 75/141 [01:44<01:39,  1.51s/it]Task Evaluating...:  54%|█████▍    | 76/141 [01:46<01:37,  1.51s/it]Task Evaluating...:  55%|█████▍    | 77/141 [01:47<01:36,  1.51s/it]Task Evaluating...:  55%|█████▌    | 78/141 [01:49<01:29,  1.42s/it]Task Evaluating...:  56%|█████▌    | 79/141 [01:50<01:23,  1.34s/it]Task Evaluating...:  57%|█████▋    | 80/141 [01:51<01:20,  1.31s/it]Task Evaluating...:  57%|█████▋    | 81/141 [01:52<01:17,  1.29s/it]Task Evaluating...:  58%|█████▊    | 82/141 [01:54<01:15,  1.29s/it]Task Evaluating...:  59%|█████▉    | 83/141 [01:55<01:14,  1.28s/it]Task Evaluating...:  60%|█████▉    | 84/141 [01:56<01:12,  1.27s/it]Task Evaluating...:  60%|██████    | 85/141 [01:57<01:10,  1.26s/it]Task Evaluating...:  61%|██████    | 86/141 [01:59<01:09,  1.26s/it]Task Evaluating...:  62%|██████▏   | 87/141 [02:00<01:07,  1.25s/it]Task Evaluating...:  62%|██████▏   | 88/141 [02:01<01:06,  1.25s/it]Task Evaluating...:  63%|██████▎   | 89/141 [02:02<01:03,  1.22s/it]Task Evaluating...:  64%|██████▍   | 90/141 [02:03<01:01,  1.20s/it]Task Evaluating...:  65%|██████▍   | 91/141 [02:04<00:59,  1.19s/it]Task Evaluating...:  65%|██████▌   | 92/141 [02:06<00:57,  1.18s/it]Task Evaluating...:  66%|██████▌   | 93/141 [02:07<00:56,  1.18s/it]Task Evaluating...:  67%|██████▋   | 94/141 [02:08<00:55,  1.17s/it]Task Evaluating...:  67%|██████▋   | 95/141 [02:09<00:53,  1.17s/it]Task Evaluating...:  68%|██████▊   | 96/141 [02:10<00:52,  1.17s/it]Task Evaluating...:  69%|██████▉   | 97/141 [02:11<00:51,  1.18s/it]Task Evaluating...:  70%|██████▉   | 98/141 [02:13<00:51,  1.20s/it]Task Evaluating...:  70%|███████   | 99/141 [02:14<00:50,  1.21s/it]Task Evaluating...:  71%|███████   | 100/141 [02:15<00:50,  1.22s/it]Task Evaluating...:  72%|███████▏  | 101/141 [02:16<00:48,  1.22s/it]Task Evaluating...:  72%|███████▏  | 102/141 [02:18<00:47,  1.22s/it]Task Evaluating...:  73%|███████▎  | 103/141 [02:19<00:46,  1.23s/it]Task Evaluating...:  74%|███████▍  | 104/141 [02:20<00:45,  1.23s/it]Task Evaluating...:  74%|███████▍  | 105/141 [02:21<00:44,  1.23s/it]Task Evaluating...:  75%|███████▌  | 106/141 [02:23<00:43,  1.23s/it]Task Evaluating...:  76%|███████▌  | 107/141 [02:24<00:44,  1.30s/it]Task Evaluating...:  77%|███████▋  | 108/141 [02:26<00:44,  1.36s/it]Task Evaluating...:  77%|███████▋  | 109/141 [02:27<00:44,  1.40s/it]Task Evaluating...:  78%|███████▊  | 110/141 [02:29<00:44,  1.43s/it]Task Evaluating...:  79%|███████▊  | 111/141 [02:30<00:43,  1.46s/it]Task Evaluating...:  79%|███████▉  | 112/141 [02:32<00:42,  1.48s/it]Task Evaluating...:  80%|████████  | 113/141 [02:33<00:41,  1.49s/it]Task Evaluating...:  81%|████████  | 114/141 [02:35<00:40,  1.49s/it]Task Evaluating...:  82%|████████▏ | 115/141 [02:36<00:38,  1.50s/it]Task Evaluating...:  82%|████████▏ | 116/141 [02:38<00:37,  1.50s/it]Task Evaluating...:  83%|████████▎ | 117/141 [02:39<00:35,  1.50s/it]Task Evaluating...:  84%|████████▎ | 118/141 [02:41<00:34,  1.50s/it]Task Evaluating...:  84%|████████▍ | 119/141 [02:42<00:32,  1.50s/it]Task Evaluating...:  85%|████████▌ | 120/141 [02:44<00:31,  1.49s/it]Task Evaluating...:  86%|████████▌ | 121/141 [02:45<00:30,  1.50s/it]Task Evaluating...:  87%|████████▋ | 122/141 [02:47<00:28,  1.51s/it]Task Evaluating...:  87%|████████▋ | 123/141 [02:48<00:27,  1.51s/it]Task Evaluating...:  88%|████████▊ | 124/141 [02:50<00:25,  1.51s/it]Task Evaluating...:  89%|████████▊ | 125/141 [02:51<00:24,  1.51s/it]Task Evaluating...:  89%|████████▉ | 126/141 [02:53<00:22,  1.52s/it]Task Evaluating...:  90%|█████████ | 127/141 [02:54<00:21,  1.53s/it]Task Evaluating...:  91%|█████████ | 128/141 [02:56<00:19,  1.53s/it]Task Evaluating...:  91%|█████████▏| 129/141 [02:57<00:18,  1.52s/it]Task Evaluating...:  92%|█████████▏| 130/141 [02:59<00:16,  1.47s/it]Task Evaluating...:  93%|█████████▎| 131/141 [03:00<00:13,  1.37s/it]Task Evaluating...:  94%|█████████▎| 132/141 [03:01<00:11,  1.33s/it]Task Evaluating...:  94%|█████████▍| 133/141 [03:02<00:10,  1.31s/it]Task Evaluating...:  95%|█████████▌| 134/141 [03:04<00:09,  1.29s/it]Task Evaluating...:  96%|█████████▌| 135/141 [03:05<00:07,  1.27s/it]Task Evaluating...:  96%|█████████▋| 136/141 [03:06<00:06,  1.26s/it]Task Evaluating...:  97%|█████████▋| 137/141 [03:07<00:05,  1.25s/it]Task Evaluating...:  98%|█████████▊| 138/141 [03:08<00:03,  1.25s/it]Task Evaluating...:  99%|█████████▊| 139/141 [03:10<00:02,  1.25s/it]Task Evaluating...:  99%|█████████▉| 140/141 [03:11<00:01,  1.25s/it]Task Evaluating...: 100%|██████████| 141/141 [03:12<00:00,  1.23s/it]Task Evaluating...: 100%|██████████| 141/141 [03:12<00:00,  1.37s/it]
-2026-05-11 23:53:02 - Task finish!
-6.723258018493652

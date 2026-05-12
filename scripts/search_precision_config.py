@@ -5,9 +5,12 @@ from __future__ import annotations
 
 import argparse
 import ast
+import errno
 import json
 import os
+import pty
 import re
+import select
 import subprocess
 import sys
 import time
@@ -21,6 +24,28 @@ DEFAULT_METHOD_DTYPES = {
     "olive": "int-flint",
     "mant": "int",
 }
+COLOR_ENABLED = sys.stdout.isatty() and not os.environ.get("NO_COLOR")
+
+
+def color(text: str, code: str) -> str:
+    if not COLOR_ENABLED:
+        return text
+    return f"\033[{code}m{text}\033[0m"
+
+
+def section(title: str, detail: str = "", code: str = "1;36") -> None:
+    line = f"=== {title} ==="
+    if detail:
+        line = f"{line} {detail}"
+    print(f"\n{color(line, code)}", flush=True)
+
+
+def important(label: str, detail: str, code: str = "1;32") -> None:
+    print(f"\n{color(f'=== {label} ===', code)} {detail}\n", flush=True)
+
+
+def bits_display(bits: List[int], high_bit: int = 8) -> str:
+    return compact_bits_expr(bits) or f"mixed high_bits={bits.count(high_bit)} total={len(bits)}"
 
 
 def parse_args() -> argparse.Namespace:
@@ -62,6 +87,17 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--olive_dtype", default=DEFAULT_METHOD_DTYPES["olive"])
     parser.add_argument("--mant_dtype", default=DEFAULT_METHOD_DTYPES["mant"])
     parser.add_argument("--sota_repo", default="../mxfp_quant/pseudo_quantization")
+    parser.add_argument(
+        "--sota_python",
+        default=os.environ.get("SOTA_PYTHON", sys.executable),
+        help="Python executable used to evaluate the nvesm2 SOTA target.",
+    )
+    parser.add_argument(
+        "--sota_limit_samples",
+        type=int,
+        default=None,
+        help="Limit samples for the nvesm2 SOTA target. Defaults to full SOTA evaluation.",
+    )
     parser.add_argument("--sota_w_bit", type=int, default=4)
     parser.add_argument("--sota_a_bit", type=int, default=4)
     parser.add_argument("--sota_w_mode", default="nvesm2")
@@ -72,6 +108,8 @@ def parse_args() -> argparse.Namespace:
     args = parser.parse_args()
     if args.limit_samples is not None and args.limit_samples <= 0:
         raise ValueError("--limit_samples must be a positive integer")
+    if args.sota_limit_samples is not None and args.sota_limit_samples <= 0:
+        raise ValueError("--sota_limit_samples must be a positive integer")
     return args
 
 
@@ -131,7 +169,9 @@ def parse_lm_eval_rows(text: str) -> List[Tuple[str, str, str]]:
 def run_command(cmd: List[str], cwd: Path, log_file: Path, dry_run: bool) -> float:
     log_file.parent.mkdir(parents=True, exist_ok=True)
     printable = " ".join(cmd)
-    print(f"RUN cwd={cwd}: {printable}")
+    section("RUN", f"cwd={cwd}", "1;34")
+    print(color(printable, "36"), flush=True)
+    print(color(f"log: {log_file}", "2"), flush=True)
     if dry_run:
         log_file.write_text(printable + "\n", encoding="utf-8")
         return 0.0
@@ -139,11 +179,80 @@ def run_command(cmd: List[str], cwd: Path, log_file: Path, dry_run: bool) -> flo
     env = os.environ.copy()
     env["PYTHONPATH"] = str(cwd) + os.pathsep + env.get("PYTHONPATH", "")
     with log_file.open("w", encoding="utf-8") as f:
-        proc = subprocess.run(cmd, cwd=str(cwd), env=env, stdout=f, stderr=subprocess.STDOUT)
+        proc = stream_process(cmd, cwd, env, f)
     if proc.returncode != 0:
         tail = "\n".join(log_file.read_text(encoding="utf-8", errors="ignore").splitlines()[-40:])
         raise RuntimeError(f"Command failed with exit code {proc.returncode}. Log: {log_file}\n{tail}")
     return proc.returncode
+
+
+def write_stdout_bytes(data: bytes) -> None:
+    try:
+        os.write(sys.stdout.fileno(), data)
+    except (AttributeError, OSError, ValueError):
+        print(data.decode("utf-8", errors="replace"), end="", flush=True)
+
+
+def stream_process(cmd: List[str], cwd: Path, env: Dict[str, str], log_file) -> subprocess.Popen:
+    if sys.stdout.isatty():
+        return stream_process_pty(cmd, cwd, env, log_file)
+    return stream_process_pipe(cmd, cwd, env, log_file)
+
+
+def stream_process_pipe(cmd: List[str], cwd: Path, env: Dict[str, str], log_file) -> subprocess.Popen:
+    proc = subprocess.Popen(
+        cmd,
+        cwd=str(cwd),
+        env=env,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        bufsize=1,
+    )
+    assert proc.stdout is not None
+    for chunk in iter(lambda: proc.stdout.read(1), ""):
+        log_file.write(chunk)
+        log_file.flush()
+        print(chunk, end="", flush=True)
+    proc.wait()
+    return proc
+
+
+def stream_process_pty(cmd: List[str], cwd: Path, env: Dict[str, str], log_file) -> subprocess.Popen:
+    master_fd, slave_fd = pty.openpty()
+    proc = subprocess.Popen(
+        cmd,
+        cwd=str(cwd),
+        env=env,
+        stdin=subprocess.DEVNULL,
+        stdout=slave_fd,
+        stderr=slave_fd,
+        close_fds=True,
+    )
+    os.close(slave_fd)
+    try:
+        while True:
+            try:
+                ready, _, _ = select.select([master_fd], [], [], 0.1)
+                if master_fd in ready:
+                    data = os.read(master_fd, 4096)
+                    if not data:
+                        break
+                    log_file.write(data.decode("utf-8", errors="replace"))
+                    log_file.flush()
+                    write_stdout_bytes(data)
+                elif proc.poll() is not None:
+                    break
+            except OSError as exc:
+                if exc.errno == errno.EIO:
+                    break
+                raise
+    finally:
+        os.close(master_fd)
+    proc.wait()
+    return proc
 
 
 def infer_num_tensors(model_path: str, tensors_per_layer: Optional[int]) -> int:
@@ -239,13 +348,17 @@ def adapt_initial_bits(bits: List[int], num_tensors: int, method: str, model_key
     if len(bits) == num_tensors:
         return bits
     if len(bits) > num_tensors:
-        print(
-            f"{method}: truncating {model_key} initial pattern from {len(bits)} to {num_tensors} entries"
+        important(
+            "INITIAL CONFIG",
+            f"{method}: truncating {model_key} initial pattern from {len(bits)} to {num_tensors} entries",
+            "1;34",
         )
         return bits[:num_tensors]
     repeats = (num_tensors + len(bits) - 1) // len(bits)
-    print(
-        f"{method}: repeating {model_key} initial pattern from {len(bits)} to {num_tensors} entries"
+    important(
+        "INITIAL CONFIG",
+        f"{method}: repeating {model_key} initial pattern from {len(bits)} to {num_tensors} entries",
+        "1;34",
     )
     return (bits * repeats)[:num_tensors]
 
@@ -262,9 +375,15 @@ def initial_bits_for_method(
     model_key = infer_example_model_key(args.model_path)
     bits = load_example_bit_pattern(repo_root, method, model_key)
     bits = adapt_initial_bits(bits, num_tensors, method, model_key)
-    print(
-        f"{method}: initial high_bits={sum(bit == args.high_bit for bit in bits)} "
-        f"from accel_model_configs_example.py::{model_key}"
+    important(
+        "INITIAL CONFIG",
+        (
+            f"{method}: high_bits={sum(bit == args.high_bit for bit in bits)} "
+            f"low_bits={sum(bit == args.initial_bit for bit in bits)} "
+            f"w_bits={bits_display(bits, args.high_bit)} "
+            f"source=accel_model_configs_example.py::{model_key}"
+        ),
+        "1;34",
     )
     return bits
 
@@ -349,7 +468,6 @@ def print_eval_config(
     log_path: Path,
 ) -> None:
     payload = {
-        "event": "eval_start",
         "method": method,
         "eval": eval_id,
         "metric": kind,
@@ -361,12 +479,10 @@ def print_eval_config(
         "remaining_after_this": remaining_evals_text(args, eval_id + 1),
         "config": str(pattern_path),
         "log": str(log_path),
-        "w_bits": bits,
+        "w_bits": compact_bits_expr(bits) or "mixed",
     }
-    compact = compact_bits_expr(bits)
-    if compact is not None:
-        payload["compact_w_bits"] = compact
-    print(json.dumps(payload, separators=(",", ":")), flush=True)
+    section("EVAL CONFIG", f"{method} #{eval_id}", "1;35")
+    print(json.dumps(payload, indent=2), flush=True)
 
 
 def within_tolerance(value: float, target: float, args: argparse.Namespace) -> bool:
@@ -447,26 +563,29 @@ def evaluate_method(
     )
     cache[key] = value
     write_pattern(pattern_path, method, bits, value)
-    print(
-        f"EVAL RESULT method={method} eval={eval_id} {kind}={value} "
-        f"target={target} direction_if_selected={direction_for_value(value, target, kind, args)} "
-        f"high_bits={sum(bit == args.high_bit for bit in bits)} "
-        f"low_bits={sum(bit == args.initial_bit for bit in bits)} "
-        f"completed_evals={len(cache)} remaining_evals={remaining_evals_text(args, len(cache))}",
-        flush=True,
+    important(
+        "EVAL RESULT",
+        (
+            f"method={method} eval={eval_id} {kind}={value} target={target} "
+            f"direction_if_selected={direction_for_value(value, target, kind, args)} "
+            f"high_bits={sum(bit == args.high_bit for bit in bits)} "
+            f"low_bits={sum(bit == args.initial_bit for bit in bits)} "
+            f"w_bits={bits_display(bits, args.high_bit)} "
+            f"completed_evals={len(cache)} remaining_evals={remaining_evals_text(args, len(cache))}"
+        ),
     )
     return value
 
 
 def evaluate_sota(args: argparse.Namespace, repo_root: Path, run_dir: Path, kind: str) -> float:
     if args.target_metric is not None:
-        print(f"Using provided nvesm2 target metric: {args.target_metric}")
+        important("SOTA TARGET", f"using provided nvesm2 {kind}={args.target_metric}", "1;33")
         return args.target_metric
 
     sota_cwd = (repo_root / args.sota_repo).resolve()
     log_path = run_dir / "sota_nvesm2.log"
     cmd = [
-        sys.executable,
+        args.sota_python,
         "-m",
         "mxq.entry",
         "--model_path",
@@ -488,6 +607,8 @@ def evaluate_sota(args: argparse.Namespace, repo_root: Path, run_dir: Path, kind
         "--group_size",
         str(args.sota_group_size),
     ]
+    if args.sota_limit_samples is not None:
+        cmd.extend(["--limit_samples", str(args.sota_limit_samples)])
     run_command(cmd, sota_cwd, log_path, args.dry_run)
     return 0.0 if args.dry_run else parse_metric_from_log(
         log_path.read_text(encoding="utf-8", errors="ignore"), kind, args.tasks
@@ -521,10 +642,11 @@ def search_method(
     bits = initial_bits_for_method(args, repo_root, method, num_tensors)
     grouped_llama3_8b = llama3_8b_grouped_search(args, num_tensors)
     if grouped_llama3_8b:
-        print(
+        important(
+            "GROUPED SEARCH",
             f"{method}: llama3_8b grouped search enabled; each trial changes one tensor position across "
             f"{num_tensors // 7} layers",
-            flush=True,
+            "1;34",
         )
     cache: Dict[str, float] = {}
     eval_count = 0
@@ -533,17 +655,19 @@ def search_method(
         value = evaluate_method(args, repo_root, run_dir, method, bits, kind, target, cache)
         eval_count = len(cache)
         if within_tolerance(value, target, args):
-            print(
-                f"NEXT method={method} step={step} action=stop reason=reached_tolerance "
+            important(
+                "NEXT",
+                f"method={method} step={step} action=stop reason=reached_tolerance "
                 f"completed_evals={eval_count} remaining_evals={remaining_evals_text(args, eval_count)}",
-                flush=True,
+                "1;33",
             )
             return bits, value
         if args.max_evals > 0 and eval_count >= args.max_evals:
-            print(
-                f"NEXT method={method} step={step} action=stop reason=max_evals "
+            important(
+                "NEXT",
+                f"method={method} step={step} action=stop reason=max_evals "
                 f"completed_evals={eval_count} remaining_evals={remaining_evals_text(args, eval_count)}",
-                flush=True,
+                "1;33",
             )
             return bits, value
 
@@ -551,24 +675,26 @@ def search_method(
         from_bit, to_bit = (args.initial_bit, args.high_bit) if promote else (args.high_bit, args.initial_bit)
         changes = candidate_changes(args, bits, from_bit, args.max_candidates_per_step, grouped_llama3_8b)
         if not changes:
-            print(
-                f"NEXT method={method} step={step} action={'increase' if promote else 'decrease'}_precision "
+            important(
+                "NEXT",
+                f"method={method} step={step} action={'increase' if promote else 'decrease'}_precision "
                 f"from_bit={from_bit} to_bit={to_bit} candidates=0 reason=no_candidates "
                 f"completed_evals={eval_count} remaining_evals={remaining_evals_text(args, eval_count)}",
-                flush=True,
+                "1;33",
             )
             return bits, value
         if args.max_evals > 0:
             planned_trial_evals = min(len(changes), max(args.max_evals - eval_count, 0))
         else:
             planned_trial_evals = len(changes)
-        print(
-            f"NEXT method={method} step={step} action={'increase' if promote else 'decrease'}_precision "
+        important(
+            "NEXT",
+            f"method={method} step={step} action={'increase' if promote else 'decrease'}_precision "
             f"from_bit={from_bit} to_bit={to_bit} "
             f"candidate_changes={[label for label, _ in changes]} "
             f"planned_trial_evals={planned_trial_evals} completed_evals={eval_count} "
             f"remaining_evals={remaining_evals_text(args, eval_count)}",
-            flush=True,
+            "1;33",
         )
 
         candidates = []
@@ -576,19 +702,21 @@ def search_method(
         for trial_no, (label, change_indices) in enumerate(changes, start=1):
             for idx in change_indices:
                 trial[idx] = to_bit
-            print(
-                f"TRIAL method={method} step={step} trial={trial_no}/{planned_trial_evals} "
+            section(
+                "TRIAL",
+                f"method={method} step={step} trial={trial_no}/{planned_trial_evals} "
                 f"{label} changed_indices={change_indices} change={from_bit}->{to_bit}",
-                flush=True,
+                "1;36",
             )
             trial_value = evaluate_method(args, repo_root, run_dir, method, trial, kind, target, cache)
             candidates.append((trial.copy(), trial_value))
             eval_count = len(cache)
             if args.max_evals > 0 and eval_count >= args.max_evals:
-                print(
-                    f"NEXT method={method} step={step} action=stop reason=max_evals "
+                important(
+                    "NEXT",
+                    f"method={method} step={step} action=stop reason=max_evals "
                     f"completed_evals={eval_count} remaining_evals={remaining_evals_text(args, eval_count)}",
-                    flush=True,
+                    "1;33",
                 )
                 break
 
@@ -596,13 +724,14 @@ def search_method(
         if pattern_key(new_bits) == pattern_key(bits):
             return bits, value
         bits = new_bits
-        print(
-            f"SELECT method={method} step={step} selected_metric={new_value} "
+        important(
+            "SELECT",
+            f"method={method} step={step} selected_metric={new_value} "
             f"high_bits={sum(bit == args.high_bit for bit in bits)} "
             f"low_bits={sum(bit == args.initial_bit for bit in bits)} "
-            f"compact_w_bits={compact_bits_expr(bits) or 'mixed'} "
+            f"w_bits={bits_display(bits, args.high_bit)} "
             f"completed_evals={eval_count} remaining_evals={remaining_evals_text(args, eval_count)}",
-            flush=True,
+            "1;32",
         )
         if args.max_evals > 0 and eval_count >= args.max_evals:
             break
@@ -620,10 +749,18 @@ def main() -> None:
 
     kind = metric_kind(args)
     num_tensors = args.num_tensors or infer_num_tensors(args.model_path, args.tensors_per_layer)
-    print(f"metric={kind}, lower_is_better={lower_is_better(kind)}, num_tensors={num_tensors}")
+    important(
+        "SEARCH START",
+        (
+            f"metric={kind} lower_is_better={lower_is_better(kind)} num_tensors={num_tensors} "
+            f"sample={args.limit_samples if args.limit_samples is not None else 'full'} "
+            f"sota_sample={args.sota_limit_samples if args.sota_limit_samples is not None else 'full'}"
+        ),
+        "1;36",
+    )
 
     target = evaluate_sota(args, repo_root, run_dir, kind)
-    print(f"nvesm2 target {kind}: {target}")
+    important("SOTA TARGET", f"nvesm2 {kind}={target}", "1;33")
 
     summary = {"target": target, "metric": kind, "methods": {}}
     for method in [m.strip() for m in args.methods.split(",") if m.strip()]:
@@ -635,11 +772,13 @@ def main() -> None:
         summary["methods"][method] = {
             "metric": value,
             "high_bit_count": sum(bit == args.high_bit for bit in bits),
+            "w_bits": bits_display(bits, args.high_bit),
             "config": str(out_path),
         }
 
     (run_dir / "summary.json").write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps(summary, indent=2))
+    section("FINAL SUMMARY", str(run_dir), "1;32")
+    print(json.dumps(summary, indent=2), flush=True)
 
 
 if __name__ == "__main__":
