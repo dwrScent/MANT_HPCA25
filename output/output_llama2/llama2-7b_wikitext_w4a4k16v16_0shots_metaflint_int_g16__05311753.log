@@ -1,0 +1,681 @@
+
+Quantization configuration: {'quant_dtype': 'int', 'q_group_size': 16, 'w_low': 75, 'w_high': 150, 'quant_method': 'metaflint', 'quant_kv': False}
+
+args: Namespace(model_path='/cephfs/shared/model/llama-2-7b-hf', batch_size=32, tasks='wikitext', num_fewshot=0, limit_samples=None, quant_bit_width='w4a4k16v16', w_bit=4, a_bit=4, k_bit=16, v_bit=16, q_group_size=16, quant_mode='metaflint', quant_dtype='int', w_low=75, w_high=150, layer_bit_config=None, layer_a_bits='global', a_stride=10) 
+
+* Building model /cephfs/shared/model/llama-2-7b-hf
+2026-05-31 17:58:50 - Start a task
+layer: 0, tensor: self_attn.q_proj, weight quant, best mode: flint_4, mse: 3.5123042698806305e-05, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 0, tensor: self_attn.q_proj, input quant, best mode: flint_5, mse: 1.9962041706732116e-05, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 0, tensor: self_attn.k_proj, weight quant, best mode: flint_4, mse: 3.266093916392636e-05, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 0, tensor: self_attn.k_proj, input quant, best mode: flint_5, mse: 2.0919972825512554e-05, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 0, tensor: self_attn.v_proj, weight quant, best mode: flint_5, mse: 4.359896170179081e-06, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 0, tensor: self_attn.v_proj, input quant, best mode: flint_17, mse: 2.2877421297646352e-06, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 0, tensor: self_attn.o_proj, weight quant, best mode: flint_4, mse: 2.4234651682985084e-07, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 0, tensor: self_attn.o_proj, input quant, best mode: flint_5, mse: 2.3091297830419753e-07, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 0, tensor: mlp.gate_proj, weight quant, best mode: flint_4, mse: 1.4643506775248748e-05, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 0, tensor: mlp.gate_proj, input quant, best mode: flint_0, mse: 1.6486154823620552e-05, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 0, tensor: mlp.up_proj, weight quant, best mode: flint_4, mse: 1.4053841815346925e-05, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 0, tensor: mlp.up_proj, input quant, best mode: flint_0, mse: 1.585085061709922e-05, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 0, tensor: mlp.down_proj, weight quant, best mode: flint_4, mse: 4.3637327270161665e-07, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 0, tensor: mlp.down_proj, input quant, best mode: flint_15, mse: 1.785736132489224e-07, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 1, tensor: self_attn.q_proj, weight quant, best mode: flint_4, mse: 0.00046108736041705395, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 1, tensor: self_attn.q_proj, input quant, best mode: flint_5, mse: 0.00024157333080364004, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 1, tensor: self_attn.k_proj, weight quant, best mode: flint_4, mse: 0.0004376867147381915, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 1, tensor: self_attn.k_proj, input quant, best mode: flint_5, mse: 0.0002539270968927392, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 1, tensor: self_attn.v_proj, weight quant, best mode: flint_0, mse: 2.1177320433422713e-05, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 1, tensor: self_attn.v_proj, input quant, best mode: flint_5, mse: 2.0977900091225626e-05, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 1, tensor: self_attn.o_proj, weight quant, best mode: flint_4, mse: 9.31074188071575e-07, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 1, tensor: self_attn.o_proj, input quant, best mode: flint_0, mse: 1.0574068466980296e-06, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 1, tensor: mlp.gate_proj, weight quant, best mode: flint_4, mse: 4.81459276172423e-05, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 1, tensor: mlp.gate_proj, input quant, best mode: flint_4, mse: 5.549299704351212e-05, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 1, tensor: mlp.up_proj, weight quant, best mode: flint_4, mse: 4.279866126510877e-05, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 1, tensor: mlp.up_proj, input quant, best mode: flint_4, mse: 4.92850389741593e-05, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 1, tensor: mlp.down_proj, weight quant, best mode: flint_8, mse: 7.658376840006513e-05, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 1, tensor: mlp.down_proj, input quant, best mode: flint_15, mse: 1.4380930977643791e-06, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 2, tensor: self_attn.q_proj, weight quant, best mode: flint_4, mse: 0.0009667425613813854, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 2, tensor: self_attn.q_proj, input quant, best mode: flint_5, mse: 0.0007832269934078993, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 2, tensor: self_attn.k_proj, weight quant, best mode: flint_4, mse: 0.0010877362250158267, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 2, tensor: self_attn.k_proj, input quant, best mode: flint_5, mse: 0.0008859202212652425, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 2, tensor: self_attn.v_proj, weight quant, best mode: flint_0, mse: 0.00019855675092689512, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 2, tensor: self_attn.v_proj, input quant, best mode: flint_5, mse: 0.00021677883560892666, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 2, tensor: self_attn.o_proj, weight quant, best mode: flint_4, mse: 1.7066314690036482e-06, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 2, tensor: self_attn.o_proj, input quant, best mode: flint_0, mse: 2.034343311977219e-06, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 2, tensor: mlp.gate_proj, weight quant, best mode: flint_4, mse: 0.00010352550345071625, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 2, tensor: mlp.gate_proj, input quant, best mode: flint_4, mse: 0.00010757840901821951, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 2, tensor: mlp.up_proj, weight quant, best mode: flint_4, mse: 9.01543291673129e-05, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 2, tensor: mlp.up_proj, input quant, best mode: flint_4, mse: 9.366311099667205e-05, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 2, tensor: mlp.down_proj, weight quant, best mode: flint_4, mse: 4.426090922449501e-06, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 2, tensor: mlp.down_proj, input quant, best mode: flint_15, mse: 4.236436099482709e-06, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 3, tensor: self_attn.q_proj, weight quant, best mode: flint_4, mse: 0.0017822806251388847, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 3, tensor: self_attn.q_proj, input quant, best mode: flint_5, mse: 0.001850932025666743, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 3, tensor: self_attn.k_proj, weight quant, best mode: flint_4, mse: 0.0019074768024283381, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 3, tensor: self_attn.k_proj, input quant, best mode: flint_5, mse: 0.0020138701268335047, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 3, tensor: self_attn.v_proj, weight quant, best mode: flint_0, mse: 0.0004464936432110049, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 3, tensor: self_attn.v_proj, input quant, best mode: flint_5, mse: 0.0005281858600574306, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 3, tensor: self_attn.o_proj, weight quant, best mode: flint_4, mse: 2.563872072908808e-06, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 3, tensor: self_attn.o_proj, input quant, best mode: flint_0, mse: 3.034231422996304e-06, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 3, tensor: mlp.gate_proj, weight quant, best mode: flint_4, mse: 0.00017643783177742931, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 3, tensor: mlp.gate_proj, input quant, best mode: flint_4, mse: 0.0001882437926517925, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 3, tensor: mlp.up_proj, weight quant, best mode: flint_4, mse: 0.00015154457757287205, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 3, tensor: mlp.up_proj, input quant, best mode: flint_4, mse: 0.0001613766169380688, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 3, tensor: mlp.down_proj, weight quant, best mode: flint_4, mse: 8.538018348635201e-06, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 3, tensor: mlp.down_proj, input quant, best mode: flint_15, mse: 8.100517696855173e-06, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 4, tensor: self_attn.q_proj, weight quant, best mode: flint_4, mse: 0.0017630321794151792, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 4, tensor: self_attn.q_proj, input quant, best mode: flint_5, mse: 0.0017442617021817344, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 4, tensor: self_attn.k_proj, weight quant, best mode: flint_4, mse: 0.001825824260500594, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 4, tensor: self_attn.k_proj, input quant, best mode: flint_5, mse: 0.0018349833399439219, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 4, tensor: self_attn.v_proj, weight quant, best mode: flint_0, mse: 0.0004449023073145096, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 4, tensor: self_attn.v_proj, input quant, best mode: flint_5, mse: 0.0005103942288982592, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 4, tensor: self_attn.o_proj, weight quant, best mode: flint_4, mse: 5.188696284845797e-06, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 4, tensor: self_attn.o_proj, input quant, best mode: flint_0, mse: 6.109386973563836e-06, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 4, tensor: mlp.gate_proj, weight quant, best mode: flint_4, mse: 0.0002523204767111949, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 4, tensor: mlp.gate_proj, input quant, best mode: flint_4, mse: 0.00028584907094723276, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 4, tensor: mlp.up_proj, weight quant, best mode: flint_4, mse: 0.0002047430343493582, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 4, tensor: mlp.up_proj, input quant, best mode: flint_4, mse: 0.00023195748425585466, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 4, tensor: mlp.down_proj, weight quant, best mode: flint_4, mse: 1.5945630582465917e-05, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 4, tensor: mlp.down_proj, input quant, best mode: flint_5, mse: 1.526341220767202e-05, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 5, tensor: self_attn.q_proj, weight quant, best mode: flint_4, mse: 0.0018766255830828969, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 5, tensor: self_attn.q_proj, input quant, best mode: flint_5, mse: 0.001954713778801928, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 5, tensor: self_attn.k_proj, weight quant, best mode: flint_4, mse: 0.0020104508690284677, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 5, tensor: self_attn.k_proj, input quant, best mode: flint_5, mse: 0.002136858486091661, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 5, tensor: self_attn.v_proj, weight quant, best mode: flint_0, mse: 0.0005047255712505663, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 5, tensor: self_attn.v_proj, input quant, best mode: flint_5, mse: 0.0005957192524337216, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 5, tensor: self_attn.o_proj, weight quant, best mode: flint_4, mse: 9.242794265991503e-06, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 5, tensor: self_attn.o_proj, input quant, best mode: flint_0, mse: 1.0943252600560477e-05, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 5, tensor: mlp.gate_proj, weight quant, best mode: flint_4, mse: 0.00031144004784517873, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 5, tensor: mlp.gate_proj, input quant, best mode: flint_4, mse: 0.0003512831484220073, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 5, tensor: mlp.up_proj, weight quant, best mode: flint_4, mse: 0.000251773900306544, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 5, tensor: mlp.up_proj, input quant, best mode: flint_4, mse: 0.00028202954685968714, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 5, tensor: mlp.down_proj, weight quant, best mode: flint_4, mse: 2.2661674231840774e-05, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 5, tensor: mlp.down_proj, input quant, best mode: flint_0, mse: 2.2960277042499283e-05, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 6, tensor: self_attn.q_proj, weight quant, best mode: flint_4, mse: 0.002513410540353331, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 6, tensor: self_attn.q_proj, input quant, best mode: flint_5, mse: 0.002758390731502712, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 6, tensor: self_attn.k_proj, weight quant, best mode: flint_4, mse: 0.0026112695875722095, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 6, tensor: self_attn.k_proj, input quant, best mode: flint_5, mse: 0.002881484163639727, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 6, tensor: self_attn.v_proj, weight quant, best mode: flint_0, mse: 0.0006855344106422396, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 6, tensor: self_attn.v_proj, input quant, best mode: flint_5, mse: 0.0008127470575400402, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 6, tensor: self_attn.o_proj, weight quant, best mode: flint_4, mse: 1.4433561666924495e-05, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 6, tensor: self_attn.o_proj, input quant, best mode: flint_0, mse: 1.6907774912519765e-05, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 6, tensor: mlp.gate_proj, weight quant, best mode: flint_4, mse: 0.0003938826467673456, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 6, tensor: mlp.gate_proj, input quant, best mode: flint_4, mse: 0.00044767273877841364, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 6, tensor: mlp.up_proj, weight quant, best mode: flint_4, mse: 0.0003040052187547778, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 6, tensor: mlp.up_proj, input quant, best mode: flint_4, mse: 0.0003453596372657953, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 6, tensor: mlp.down_proj, weight quant, best mode: flint_4, mse: 3.445491504045261e-05, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 6, tensor: mlp.down_proj, input quant, best mode: flint_0, mse: 3.469309400324398e-05, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 7, tensor: self_attn.q_proj, weight quant, best mode: flint_4, mse: 0.0027322598616513023, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 7, tensor: self_attn.q_proj, input quant, best mode: flint_5, mse: 0.003013592282620957, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 7, tensor: self_attn.k_proj, weight quant, best mode: flint_4, mse: 0.0026860355476998944, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 7, tensor: self_attn.k_proj, input quant, best mode: flint_5, mse: 0.003048028657861754, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 7, tensor: self_attn.v_proj, weight quant, best mode: flint_0, mse: 0.0007689478795675192, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 7, tensor: self_attn.v_proj, input quant, best mode: flint_5, mse: 0.0009146070519956129, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 7, tensor: self_attn.o_proj, weight quant, best mode: flint_4, mse: 2.016892216001711e-05, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 7, tensor: self_attn.o_proj, input quant, best mode: flint_0, mse: 2.359735314185116e-05, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 7, tensor: mlp.gate_proj, weight quant, best mode: flint_4, mse: 0.00046190356295472396, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 7, tensor: mlp.gate_proj, input quant, best mode: flint_4, mse: 0.0005478499577448604, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 7, tensor: mlp.up_proj, weight quant, best mode: flint_4, mse: 0.00036046311390745687, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 7, tensor: mlp.up_proj, input quant, best mode: flint_4, mse: 0.0004259395797272371, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 7, tensor: mlp.down_proj, weight quant, best mode: flint_4, mse: 4.6669518905366494e-05, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 7, tensor: mlp.down_proj, input quant, best mode: flint_0, mse: 4.749029961834593e-05, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 8, tensor: self_attn.q_proj, weight quant, best mode: flint_4, mse: 0.002851090853462401, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 8, tensor: self_attn.q_proj, input quant, best mode: flint_5, mse: 0.00298882942210614, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 8, tensor: self_attn.k_proj, weight quant, best mode: flint_4, mse: 0.0028237822757318995, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 8, tensor: self_attn.k_proj, input quant, best mode: flint_5, mse: 0.003027396155346998, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 8, tensor: self_attn.v_proj, weight quant, best mode: flint_0, mse: 0.0007995013022553431, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 8, tensor: self_attn.v_proj, input quant, best mode: flint_5, mse: 0.0009427025847233244, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 8, tensor: self_attn.o_proj, weight quant, best mode: flint_4, mse: 3.414016241635625e-05, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 8, tensor: self_attn.o_proj, input quant, best mode: flint_0, mse: 4.087000928962989e-05, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 8, tensor: mlp.gate_proj, weight quant, best mode: flint_4, mse: 0.00048775715374598406, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 8, tensor: mlp.gate_proj, input quant, best mode: flint_0, mse: 0.000580919679199832, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 8, tensor: mlp.up_proj, weight quant, best mode: flint_4, mse: 0.00040152433683592157, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 8, tensor: mlp.up_proj, input quant, best mode: flint_0, mse: 0.0004762890618270027, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 8, tensor: mlp.down_proj, weight quant, best mode: flint_4, mse: 5.724797856600408e-05, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 8, tensor: mlp.down_proj, input quant, best mode: flint_0, mse: 5.919445843459224e-05, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 9, tensor: self_attn.q_proj, weight quant, best mode: flint_4, mse: 0.0028611442397875183, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 9, tensor: self_attn.q_proj, input quant, best mode: flint_5, mse: 0.003103693673397901, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 9, tensor: self_attn.k_proj, weight quant, best mode: flint_4, mse: 0.0030130232223951996, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 9, tensor: self_attn.k_proj, input quant, best mode: flint_5, mse: 0.0032713615852068066, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 9, tensor: self_attn.v_proj, weight quant, best mode: flint_0, mse: 0.000864789250234025, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 9, tensor: self_attn.v_proj, input quant, best mode: flint_5, mse: 0.0010223109063928427, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 9, tensor: self_attn.o_proj, weight quant, best mode: flint_4, mse: 4.291402313040815e-05, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 9, tensor: self_attn.o_proj, input quant, best mode: flint_0, mse: 5.1090388242761264e-05, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 9, tensor: mlp.gate_proj, weight quant, best mode: flint_4, mse: 0.0005141707954226744, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 9, tensor: mlp.gate_proj, input quant, best mode: flint_0, mse: 0.0006143584760055448, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 9, tensor: mlp.up_proj, weight quant, best mode: flint_4, mse: 0.0004399074330479133, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 9, tensor: mlp.up_proj, input quant, best mode: flint_0, mse: 0.0005206348213755208, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 9, tensor: mlp.down_proj, weight quant, best mode: flint_4, mse: 7.104119208393541e-05, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 9, tensor: mlp.down_proj, input quant, best mode: flint_0, mse: 7.386760125907802e-05, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 10, tensor: self_attn.q_proj, weight quant, best mode: flint_4, mse: 0.0029481815663884425, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 10, tensor: self_attn.q_proj, input quant, best mode: flint_5, mse: 0.0031636001341171943, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 10, tensor: self_attn.k_proj, weight quant, best mode: flint_4, mse: 0.003072719762065964, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 10, tensor: self_attn.k_proj, input quant, best mode: flint_5, mse: 0.0033694158901894896, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 10, tensor: self_attn.v_proj, weight quant, best mode: flint_0, mse: 0.0008710443248327892, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 10, tensor: self_attn.v_proj, input quant, best mode: flint_5, mse: 0.0010244030881896866, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 10, tensor: self_attn.o_proj, weight quant, best mode: flint_4, mse: 6.622237130384003e-05, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 10, tensor: self_attn.o_proj, input quant, best mode: flint_4, mse: 7.70129087773184e-05, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 10, tensor: mlp.gate_proj, weight quant, best mode: flint_4, mse: 0.0005387488403553283, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 10, tensor: mlp.gate_proj, input quant, best mode: flint_0, mse: 0.0006429597260444756, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 10, tensor: mlp.up_proj, weight quant, best mode: flint_4, mse: 0.0004720089259884363, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 10, tensor: mlp.up_proj, input quant, best mode: flint_0, mse: 0.0005603108388121318, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 10, tensor: mlp.down_proj, weight quant, best mode: flint_4, mse: 8.16894183061327e-05, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 10, tensor: mlp.down_proj, input quant, best mode: flint_0, mse: 8.458997557559169e-05, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 11, tensor: self_attn.q_proj, weight quant, best mode: flint_4, mse: 0.0031302854883564386, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 11, tensor: self_attn.q_proj, input quant, best mode: flint_5, mse: 0.0035429194173466254, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 11, tensor: self_attn.k_proj, weight quant, best mode: flint_4, mse: 0.0030677887437042138, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 11, tensor: self_attn.k_proj, input quant, best mode: flint_5, mse: 0.003523367847583829, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 11, tensor: self_attn.v_proj, weight quant, best mode: flint_0, mse: 0.0011489865753351544, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 11, tensor: self_attn.v_proj, input quant, best mode: flint_5, mse: 0.0013736269391791374, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 11, tensor: self_attn.o_proj, weight quant, best mode: flint_4, mse: 7.636365657342422e-05, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 11, tensor: self_attn.o_proj, input quant, best mode: flint_4, mse: 8.923553824324992e-05, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 11, tensor: mlp.gate_proj, weight quant, best mode: flint_4, mse: 0.0005806764933349484, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 11, tensor: mlp.gate_proj, input quant, best mode: flint_4, mse: 0.0006913985858191956, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 11, tensor: mlp.up_proj, weight quant, best mode: flint_4, mse: 0.0005213466051341599, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 11, tensor: mlp.up_proj, input quant, best mode: flint_4, mse: 0.0006184048399947939, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 11, tensor: mlp.down_proj, weight quant, best mode: flint_4, mse: 9.245373279264197e-05, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 11, tensor: mlp.down_proj, input quant, best mode: flint_0, mse: 9.514695543295259e-05, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 12, tensor: self_attn.q_proj, weight quant, best mode: flint_4, mse: 0.0032359198775707893, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 12, tensor: self_attn.q_proj, input quant, best mode: flint_5, mse: 0.003715875426570377, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 12, tensor: self_attn.k_proj, weight quant, best mode: flint_4, mse: 0.0033818069523301477, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 12, tensor: self_attn.k_proj, input quant, best mode: flint_5, mse: 0.00393888662711145, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 12, tensor: self_attn.v_proj, weight quant, best mode: flint_0, mse: 0.0011250240235918182, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 12, tensor: self_attn.v_proj, input quant, best mode: flint_5, mse: 0.0013518922111056876, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 12, tensor: self_attn.o_proj, weight quant, best mode: flint_4, mse: 7.555504658804559e-05, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 12, tensor: self_attn.o_proj, input quant, best mode: flint_4, mse: 8.830305438707751e-05, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 12, tensor: mlp.gate_proj, weight quant, best mode: flint_4, mse: 0.0006092581451203633, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 12, tensor: mlp.gate_proj, input quant, best mode: flint_4, mse: 0.0007145085172816104, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 12, tensor: mlp.up_proj, weight quant, best mode: flint_4, mse: 0.0005615050286056527, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 12, tensor: mlp.up_proj, input quant, best mode: flint_4, mse: 0.0006592560269847782, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 12, tensor: mlp.down_proj, weight quant, best mode: flint_4, mse: 0.00010528130798267579, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 12, tensor: mlp.down_proj, input quant, best mode: flint_0, mse: 0.00010856581739707239, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 13, tensor: self_attn.q_proj, weight quant, best mode: flint_4, mse: 0.003156409974169822, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 13, tensor: self_attn.q_proj, input quant, best mode: flint_0, mse: 0.003688961602946783, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 13, tensor: self_attn.k_proj, weight quant, best mode: flint_4, mse: 0.003253820884391561, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 13, tensor: self_attn.k_proj, input quant, best mode: flint_0, mse: 0.003821497478996889, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 13, tensor: self_attn.v_proj, weight quant, best mode: flint_0, mse: 0.001236931631885211, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 13, tensor: self_attn.v_proj, input quant, best mode: flint_0, mse: 0.0014758074950235569, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 13, tensor: self_attn.o_proj, weight quant, best mode: flint_4, mse: 8.900302985359726e-05, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 13, tensor: self_attn.o_proj, input quant, best mode: flint_4, mse: 0.0001031749533666933, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 13, tensor: mlp.gate_proj, weight quant, best mode: flint_4, mse: 0.0006447279554485309, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 13, tensor: mlp.gate_proj, input quant, best mode: flint_4, mse: 0.0007572733356408977, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 13, tensor: mlp.up_proj, weight quant, best mode: flint_4, mse: 0.0006136392471338508, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 13, tensor: mlp.up_proj, input quant, best mode: flint_4, mse: 0.0007183928330624236, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 13, tensor: mlp.down_proj, weight quant, best mode: flint_4, mse: 0.00012449537455692776, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 13, tensor: mlp.down_proj, input quant, best mode: flint_0, mse: 0.00012809377627442259, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 14, tensor: self_attn.q_proj, weight quant, best mode: flint_4, mse: 0.003329250601323498, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 14, tensor: self_attn.q_proj, input quant, best mode: flint_0, mse: 0.00386094083213859, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 14, tensor: self_attn.k_proj, weight quant, best mode: flint_4, mse: 0.003383331377251903, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 14, tensor: self_attn.k_proj, input quant, best mode: flint_0, mse: 0.00400110364166207, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 14, tensor: self_attn.v_proj, weight quant, best mode: flint_0, mse: 0.001246327222558212, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 14, tensor: self_attn.v_proj, input quant, best mode: flint_0, mse: 0.001492878609907633, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 14, tensor: self_attn.o_proj, weight quant, best mode: flint_4, mse: 0.0001027521871985321, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 14, tensor: self_attn.o_proj, input quant, best mode: flint_4, mse: 0.00011358585756086141, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 14, tensor: mlp.gate_proj, weight quant, best mode: flint_4, mse: 0.0006917229795395226, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 14, tensor: mlp.gate_proj, input quant, best mode: flint_4, mse: 0.0007996032939460461, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 14, tensor: mlp.up_proj, weight quant, best mode: flint_4, mse: 0.0006616847934235658, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 14, tensor: mlp.up_proj, input quant, best mode: flint_4, mse: 0.0007641141108454783, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 14, tensor: mlp.down_proj, weight quant, best mode: flint_4, mse: 0.00014373295184394512, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 14, tensor: mlp.down_proj, input quant, best mode: flint_0, mse: 0.0001438169023947992, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 15, tensor: self_attn.q_proj, weight quant, best mode: flint_4, mse: 0.0031738414066167548, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 15, tensor: self_attn.q_proj, input quant, best mode: flint_5, mse: 0.0036624490616119117, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 15, tensor: self_attn.k_proj, weight quant, best mode: flint_4, mse: 0.003335589178486994, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 15, tensor: self_attn.k_proj, input quant, best mode: flint_5, mse: 0.003931726010658484, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 15, tensor: self_attn.v_proj, weight quant, best mode: flint_0, mse: 0.001314463098779987, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 15, tensor: self_attn.v_proj, input quant, best mode: flint_5, mse: 0.0015721356059718514, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 15, tensor: self_attn.o_proj, weight quant, best mode: flint_4, mse: 0.00010182377089204444, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 15, tensor: self_attn.o_proj, input quant, best mode: flint_4, mse: 0.00011359660162052017, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 15, tensor: mlp.gate_proj, weight quant, best mode: flint_4, mse: 0.0007612409635783275, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 15, tensor: mlp.gate_proj, input quant, best mode: flint_4, mse: 0.0008883308787227415, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 15, tensor: mlp.up_proj, weight quant, best mode: flint_4, mse: 0.0007289828714389516, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 15, tensor: mlp.up_proj, input quant, best mode: flint_4, mse: 0.000847002664630762, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 15, tensor: mlp.down_proj, weight quant, best mode: flint_4, mse: 0.0001890545840229978, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 15, tensor: mlp.down_proj, input quant, best mode: flint_5, mse: 0.00018206266990717884, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 16, tensor: self_attn.q_proj, weight quant, best mode: flint_4, mse: 0.0032359134385023538, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 16, tensor: self_attn.q_proj, input quant, best mode: flint_0, mse: 0.0037537323536407973, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 16, tensor: self_attn.k_proj, weight quant, best mode: flint_4, mse: 0.0033275437179119023, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 16, tensor: self_attn.k_proj, input quant, best mode: flint_0, mse: 0.003957914830714259, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 16, tensor: self_attn.v_proj, weight quant, best mode: flint_0, mse: 0.001488463499057006, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 16, tensor: self_attn.v_proj, input quant, best mode: flint_0, mse: 0.0017786531901820156, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 16, tensor: self_attn.o_proj, weight quant, best mode: flint_4, mse: 0.00011774034776962139, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 16, tensor: self_attn.o_proj, input quant, best mode: flint_4, mse: 0.00013128519891537677, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 16, tensor: mlp.gate_proj, weight quant, best mode: flint_4, mse: 0.0008670630577706996, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 16, tensor: mlp.gate_proj, input quant, best mode: flint_4, mse: 0.0009671533239748918, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 16, tensor: mlp.up_proj, weight quant, best mode: flint_4, mse: 0.0008157733766560238, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 16, tensor: mlp.up_proj, input quant, best mode: flint_4, mse: 0.0009078984322745659, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 16, tensor: mlp.down_proj, weight quant, best mode: flint_4, mse: 0.00024868544476101335, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 16, tensor: mlp.down_proj, input quant, best mode: flint_5, mse: 0.0002273714033621945, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 17, tensor: self_attn.q_proj, weight quant, best mode: flint_4, mse: 0.0031897970812820526, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 17, tensor: self_attn.q_proj, input quant, best mode: flint_0, mse: 0.0037644991012637332, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 17, tensor: self_attn.k_proj, weight quant, best mode: flint_4, mse: 0.003312290496608786, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 17, tensor: self_attn.k_proj, input quant, best mode: flint_0, mse: 0.003940876932254549, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 17, tensor: self_attn.v_proj, weight quant, best mode: flint_0, mse: 0.0015778450556565098, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 17, tensor: self_attn.v_proj, input quant, best mode: flint_0, mse: 0.0018025252806210409, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 17, tensor: self_attn.o_proj, weight quant, best mode: flint_4, mse: 9.63982011350145e-05, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 17, tensor: self_attn.o_proj, input quant, best mode: flint_4, mse: 0.0001134513539513486, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 17, tensor: mlp.gate_proj, weight quant, best mode: flint_4, mse: 0.0009716484290079472, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 17, tensor: mlp.gate_proj, input quant, best mode: flint_4, mse: 0.0010459000178275333, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 17, tensor: mlp.up_proj, weight quant, best mode: flint_4, mse: 0.0008917388630218547, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 17, tensor: mlp.up_proj, input quant, best mode: flint_4, mse: 0.0009575448862012592, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 17, tensor: mlp.down_proj, weight quant, best mode: flint_4, mse: 0.00026300130826800705, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 17, tensor: mlp.down_proj, input quant, best mode: flint_5, mse: 0.00024205251884446187, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 18, tensor: self_attn.q_proj, weight quant, best mode: flint_4, mse: 0.0033412804633226926, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 18, tensor: self_attn.q_proj, input quant, best mode: flint_0, mse: 0.0039050226554188903, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 18, tensor: self_attn.k_proj, weight quant, best mode: flint_4, mse: 0.003425868038955499, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 18, tensor: self_attn.k_proj, input quant, best mode: flint_0, mse: 0.00407982375724378, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 18, tensor: self_attn.v_proj, weight quant, best mode: flint_4, mse: 0.0018508433854779963, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 18, tensor: self_attn.v_proj, input quant, best mode: flint_0, mse: 0.0021565867240855847, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 18, tensor: self_attn.o_proj, weight quant, best mode: flint_4, mse: 9.860451935058621e-05, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 18, tensor: self_attn.o_proj, input quant, best mode: flint_4, mse: 0.00011560897534085392, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 18, tensor: mlp.gate_proj, weight quant, best mode: flint_4, mse: 0.0011088794509339385, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 18, tensor: mlp.gate_proj, input quant, best mode: flint_4, mse: 0.0011785369493330583, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 18, tensor: mlp.up_proj, weight quant, best mode: flint_4, mse: 0.0009893097110794313, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 18, tensor: mlp.up_proj, input quant, best mode: flint_4, mse: 0.0010526719804946037, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 18, tensor: mlp.down_proj, weight quant, best mode: flint_4, mse: 0.00029798817239726775, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 18, tensor: mlp.down_proj, input quant, best mode: flint_5, mse: 0.0002758627641031141, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 19, tensor: self_attn.q_proj, weight quant, best mode: flint_4, mse: 0.003194529571742267, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 19, tensor: self_attn.q_proj, input quant, best mode: flint_0, mse: 0.0037695900085745375, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 19, tensor: self_attn.k_proj, weight quant, best mode: flint_4, mse: 0.0032687622608263732, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 19, tensor: self_attn.k_proj, input quant, best mode: flint_0, mse: 0.0039276162724087, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 19, tensor: self_attn.v_proj, weight quant, best mode: flint_4, mse: 0.001865665564419628, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 19, tensor: self_attn.v_proj, input quant, best mode: flint_0, mse: 0.002174420019501525, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 19, tensor: self_attn.o_proj, weight quant, best mode: flint_4, mse: 9.44918278635425e-05, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 19, tensor: self_attn.o_proj, input quant, best mode: flint_4, mse: 0.00010157742396610863, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 19, tensor: mlp.gate_proj, weight quant, best mode: flint_4, mse: 0.0011877431979705388, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 19, tensor: mlp.gate_proj, input quant, best mode: flint_4, mse: 0.0012581221385786032, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 19, tensor: mlp.up_proj, weight quant, best mode: flint_4, mse: 0.0010559076563150579, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 19, tensor: mlp.up_proj, input quant, best mode: flint_4, mse: 0.001115656497425077, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 19, tensor: mlp.down_proj, weight quant, best mode: flint_4, mse: 0.0003245555182771777, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 19, tensor: mlp.down_proj, input quant, best mode: flint_5, mse: 0.0003038729067839041, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 20, tensor: self_attn.q_proj, weight quant, best mode: flint_4, mse: 0.00325245426761524, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 20, tensor: self_attn.q_proj, input quant, best mode: flint_0, mse: 0.003826944094434691, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 20, tensor: self_attn.k_proj, weight quant, best mode: flint_4, mse: 0.0033119235440137017, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 20, tensor: self_attn.k_proj, input quant, best mode: flint_0, mse: 0.003978524089735979, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 20, tensor: self_attn.v_proj, weight quant, best mode: flint_4, mse: 0.001914150185043801, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 20, tensor: self_attn.v_proj, input quant, best mode: flint_0, mse: 0.002248066888273847, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 20, tensor: self_attn.o_proj, weight quant, best mode: flint_4, mse: 9.617029787984733e-05, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 20, tensor: self_attn.o_proj, input quant, best mode: flint_4, mse: 0.00010759219202340271, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 20, tensor: mlp.gate_proj, weight quant, best mode: flint_4, mse: 0.001270983777579579, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 20, tensor: mlp.gate_proj, input quant, best mode: flint_4, mse: 0.001333427037075154, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 20, tensor: mlp.up_proj, weight quant, best mode: flint_4, mse: 0.0011157950840422635, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 20, tensor: mlp.up_proj, input quant, best mode: flint_4, mse: 0.0011681771287398043, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 20, tensor: mlp.down_proj, weight quant, best mode: flint_4, mse: 0.00038258914532290987, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 20, tensor: mlp.down_proj, input quant, best mode: flint_5, mse: 0.000354588084562426, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 21, tensor: self_attn.q_proj, weight quant, best mode: flint_4, mse: 0.0034237343366833165, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 21, tensor: self_attn.q_proj, input quant, best mode: flint_0, mse: 0.00401516848795759, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 21, tensor: self_attn.k_proj, weight quant, best mode: flint_4, mse: 0.0034904078480706376, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 21, tensor: self_attn.k_proj, input quant, best mode: flint_0, mse: 0.004099975514312824, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 21, tensor: self_attn.v_proj, weight quant, best mode: flint_4, mse: 0.0022337978306203785, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 21, tensor: self_attn.v_proj, input quant, best mode: flint_0, mse: 0.002620835522826862, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 21, tensor: self_attn.o_proj, weight quant, best mode: flint_4, mse: 9.837207037261812e-05, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 21, tensor: self_attn.o_proj, input quant, best mode: flint_4, mse: 0.00010317337137342618, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 21, tensor: mlp.gate_proj, weight quant, best mode: flint_4, mse: 0.0013662210602283864, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 21, tensor: mlp.gate_proj, input quant, best mode: flint_4, mse: 0.0014220270258970109, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 21, tensor: mlp.up_proj, weight quant, best mode: flint_4, mse: 0.001178417483321101, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 21, tensor: mlp.up_proj, input quant, best mode: flint_4, mse: 0.0012240585540855796, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 21, tensor: mlp.down_proj, weight quant, best mode: flint_4, mse: 0.00041844363354750407, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 21, tensor: mlp.down_proj, input quant, best mode: flint_5, mse: 0.0003797774405725964, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 22, tensor: self_attn.q_proj, weight quant, best mode: flint_4, mse: 0.0036938843366218963, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 22, tensor: self_attn.q_proj, input quant, best mode: flint_0, mse: 0.004319728903443494, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 22, tensor: self_attn.k_proj, weight quant, best mode: flint_4, mse: 0.0037437844375492945, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 22, tensor: self_attn.k_proj, input quant, best mode: flint_0, mse: 0.0044362021749603945, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 22, tensor: self_attn.v_proj, weight quant, best mode: flint_4, mse: 0.002317312924714936, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 22, tensor: self_attn.v_proj, input quant, best mode: flint_0, mse: 0.0027176688666293142, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 22, tensor: self_attn.o_proj, weight quant, best mode: flint_4, mse: 0.00011963812256322038, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 22, tensor: self_attn.o_proj, input quant, best mode: flint_4, mse: 0.00012402196882442288, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 22, tensor: mlp.gate_proj, weight quant, best mode: flint_4, mse: 0.001454185206094331, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 22, tensor: mlp.gate_proj, input quant, best mode: flint_4, mse: 0.0015016327514430744, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 22, tensor: mlp.up_proj, weight quant, best mode: flint_4, mse: 0.0012378366043490417, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 22, tensor: mlp.up_proj, input quant, best mode: flint_4, mse: 0.0012774395863606736, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 22, tensor: mlp.down_proj, weight quant, best mode: flint_4, mse: 0.000436705686679275, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 22, tensor: mlp.down_proj, input quant, best mode: flint_5, mse: 0.00041669132104157805, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 23, tensor: self_attn.q_proj, weight quant, best mode: flint_4, mse: 0.0038447409549448902, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 23, tensor: self_attn.q_proj, input quant, best mode: flint_0, mse: 0.004564708751198764, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 23, tensor: self_attn.k_proj, weight quant, best mode: flint_4, mse: 0.0038873441095883658, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 23, tensor: self_attn.k_proj, input quant, best mode: flint_0, mse: 0.004632530857938398, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 23, tensor: self_attn.v_proj, weight quant, best mode: flint_4, mse: 0.0027264442044219427, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 23, tensor: self_attn.v_proj, input quant, best mode: flint_0, mse: 0.0031942453490489114, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 23, tensor: self_attn.o_proj, weight quant, best mode: flint_4, mse: 0.00011077719480468076, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 23, tensor: self_attn.o_proj, input quant, best mode: flint_4, mse: 0.00012102317115588945, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 23, tensor: mlp.gate_proj, weight quant, best mode: flint_4, mse: 0.0015388111006299388, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 23, tensor: mlp.gate_proj, input quant, best mode: flint_4, mse: 0.0016000144257079625, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 23, tensor: mlp.up_proj, weight quant, best mode: flint_4, mse: 0.0013266230551182122, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 23, tensor: mlp.up_proj, input quant, best mode: flint_4, mse: 0.0013749842516678264, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 23, tensor: mlp.down_proj, weight quant, best mode: flint_4, mse: 0.000467623954667783, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 23, tensor: mlp.down_proj, input quant, best mode: flint_5, mse: 0.00044030231554288474, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 24, tensor: self_attn.q_proj, weight quant, best mode: flint_4, mse: 0.0036436937836145833, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 24, tensor: self_attn.q_proj, input quant, best mode: flint_0, mse: 0.0042997118387336965, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 24, tensor: self_attn.k_proj, weight quant, best mode: flint_4, mse: 0.0036691887430436625, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 24, tensor: self_attn.k_proj, input quant, best mode: flint_0, mse: 0.0043382682135801424, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 24, tensor: self_attn.v_proj, weight quant, best mode: flint_4, mse: 0.002671977268637697, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 24, tensor: self_attn.v_proj, input quant, best mode: flint_0, mse: 0.0031273554073936055, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 24, tensor: self_attn.o_proj, weight quant, best mode: flint_4, mse: 0.0001509576607054222, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 24, tensor: self_attn.o_proj, input quant, best mode: flint_4, mse: 0.00016068456433796999, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 24, tensor: mlp.gate_proj, weight quant, best mode: flint_4, mse: 0.0016064582502787587, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 24, tensor: mlp.gate_proj, input quant, best mode: flint_4, mse: 0.001658003977839926, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 24, tensor: mlp.up_proj, weight quant, best mode: flint_4, mse: 0.0013818608101525266, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 24, tensor: mlp.up_proj, input quant, best mode: flint_4, mse: 0.0014256967408114375, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 24, tensor: mlp.down_proj, weight quant, best mode: flint_4, mse: 0.0004770004485888243, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 24, tensor: mlp.down_proj, input quant, best mode: flint_5, mse: 0.00046447402746315326, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 25, tensor: self_attn.q_proj, weight quant, best mode: flint_4, mse: 0.004055336630394085, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 25, tensor: self_attn.q_proj, input quant, best mode: flint_0, mse: 0.004775596022965678, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 25, tensor: self_attn.k_proj, weight quant, best mode: flint_4, mse: 0.00405843698351282, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 25, tensor: self_attn.k_proj, input quant, best mode: flint_0, mse: 0.004812652415904728, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 25, tensor: self_attn.v_proj, weight quant, best mode: flint_4, mse: 0.0031218483706052518, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 25, tensor: self_attn.v_proj, input quant, best mode: flint_0, mse: 0.003680103267023151, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 25, tensor: self_attn.o_proj, weight quant, best mode: flint_4, mse: 0.00018404174685418304, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 25, tensor: self_attn.o_proj, input quant, best mode: flint_4, mse: 0.00018939112503207466, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 25, tensor: mlp.gate_proj, weight quant, best mode: flint_4, mse: 0.001720905340100025, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 25, tensor: mlp.gate_proj, input quant, best mode: flint_4, mse: 0.0017988149460353823, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 25, tensor: mlp.up_proj, weight quant, best mode: flint_4, mse: 0.0014899551409665447, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 25, tensor: mlp.up_proj, input quant, best mode: flint_4, mse: 0.0015539784183903887, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 25, tensor: mlp.down_proj, weight quant, best mode: flint_4, mse: 0.0005828166642708707, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 25, tensor: mlp.down_proj, input quant, best mode: flint_5, mse: 0.0005198121294534852, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 26, tensor: self_attn.q_proj, weight quant, best mode: flint_4, mse: 0.0038640828641986567, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 26, tensor: self_attn.q_proj, input quant, best mode: flint_0, mse: 0.004551467352285442, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 26, tensor: self_attn.k_proj, weight quant, best mode: flint_4, mse: 0.0038999745574968855, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 26, tensor: self_attn.k_proj, input quant, best mode: flint_0, mse: 0.004625895763791817, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 26, tensor: self_attn.v_proj, weight quant, best mode: flint_4, mse: 0.0031908956128655465, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 26, tensor: self_attn.v_proj, input quant, best mode: flint_0, mse: 0.0037271642533108855, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 26, tensor: self_attn.o_proj, weight quant, best mode: flint_4, mse: 0.0001742481678192102, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 26, tensor: self_attn.o_proj, input quant, best mode: flint_4, mse: 0.00019855183517547375, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 26, tensor: mlp.gate_proj, weight quant, best mode: flint_4, mse: 0.0018174460286811565, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 26, tensor: mlp.gate_proj, input quant, best mode: flint_4, mse: 0.0018889443095049152, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 26, tensor: mlp.up_proj, weight quant, best mode: flint_4, mse: 0.0015740443468943094, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 26, tensor: mlp.up_proj, input quant, best mode: flint_4, mse: 0.001633891496151664, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 26, tensor: mlp.down_proj, weight quant, best mode: flint_4, mse: 0.0006313377134643311, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 26, tensor: mlp.down_proj, input quant, best mode: flint_5, mse: 0.0005788473036220102, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 27, tensor: self_attn.q_proj, weight quant, best mode: flint_4, mse: 0.004001323537039039, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 27, tensor: self_attn.q_proj, input quant, best mode: flint_0, mse: 0.004776888012150905, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 27, tensor: self_attn.k_proj, weight quant, best mode: flint_4, mse: 0.004039699271042416, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 27, tensor: self_attn.k_proj, input quant, best mode: flint_0, mse: 0.004877273941104441, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 27, tensor: self_attn.v_proj, weight quant, best mode: flint_4, mse: 0.0030765655923955977, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 27, tensor: self_attn.v_proj, input quant, best mode: flint_0, mse: 0.0036571505322760952, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 27, tensor: self_attn.o_proj, weight quant, best mode: flint_4, mse: 0.0001691131285771681, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 27, tensor: self_attn.o_proj, input quant, best mode: flint_4, mse: 0.000187959698751542, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 27, tensor: mlp.gate_proj, weight quant, best mode: flint_4, mse: 0.0019262171799950835, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 27, tensor: mlp.gate_proj, input quant, best mode: flint_4, mse: 0.002027943611911304, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 27, tensor: mlp.up_proj, weight quant, best mode: flint_4, mse: 0.0016885545583168898, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 27, tensor: mlp.up_proj, input quant, best mode: flint_4, mse: 0.0017679727906843247, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 27, tensor: mlp.down_proj, weight quant, best mode: flint_4, mse: 0.0007450888620750324, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 27, tensor: mlp.down_proj, input quant, best mode: flint_5, mse: 0.0006933322024991116, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 28, tensor: self_attn.q_proj, weight quant, best mode: flint_4, mse: 0.003950335789615641, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 28, tensor: self_attn.q_proj, input quant, best mode: flint_0, mse: 0.004663114688617425, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 28, tensor: self_attn.k_proj, weight quant, best mode: flint_4, mse: 0.003973410242525666, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 28, tensor: self_attn.k_proj, input quant, best mode: flint_0, mse: 0.004783160569673001, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 28, tensor: self_attn.v_proj, weight quant, best mode: flint_4, mse: 0.003392143518841266, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 28, tensor: self_attn.v_proj, input quant, best mode: flint_0, mse: 0.004016192950793553, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 28, tensor: self_attn.o_proj, weight quant, best mode: flint_4, mse: 0.00022585160456946047, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 28, tensor: self_attn.o_proj, input quant, best mode: flint_4, mse: 0.0002503922530215283, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 28, tensor: mlp.gate_proj, weight quant, best mode: flint_4, mse: 0.0020283683609726697, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 28, tensor: mlp.gate_proj, input quant, best mode: flint_4, mse: 0.002147035842181521, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 28, tensor: mlp.up_proj, weight quant, best mode: flint_4, mse: 0.0018158595429812728, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 28, tensor: mlp.up_proj, input quant, best mode: flint_4, mse: 0.0019257271675139414, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 28, tensor: mlp.down_proj, weight quant, best mode: flint_4, mse: 0.0010081415671504548, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 28, tensor: mlp.down_proj, input quant, best mode: flint_5, mse: 0.0008976473624538047, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 29, tensor: self_attn.q_proj, weight quant, best mode: flint_4, mse: 0.0035665180443189316, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 29, tensor: self_attn.q_proj, input quant, best mode: flint_0, mse: 0.004187348606506409, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 29, tensor: self_attn.k_proj, weight quant, best mode: flint_4, mse: 0.0035542755471814694, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 29, tensor: self_attn.k_proj, input quant, best mode: flint_0, mse: 0.004288264610303118, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 29, tensor: self_attn.v_proj, weight quant, best mode: flint_4, mse: 0.003246801145290001, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 29, tensor: self_attn.v_proj, input quant, best mode: flint_0, mse: 0.003826984098978761, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 29, tensor: self_attn.o_proj, weight quant, best mode: flint_4, mse: 0.0002560523767165865, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 29, tensor: self_attn.o_proj, input quant, best mode: flint_4, mse: 0.00026817105663871205, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 29, tensor: mlp.gate_proj, weight quant, best mode: flint_4, mse: 0.0020891689983415836, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 29, tensor: mlp.gate_proj, input quant, best mode: flint_4, mse: 0.0022374122256256226, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 29, tensor: mlp.up_proj, weight quant, best mode: flint_4, mse: 0.0019044310457377227, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 29, tensor: mlp.up_proj, input quant, best mode: flint_4, mse: 0.0020318774197759216, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 29, tensor: mlp.down_proj, weight quant, best mode: flint_4, mse: 0.0013710343332484763, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 29, tensor: mlp.down_proj, input quant, best mode: flint_5, mse: 0.0011841881678366737, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 30, tensor: self_attn.q_proj, weight quant, best mode: flint_4, mse: 0.0036590576567487616, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 30, tensor: self_attn.q_proj, input quant, best mode: flint_4, mse: 0.004154849045907862, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 30, tensor: self_attn.k_proj, weight quant, best mode: flint_4, mse: 0.003699663243432774, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 30, tensor: self_attn.k_proj, input quant, best mode: flint_4, mse: 0.004276291415551203, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 30, tensor: self_attn.v_proj, weight quant, best mode: flint_4, mse: 0.003422592066386823, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 30, tensor: self_attn.v_proj, input quant, best mode: flint_4, mse: 0.003970668394878274, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 30, tensor: self_attn.o_proj, weight quant, best mode: flint_4, mse: 0.00033754114680722026, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 30, tensor: self_attn.o_proj, input quant, best mode: flint_4, mse: 0.0003995915852281317, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 30, tensor: mlp.gate_proj, weight quant, best mode: flint_4, mse: 0.0022112532365800262, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 30, tensor: mlp.gate_proj, input quant, best mode: flint_4, mse: 0.002389692577960328, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 30, tensor: mlp.up_proj, weight quant, best mode: flint_4, mse: 0.0019812999589424686, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 30, tensor: mlp.up_proj, input quant, best mode: flint_4, mse: 0.0021448275687622593, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 30, tensor: mlp.down_proj, weight quant, best mode: flint_0, mse: 0.003196672287825055, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 30, tensor: mlp.down_proj, input quant, best mode: flint_5, mse: 0.0018994748939024238, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 31, tensor: self_attn.q_proj, weight quant, best mode: flint_4, mse: 0.002562773037958755, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 31, tensor: self_attn.q_proj, input quant, best mode: flint_4, mse: 0.00290625359467606, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 31, tensor: self_attn.k_proj, weight quant, best mode: flint_4, mse: 0.0027482785133702958, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 31, tensor: self_attn.k_proj, input quant, best mode: flint_4, mse: 0.0031273069357108606, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 31, tensor: self_attn.v_proj, weight quant, best mode: flint_4, mse: 0.0019679210337274636, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 31, tensor: self_attn.v_proj, input quant, best mode: flint_4, mse: 0.0022595979908892143, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 31, tensor: self_attn.o_proj, weight quant, best mode: flint_4, mse: 0.000358802539923036, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 31, tensor: self_attn.o_proj, input quant, best mode: flint_4, mse: 0.0004159075389325291, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 31, tensor: mlp.gate_proj, weight quant, best mode: flint_4, mse: 0.0019964008122657206, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 31, tensor: mlp.gate_proj, input quant, best mode: flint_4, mse: 0.002186739840889431, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 31, tensor: mlp.up_proj, weight quant, best mode: flint_4, mse: 0.0017782894269568266, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 31, tensor: mlp.up_proj, input quant, best mode: flint_4, mse: 0.0019495606293047799, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+layer: 31, tensor: mlp.down_proj, weight quant, best mode: flint_0, mse: 0.00981967056872569, alpha: 1.0, bit_width: 4, group_size: 16
+layer: 31, tensor: mlp.down_proj, input quant, best mode: flint_5, mse: 0.004836645051311324, alpha: 1.0, bit_width: 4, group_size: 16
+meta-flint search data type and alpha.
+2026-05-31 18:06:34 - Task finish!
+5.678260803222656

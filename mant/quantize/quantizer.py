@@ -433,6 +433,10 @@ def make_quant_linear(
                 from .qmodule_ant import ANT_Linear
                 q_linear = ANT_Linear.from_linear(
                     module, cur_w_bit, cur_a_bit, module_quant_config['q_group_size'], i, name, quant_config=module_quant_config)
+            elif quant_config['quant_method'] == 'metaflint':
+                from .qmodule_metaflint import MetaFlint_Linear
+                q_linear = MetaFlint_Linear.from_linear(
+                    module, cur_w_bit, cur_a_bit, module_quant_config['q_group_size'], i, name, quant_config=module_quant_config)
             elif quant_config['quant_method'] == 'olive':
                 from .qmodule_olive import OliVe_Linear
                 q_linear = OliVe_Linear.from_linear(

@@ -76,12 +76,17 @@ args = parser.parse_args()
 if args.limit_samples is not None and args.limit_samples <= 0:
     raise ValueError("--limit_samples must be a positive integer")
 
+
+def normalize_quant_method(method):
+    return "metaflint" if method in {"metaflint", "meta_flint", "meta-flint"} else method
+
+
 quant_config = {
     "quant_dtype": args.quant_dtype,  # specify the data type
     "q_group_size": args.q_group_size,  # whether to use group quantization
     "w_low": args.w_low,
     "w_high": args.w_high,
-    "quant_method": args.quant_mode,
+    "quant_method": normalize_quant_method(args.quant_mode),
     "quant_kv": False,
 }
 
@@ -174,7 +179,7 @@ def build_model_and_enc(model_path):
     if has_low_precision(weight_bit_spec):
         quant_mode = quant_config['quant_method']
 
-        if quant_mode in ['ant', 'olive']:
+        if quant_mode in ['ant', 'olive', 'metaflint']:
             make_quant_linear(
                 model, weight_bit_spec, activation_bit_spec, quant_config=quant_config
             )
