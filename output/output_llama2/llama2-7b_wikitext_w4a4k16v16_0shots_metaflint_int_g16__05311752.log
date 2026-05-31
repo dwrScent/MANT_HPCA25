@@ -1,5 +1,0 @@
-
-Quantization configuration: {'quant_dtype': 'int', 'q_group_size': 16, 'w_low': 75, 'w_high': 150, 'quant_method': 'metaflint', 'quant_kv': False}
-
-args: Namespace(model_path='meta-llama/Llama-2-7b-hf', batch_size=32, tasks='wikitext', num_fewshot=0, limit_samples=None, quant_bit_width='w4a4k16v16', w_bit=4, a_bit=4, k_bit=16, v_bit=16, q_group_size=16, quant_mode='metaflint', quant_dtype='int', w_low=75, w_high=150, layer_bit_config=None, layer_a_bits='global', a_stride=10) 
-
