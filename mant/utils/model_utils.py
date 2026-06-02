@@ -16,7 +16,7 @@ import os
 def load_quantized_model(model_path, args, quant_config):
     if os.path.exists(os.path.join(model_path, 'config.json')) and args.quant_mode == 'mant':
         print(f"Loading quantized model from {model_path} ...")
-        enc = AutoTokenizer.from_pretrained(model_path, use_fast=False)
+        enc = AutoTokenizer.from_pretrained(model_path)
         config = AutoConfig.from_pretrained(model_path)
         config.update({
             "a_bit": args.a_bit, 
@@ -35,7 +35,11 @@ def load_quantized_model(model_path, args, quant_config):
             elif isinstance(config, LlamaConfig):
                 model_cls = LlamaForCausalLM_mant
             else:
-                raise NotImplementedError('not support yet')
+                model_type = getattr(config, "model_type", type(config).__name__)
+                raise NotImplementedError(
+                    f"KV cache quantization is not supported for model_type={model_type}. "
+                    "Use k16v16 for Qwen3 or add a Qwen3-specific MANT attention wrapper."
+                )
         
         model = model_cls.from_pretrained(model_path, config=config, **kwargs)
         return model, enc
@@ -71,15 +75,13 @@ def get_named_linears(module):
 
 
 def get_blocks(model):
-    if isinstance(model, LlamaForCausalLM) or isinstance(model, LlamaForCausalLM_mant):
+    if hasattr(model, "model") and hasattr(model.model, "layers"):
         layers = model.model.layers
-    elif isinstance(model, FalconForCausalLM):
-        layers = model.transformer.h
-    elif isinstance(model, OPTForCausalLM) or isinstance(model, OPTForCausalLM_mant):
+    elif hasattr(model, "model") and hasattr(model.model, "decoder") and hasattr(model.model.decoder, "layers"):
         layers = model.model.decoder.layers
-    elif isinstance(model, GPT2LMHeadModel):
+    elif hasattr(model, "transformer") and hasattr(model.transformer, "h"):
         layers = model.transformer.h
-    elif isinstance(model, BertForSequenceClassification):
+    elif hasattr(model, "bert") and hasattr(model.bert, "encoder") and hasattr(model.bert.encoder, "layer"):
         layers = model.bert.encoder.layer
     else:
         raise NotImplementedError(type(model))

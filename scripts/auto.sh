@@ -7,12 +7,12 @@ REPO_ROOT=$(cd -- "$SCRIPT_DIR/.." && pwd)
 cd "$REPO_ROOT" || exit 1
 
 # Default experiment configuration. Override through environment variables when needed.
-DEFAULT_MODEL_NAMES=("llama3-8b" "qwen3-8b")
+DEFAULT_MODEL_NAMES=("qwen3-8b" "llama3-8b")
 DEFAULT_MODEL_PATHS=(
-    "${LLAMA3_MODEL_PATH:-/cephfs/shared/model/llama-3-8b-hf}"
     "${QWEN3_MODEL_PATH:-/cephfs/shared/model/Qwen3-8B}"
+    "${LLAMA3_MODEL_PATH:-/cephfs/shared/model/llama-3-8b-hf}"
 )
-DEFAULT_METHODS=("fp16" "olive" "ant" "mant" "meta-flint")
+DEFAULT_METHODS=("olive" "ant" "mant" "meta-flint" "fp16")
 DEFAULT_TASKS=(
     "hellaswag"
     "piqa"
@@ -21,6 +21,7 @@ DEFAULT_TASKS=(
     "arc_challenge"
     "boolq"
 )
+DEFAULT_GROUP_SIZES=(64 32)
 
 split_csv() {
     local csv="$1"
@@ -32,6 +33,7 @@ MODEL_NAMES=("${DEFAULT_MODEL_NAMES[@]}")
 MODEL_PATHS=("${DEFAULT_MODEL_PATHS[@]}")
 METHOD_LIST=("${DEFAULT_METHODS[@]}")
 TASK_LIST=("${DEFAULT_TASKS[@]}")
+GROUP_SIZE_LIST=("${DEFAULT_GROUP_SIZES[@]}")
 
 if [ -n "${MODELS:-}" ]; then
     split_csv "$MODELS" MODEL_NAMES
@@ -45,6 +47,11 @@ fi
 if [ -n "${TASKS:-}" ]; then
     split_csv "$TASKS" TASK_LIST
 fi
+if [ -n "${GROUP_SIZES:-}" ]; then
+    split_csv "$GROUP_SIZES" GROUP_SIZE_LIST
+elif [ -n "${GROUP_SIZE:-}" ]; then
+    GROUP_SIZE_LIST=("$GROUP_SIZE")
+fi
 
 if [ -z "${PYTHON_BIN:-}" ]; then
     if command -v python >/dev/null 2>&1; then
@@ -57,7 +64,6 @@ SHOTS=${SHOTS:-0}
 BATCH_SIZE=${BATCH_SIZE:-32}
 BOOLQ_BATCH_SIZE=${BOOLQ_BATCH_SIZE:-8}
 RECORD_BATCH_SIZE=${RECORD_BATCH_SIZE:-1}
-GROUP_SIZE=${GROUP_SIZE:-128}
 QUANT_BIT_WIDTH=${QUANT_BIT_WIDTH:-"w4a4k16v16"}
 TIMEOUT_SECONDS=${TIMEOUT_SECONDS:-0}
 LIMIT_SAMPLES=${LIMIT_SAMPLES:-}
@@ -87,16 +93,18 @@ sanitize_field() {
 
 append_record() {
     local model_name="$1"
-    local method="$2"
-    local task="$3"
-    local status="$4"
-    local batch_size="$5"
-    local log_file="$6"
-    local metric="$7"
-    local value="$8"
+    local group_size="$2"
+    local method="$3"
+    local task="$4"
+    local status="$5"
+    local batch_size="$6"
+    local log_file="$7"
+    local metric="$8"
+    local value="$9"
 
-    printf "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" \
+    printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n' \
         "$(sanitize_field "$model_name")" \
+        "$(sanitize_field "$group_size")" \
         "$(sanitize_field "$method")" \
         "$(sanitize_field "$task")" \
         "$(sanitize_field "$status")" \
@@ -189,11 +197,12 @@ classify_failure() {
 
 method_config() {
     local method="$1"
+    local group_size="$2"
 
     METHOD_QUANT_MODE="$method"
     METHOD_QUANT_DTYPE="int"
     METHOD_QUANT_BIT_WIDTH="$QUANT_BIT_WIDTH"
-    METHOD_GROUP_SIZE="$GROUP_SIZE"
+    METHOD_GROUP_SIZE="$group_size"
 
     case "$method" in
         fp16)
@@ -206,25 +215,25 @@ method_config() {
             METHOD_QUANT_MODE="olive"
             METHOD_QUANT_DTYPE="${OLIVE_QUANT_DTYPE:-int-flint}"
             METHOD_QUANT_BIT_WIDTH="${OLIVE_QUANT_BIT_WIDTH:-$QUANT_BIT_WIDTH}"
-            METHOD_GROUP_SIZE="${OLIVE_GROUP_SIZE:-$GROUP_SIZE}"
+            METHOD_GROUP_SIZE="${OLIVE_GROUP_SIZE:-$group_size}"
             ;;
         ant)
             METHOD_QUANT_MODE="ant"
             METHOD_QUANT_DTYPE="${ANT_QUANT_DTYPE:-int-flint-pot-float}"
             METHOD_QUANT_BIT_WIDTH="${ANT_QUANT_BIT_WIDTH:-$QUANT_BIT_WIDTH}"
-            METHOD_GROUP_SIZE="${ANT_GROUP_SIZE:-$GROUP_SIZE}"
+            METHOD_GROUP_SIZE="${ANT_GROUP_SIZE:-$group_size}"
             ;;
         mant)
             METHOD_QUANT_MODE="mant"
             METHOD_QUANT_DTYPE="${MANT_QUANT_DTYPE:-int}"
             METHOD_QUANT_BIT_WIDTH="${MANT_QUANT_BIT_WIDTH:-$QUANT_BIT_WIDTH}"
-            METHOD_GROUP_SIZE="${MANT_GROUP_SIZE:-$GROUP_SIZE}"
+            METHOD_GROUP_SIZE="${MANT_GROUP_SIZE:-$group_size}"
             ;;
         meta-flint|meta_flint|metaflint)
             METHOD_QUANT_MODE="meta-flint"
             METHOD_QUANT_DTYPE="${META_FLINT_QUANT_DTYPE:-int}"
             METHOD_QUANT_BIT_WIDTH="${META_FLINT_QUANT_BIT_WIDTH:-$QUANT_BIT_WIDTH}"
-            METHOD_GROUP_SIZE="${META_FLINT_GROUP_SIZE:-$GROUP_SIZE}"
+            METHOD_GROUP_SIZE="${META_FLINT_GROUP_SIZE:-$group_size}"
             ;;
         *)
             echo "Unknown method: $method" >&2
@@ -234,7 +243,7 @@ method_config() {
 }
 
 render_result_file() {
-    "$PYTHON_BIN" - "$RESULTS_TSV" "$RESULT_FILE" "$RUN_ID" "$QUANT_BIT_WIDTH" "$GROUP_SIZE" "$SHOTS" "$BATCH_SIZE" "$BOOLQ_BATCH_SIZE" "$RECORD_BATCH_SIZE" "$LOG_DIR" "${METHOD_LIST[*]}" "${MODEL_NAMES[*]}" "${TASK_LIST[*]}" <<'PY'
+    "$PYTHON_BIN" - "$RESULTS_TSV" "$RESULT_FILE" "$RUN_ID" "$QUANT_BIT_WIDTH" "${GROUP_SIZE_LIST[*]}" "$SHOTS" "$BATCH_SIZE" "$BOOLQ_BATCH_SIZE" "$RECORD_BATCH_SIZE" "$LOG_DIR" "${METHOD_LIST[*]}" "${MODEL_NAMES[*]}" "${TASK_LIST[*]}" <<'PY'
 import csv
 import sys
 from datetime import datetime
@@ -244,7 +253,7 @@ results_tsv = Path(sys.argv[1])
 result_file = Path(sys.argv[2])
 run_id = sys.argv[3]
 quant_bit_width = sys.argv[4]
-group_size = sys.argv[5]
+group_sizes = sys.argv[5].split()
 shots = sys.argv[6]
 batch_size = sys.argv[7]
 boolq_batch_size = sys.argv[8]
@@ -271,10 +280,11 @@ if results_tsv.exists():
     with results_tsv.open("r", encoding="utf-8", errors="ignore", newline="") as f:
         reader = csv.DictReader(f, delimiter="\t")
         for row in reader:
-            key = (row["model"], row["method"], row["task"])
+            group_size = row.get("group_size", "")
+            key = (group_size, row["model"], row["method"], row["task"])
             statuses[key] = row["status"]
             logs[key] = row["log"]
-            metrics[(row["model"], row["method"], row["task"], row["metric"])] = row["value"]
+            metrics[(group_size, row["model"], row["method"], row["task"], row["metric"])] = row["value"]
 
 def as_float(value):
     try:
@@ -295,19 +305,19 @@ def format_value(value, percent=True, decimals=2):
         number *= 100.0
     return f"{number:.{decimals}f}"
 
-def metric_value(model, method, task, metric):
-    value = metrics.get((model, method, task, metric))
+def metric_value(group_size, model, method, task, metric):
+    value = metrics.get((group_size, model, method, task, metric))
     if value is not None:
         return value
-    status = statuses.get((model, method, task))
+    status = statuses.get((group_size, model, method, task))
     if status and status != "OK":
         return status
     return ""
 
-def first_metric_value(model, method, task):
+def first_metric_value(group_size, model, method, task):
     preferred = primary_metric.get(task, "acc")
     for metric in [preferred, "acc_norm", "acc", "f1", "em", "ppl"]:
-        value = metric_value(model, method, task, metric)
+        value = metric_value(group_size, model, method, task, metric)
         if value != "":
             return metric, value
     return preferred, ""
@@ -330,13 +340,13 @@ def md_table(headers, rows):
     out.extend("| " + " | ".join(row) + " |" for row in rows)
     return "\n".join(out)
 
-def downstream_table(model):
+def downstream_table(group_size, model):
     rows = []
     for method in methods:
         raw_values = []
         cells = []
         for task in tasks:
-            metric, value = first_metric_value(model, method, task)
+            metric, value = first_metric_value(group_size, model, method, task)
             raw_values.append(value if metric != "ppl" else "")
             cell = format_value(value, percent=(metric != "ppl"), decimals=2 if metric != "ppl" else 3)
             if cell and cell not in {"FAIL", "SKIP"} and metric not in {"", primary_metric.get(task, "acc")}:
@@ -345,11 +355,11 @@ def downstream_table(model):
         rows.append([method, *cells, average(raw_values)])
     return md_table(["Method", *tasks, "avg"], rows)
 
-def metric_detail_table(model, metric_name):
+def metric_detail_table(group_size, model, metric_name):
     rows = []
     has_any = False
     for method in methods:
-        raw_values = [metric_value(model, method, task, metric_name) for task in tasks]
+        raw_values = [metric_value(group_size, model, method, task, metric_name) for task in tasks]
         if any(value not in {"", "FAIL", "SKIP"} for value in raw_values):
             has_any = True
         rows.append([method, *[format_value(value) for value in raw_values], average(raw_values)])
@@ -359,12 +369,13 @@ def metric_detail_table(model, metric_name):
 
 def failed_rows():
     rows = []
-    for model in models:
-        for method in methods:
-            for task in tasks:
-                status = statuses.get((model, method, task))
-                if status and status != "OK":
-                    rows.append([model, method, task, status, logs.get((model, method, task), "")])
+    for group_size in group_sizes:
+        for model in models:
+            for method in methods:
+                for task in tasks:
+                    status = statuses.get((group_size, model, method, task))
+                    if status and status != "OK":
+                        rows.append([group_size, model, method, task, status, logs.get((group_size, model, method, task), "")])
     return rows
 
 lines = [
@@ -374,7 +385,7 @@ lines = [
     f"- Updated at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
     f"- Methods: {', '.join(methods)}",
     f"- Default quant bit width: {quant_bit_width}",
-    f"- Default group size: {group_size}",
+    f"- Group sizes: {', '.join(group_sizes)}",
     f"- Few-shot: {shots}",
     f"- Default batch size: {batch_size}",
     f"- BoolQ batch size: {boolq_batch_size}",
@@ -385,34 +396,38 @@ lines = [
     "",
 ]
 
-for model in models:
-    lines.extend([f"## {model}", "", "### Primary Metric", "", downstream_table(model), ""])
-    acc_norm = metric_detail_table(model, "acc_norm")
-    if acc_norm:
-        lines.extend(["### Accuracy Norm", "", acc_norm, ""])
+for group_size in group_sizes:
+    lines.extend([f"## Group Size {group_size}", ""])
+    for model in models:
+        lines.extend([f"### {model}", "", "#### Primary Metric", "", downstream_table(group_size, model), ""])
+        acc_norm = metric_detail_table(group_size, model, "acc_norm")
+        if acc_norm:
+            lines.extend(["#### Accuracy Norm", "", acc_norm, ""])
 
 failures = failed_rows()
 if failures:
-    lines.extend(["## Failed or Skipped Tasks", "", md_table(["Model", "Method", "Task", "Status", "Log"], failures), ""])
+    lines.extend(["## Failed or Skipped Tasks", "", md_table(["Group", "Model", "Method", "Task", "Status", "Log"], failures), ""])
 
 result_file.write_text("\n".join(lines), encoding="utf-8")
 PY
 }
 
 init_result_file() {
-    printf "model\tmethod\ttask\tstatus\tbatch\tlog\tmetric\tvalue\n" >"$RESULTS_TSV"
+    printf "model\tgroup_size\tmethod\ttask\tstatus\tbatch\tlog\tmetric\tvalue\n" >"$RESULTS_TSV"
     render_result_file
 }
 
 run_one_task() {
     local model_name="$1"
     local model_path="$2"
-    local method="$3"
-    local task="$4"
+    local group_size="$3"
+    local method="$4"
+    local task="$5"
     local safe_model_name="${model_name//[^A-Za-z0-9_.-]/_}"
+    local safe_group_size="${group_size//[^A-Za-z0-9_.-]/_}"
     local safe_method="${method//[^A-Za-z0-9_.-]/_}"
     local safe_task="${task//[^A-Za-z0-9_.-]/_}"
-    local log_file="$LOG_DIR/${RUN_ID}_${safe_model_name}_${safe_method}_${safe_task}.log"
+    local log_file="$LOG_DIR/${RUN_ID}_${safe_model_name}_g${safe_group_size}_${safe_method}_${safe_task}.log"
     local status="OK"
     local result="metric=N/A"
     local current_batch_size="$BATCH_SIZE"
@@ -424,24 +439,24 @@ run_one_task() {
         current_batch_size="$RECORD_BATCH_SIZE"
     fi
 
-    if ! method_config "$method"; then
+    if ! method_config "$method" "$group_size"; then
         status="FAIL"
         result="unknown_method"
-        append_record "$model_name" "$method" "$task" "$status" "$current_batch_size" "$log_file" "error" "$result"
+        append_record "$model_name" "$group_size" "$method" "$task" "$status" "$current_batch_size" "$log_file" "error" "$result"
         render_result_file
         return 0
     fi
 
     echo
-    echo "========== Running: model=$model_name method=$method task=$task =========="
+    echo "========== Running: group_size=$group_size model=$model_name method=$method task=$task =========="
     echo "log: $log_file"
     echo "config: quant_mode=$METHOD_QUANT_MODE quant_dtype=$METHOD_QUANT_DTYPE quant_bit_width=$METHOD_QUANT_BIT_WIDTH group_size=$METHOD_GROUP_SIZE"
 
     if [ ! -d "$model_path" ]; then
         status="SKIP"
         result="model_path_not_found: $model_path"
-        printf "%-12s %-12s %-16s %-8s %s\n" "$model_name" "$method" "$task" "$status" "$result" | tee -a "$SUMMARY_FILE"
-        append_record "$model_name" "$method" "$task" "$status" "$current_batch_size" "$log_file" "error" "$result"
+        printf "%-8s %-12s %-12s %-16s %-8s %s\n" "$group_size" "$model_name" "$method" "$task" "$status" "$result" | tee -a "$SUMMARY_FILE"
+        append_record "$model_name" "$group_size" "$method" "$task" "$status" "$current_batch_size" "$log_file" "error" "$result"
         render_result_file
         return 0
     fi
@@ -475,7 +490,7 @@ run_one_task() {
                 continue
             fi
             parsed_any=1
-            append_record "$model_name" "$method" "$task" "$status" "$current_batch_size" "$log_file" "$metric" "$value"
+            append_record "$model_name" "$group_size" "$method" "$task" "$status" "$current_batch_size" "$log_file" "$metric" "$value"
             if [ "$result" = "metric=N/A" ]; then
                 result="$metric=$value"
             else
@@ -485,18 +500,18 @@ run_one_task() {
 
         if [ "$parsed_any" -eq 0 ]; then
             result="metric=N/A"
-            append_record "$model_name" "$method" "$task" "$status" "$current_batch_size" "$log_file" "metric" "N/A"
+            append_record "$model_name" "$group_size" "$method" "$task" "$status" "$current_batch_size" "$log_file" "metric" "N/A"
         fi
     else
         status=$(classify_failure "$log_file")
         result="see $(basename "$log_file")"
-        append_record "$model_name" "$method" "$task" "$status" "$current_batch_size" "$log_file" "error" "$result"
+        append_record "$model_name" "$group_size" "$method" "$task" "$status" "$current_batch_size" "$log_file" "error" "$result"
     fi
 
     cleanup_gpu
     render_result_file
 
-    printf "%-12s %-12s %-16s %-8s %s (bs=%s)\n" "$model_name" "$method" "$task" "$status" "$result" "$current_batch_size" | tee -a "$SUMMARY_FILE"
+    printf "%-8s %-12s %-12s %-16s %-8s %s (bs=%s)\n" "$group_size" "$model_name" "$method" "$task" "$status" "$result" "$current_batch_size" | tee -a "$SUMMARY_FILE"
 }
 
 upload_result() {
@@ -524,25 +539,27 @@ init_result_file
     echo "Result file: $RESULT_FILE"
     echo "Log dir: $LOG_DIR"
     echo "Default quant bit width: $QUANT_BIT_WIDTH"
-    echo "Default group size: $GROUP_SIZE"
+    echo "Group sizes: ${GROUP_SIZE_LIST[*]}"
     echo "Tasks: ${TASK_LIST[*]}"
     echo
-    printf "%-12s %-12s %-16s %-8s %s\n" "Model" "Method" "Task" "Status" "Result"
-    printf "%-12s %-12s %-16s %-8s %s\n" "-----" "------" "----" "------" "------"
+    printf "%-8s %-12s %-12s %-16s %-8s %s\n" "Group" "Model" "Method" "Task" "Status" "Result"
+    printf "%-8s %-12s %-12s %-16s %-8s %s\n" "-----" "-----" "------" "----" "------" "------"
 } | tee "$SUMMARY_FILE"
 
-for model_index in "${!MODEL_NAMES[@]}"; do
-    model_name="${MODEL_NAMES[$model_index]}"
-    model_path="${MODEL_PATHS[$model_index]}"
-    for method in "${METHOD_LIST[@]}"; do
-        for task in "${TASK_LIST[@]}"; do
-            run_one_task "$model_name" "$model_path" "$method" "$task"
-        done
+for group_size in "${GROUP_SIZE_LIST[@]}"; do
+    for model_index in "${!MODEL_NAMES[@]}"; do
+        model_name="${MODEL_NAMES[$model_index]}"
+        model_path="${MODEL_PATHS[$model_index]}"
+        for method in "${METHOD_LIST[@]}"; do
+            for task in "${TASK_LIST[@]}"; do
+                run_one_task "$model_name" "$model_path" "$group_size" "$method" "$task"
+            done
 
-        render_result_file
-        if ! upload_result; then
-            echo "Upload failed after model=$model_name method=$method; result.md is still available at $RESULT_FILE" >&2
-        fi
+            render_result_file
+            if ! upload_result; then
+                echo "Upload failed after group_size=$group_size model=$model_name method=$method; result.md is still available at $RESULT_FILE" >&2
+            fi
+        done
     done
 done
 

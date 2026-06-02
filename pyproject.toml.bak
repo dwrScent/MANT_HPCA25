@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mant"
+version = "0.1.0"
+description = "A lightweight pseudo-quantization framework for evaluating low-bit formats in LLMs."
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+]
+dependencies = [
+    "accelerate", "sentencepiece", "tokenizers>=0.12.1",
+    "torch==2.0.1", "torchvision", 
+    "transformers==4.40.0", 
+    "lm_eval==0.4.4","numpy==1.26.4",
+    "peft==0.10.0", "protobuf",
+]
+
+[tool.setuptools.packages.find]
+exclude = ["results*", "examples*"]
+
+[tool.wheel]
+exclude = ["results*", "examples*"]

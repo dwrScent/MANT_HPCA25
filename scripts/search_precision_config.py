@@ -259,7 +259,7 @@ def infer_num_tensors(model_path: str, tensors_per_layer: Optional[int]) -> int:
     try:
         from transformers import AutoConfig
 
-        cfg = AutoConfig.from_pretrained(model_path, trust_remote_code=True)
+        cfg = AutoConfig.from_pretrained(model_path)
     except Exception as exc:
         raise RuntimeError(
             "Could not infer model structure. Pass --num_tensors explicitly."

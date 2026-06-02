@@ -1,0 +1,12 @@
+Run id: 20260602_104320
+Result file: /root/llm-quan/MANT_HPCA25/result.md
+Log dir: /root/llm-quan/MANT_HPCA25/output/auto_logs/20260602_104320
+Default quant bit width: w4a4k16v16
+Group sizes: 64 32
+Tasks: hellaswag piqa winogrande arc_easy arc_challenge boolq
+
+Group    Model        Method       Task             Status   Result
+-----    -----        ------       ----             ------   ------
+64       qwen3-8b     olive        hellaswag        FAIL     see 20260602_104320_qwen3-8b_g64_olive_hellaswag.log (bs=32)
+64       qwen3-8b     olive        piqa             FAIL     see 20260602_104320_qwen3-8b_g64_olive_piqa.log (bs=32)
+64       qwen3-8b     olive        winogrande       FAIL     see 20260602_104320_qwen3-8b_g64_olive_winogrande.log (bs=32)

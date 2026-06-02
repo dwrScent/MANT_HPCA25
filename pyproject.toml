@@ -7,21 +7,31 @@ name = "mant"
 version = "0.1.0"
 description = "A lightweight pseudo-quantization framework for evaluating low-bit formats in LLMs."
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10,<3.13"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: Apache Software License",
 ]
 dependencies = [
-    "accelerate", "sentencepiece", "tokenizers>=0.12.1",
-    "torch==2.0.1", "torchvision", 
-    "transformers==4.40.0", 
-    "lm_eval==0.4.4","numpy==1.26.4",
-    "peft==0.10.0", "protobuf",
+    "accelerate>=1.6.0,<2.0.0",
+    "datasets>=3.6.0,<4.0.0",
+    "lm_eval==0.4.4",
+    "numpy>=1.26.4,<2.0.0",
+    "peft>=0.15.2,<0.16.0",
+    "protobuf>=4.25.0,<6.0.0",
+    "safetensors>=0.4.3",
+    "scipy>=1.11.4,<2.0.0",
+    "sentencepiece>=0.2.0",
+    "tokenizers>=0.21.0,<0.22.0",
+    "torch==2.6.0",
+    "torchvision==0.21.0",
+    "tqdm>=4.66.0",
+    # Qwen3 model_type support lands in transformers>=4.51.0.
+    "transformers==4.52.4",
 ]
 
 [tool.setuptools.packages.find]
-exclude = ["results*", "examples*"]
+exclude = ["results*", "examples*", "output*", "search_result*"]
 
 [tool.wheel]
-exclude = ["results*", "examples*"]
+exclude = ["results*", "examples*", "output*", "search_result*"]

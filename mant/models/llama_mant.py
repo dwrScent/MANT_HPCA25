@@ -1,6 +1,6 @@
 import math
 import warnings
-from typing import List, Optional, Tuple
+from typing import List, Optional, Tuple, Union
 
 import torch
 import torch.nn.functional as F
@@ -8,6 +8,10 @@ from torch import nn
 
 from transformers.models.llama.configuration_llama import *
 from transformers.models.llama.modeling_llama import *
+from transformers.cache_utils import Cache, DynamicCache, StaticCache
+from transformers.pytorch_utils import ALL_LAYERNORM_LAYERS
+from transformers.modeling_outputs import BaseModelOutputWithPast, CausalLMOutputWithPast
+from transformers.utils import add_start_docstrings_to_model_forward, replace_return_docstrings
 from transformers.modeling_attn_mask_utils import _prepare_4d_causal_attention_mask
 
 
@@ -16,6 +20,7 @@ from ..quantize.quant_func import pseudo_quantize_int
 
 
 _CONFIG_FOR_DOC = "LlamaConfig"
+LLAMA_INPUTS_DOCSTRING = ""
 
 
 class LlamaRotaryEmbedding_mant(nn.Module):

@@ -2,7 +2,7 @@ from lm_eval import evaluator
 from lm_eval.models.huggingface import HFLM
 from lm_eval.utils import make_table
 
-from transformers import AutoModelForCausalLM, AutoTokenizer, AutoConfig, AutoModelForSeq2SeqLM
+from transformers import AutoModelForCausalLM, AutoTokenizer, AutoConfig
 import torch
 import argparse
 import os
@@ -134,8 +134,6 @@ if layer_w_bits is not None:
 
 # Build model and tokenizer
 def build_model_and_enc(model_path):
-    if not os.path.exists(model_path):  # look into ssd
-        raise FileNotFoundError(f"{model_path} not found!")
     print(f"* Building model {model_path}")
 
     # LOAD model for DEBUGGING purpose
@@ -145,7 +143,7 @@ def build_model_and_enc(model_path):
 
     # All hf model
     config = AutoConfig.from_pretrained(model_path)
-    enc = AutoTokenizer.from_pretrained(model_path, use_fast=False)
+    enc = AutoTokenizer.from_pretrained(model_path)
 
     # Eager mode for our hacked attention implementation
     kwargs = {"device_map": "balanced", "torch_dtype": torch.float16, "attn_implementation": "eager"}
@@ -167,7 +165,11 @@ def build_model_and_enc(model_path):
             model = LlamaForCausalLM_mant.from_pretrained(
                 model_path, config=config, **kwargs)
         else:
-            raise NotImplementedError('not support yet')
+            model_type = getattr(config, "model_type", type(config).__name__)
+            raise NotImplementedError(
+                f"KV cache quantization is not supported for model_type={model_type}. "
+                "Use k16v16 for Qwen3 or add a Qwen3-specific MANT attention wrapper."
+            )
     else:
         model = AutoModelForCausalLM.from_pretrained(
             model_path, config=config, **kwargs)
@@ -220,7 +222,7 @@ def main():
     print("\nargs:", args, "\n")
     # A hack here to auto set model group
     model, enc = build_model_and_enc(args.model_path)
-    lm_eval_model = HFLM(pretrained=model, batch_size=args.batch_size)
+    lm_eval_model = HFLM(pretrained=model, tokenizer=enc, batch_size=args.batch_size)
     
     if args.tasks is not None:
         if args.tasks in ['wikitext', 'c4', 'ptb']:

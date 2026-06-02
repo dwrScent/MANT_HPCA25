@@ -1,0 +1,4 @@
+model	group_size	method	task	status	batch	log	metric	value
+qwen3-8b	64	olive	hellaswag	FAIL	32	20260602_104320_qwen3-8b_g64_olive_hellaswag.log	error	see 20260602_104320_qwen3-8b_g64_olive_hellaswag.log
+qwen3-8b	64	olive	piqa	FAIL	32	20260602_104320_qwen3-8b_g64_olive_piqa.log	error	see 20260602_104320_qwen3-8b_g64_olive_piqa.log
+qwen3-8b	64	olive	winogrande	FAIL	32	20260602_104320_qwen3-8b_g64_olive_winogrande.log	error	see 20260602_104320_qwen3-8b_g64_olive_winogrande.log

@@ -11,6 +11,7 @@ mant/models/opt_mant.py
 mant/quantize/__init__.py
 mant/quantize/qmodule_ant.py
 mant/quantize/qmodule_mant.py
+mant/quantize/qmodule_metaflint.py
 mant/quantize/qmodule_olive.py
 mant/quantize/quant_func.py
 mant/quantize/quant_grid.py

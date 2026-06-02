@@ -1,6 +1,7 @@
 import math
 import warnings
-from typing import List, Optional, Tuple
+import logging
+from typing import List, Optional, Tuple, Union
 
 import torch
 import torch.nn.functional as F
@@ -8,6 +9,8 @@ from torch import nn
 
 from transformers.models.opt.configuration_opt import *
 from transformers.models.opt.modeling_opt import *
+from transformers.modeling_outputs import BaseModelOutputWithPast, CausalLMOutputWithPast
+from transformers.utils import add_code_sample_docstrings, add_start_docstrings, add_start_docstrings_to_model_forward, replace_return_docstrings
 from transformers.modeling_attn_mask_utils import _prepare_4d_causal_attention_mask
 
 
@@ -16,6 +19,8 @@ from ..quantize.quant_func import pseudo_quantize_int
 
 _CHECKPOINT_FOR_DOC = "facebook/opt-350m"
 _CONFIG_FOR_DOC = "OPTConfig"
+OPT_INPUTS_DOCSTRING = ""
+OPT_START_DOCSTRING = ""
 
 # Base model docstring
 _EXPECTED_OUTPUT_SHAPE = [1, 8, 1024]

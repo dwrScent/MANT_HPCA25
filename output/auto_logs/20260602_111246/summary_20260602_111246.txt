@@ -1,0 +1,31 @@
+Run id: 20260602_111246
+Result file: /root/llm-quan/MANT_HPCA25/result.md
+Log dir: /root/llm-quan/MANT_HPCA25/output/auto_logs/20260602_111246
+Default quant bit width: w4a4k16v16
+Group sizes: 64 32
+Tasks: hellaswag piqa winogrande arc_easy arc_challenge boolq
+
+Group    Model        Method       Task             Status   Result
+-----    -----        ------       ----             ------   ------
+64       qwen3-8b     olive        hellaswag        OK       acc=0.5169 acc_norm=0.6914 (bs=32)
+64       qwen3-8b     olive        piqa             OK       acc=0.7329 acc_norm=0.7427 (bs=32)
+64       qwen3-8b     olive        winogrande       OK       acc=0.6283 (bs=32)
+64       qwen3-8b     olive        arc_easy         OK       acc=0.7635 acc_norm=0.7281 (bs=32)
+64       qwen3-8b     olive        arc_challenge    OK       acc=0.4744 acc_norm=0.4795 (bs=32)
+64       qwen3-8b     olive        boolq            OK       acc=0.8239 (bs=8)
+64       qwen3-8b     ant          hellaswag        OK       acc=0.5271 acc_norm=0.7084 (bs=32)
+64       qwen3-8b     ant          piqa             OK       acc=0.7405 acc_norm=0.7454 (bs=32)
+64       qwen3-8b     ant          winogrande       OK       acc=0.6496 (bs=32)
+64       qwen3-8b     ant          arc_easy         OK       acc=0.7875 acc_norm=0.7597 (bs=32)
+64       qwen3-8b     ant          arc_challenge    OK       acc=0.4838 acc_norm=0.5196 (bs=32)
+64       qwen3-8b     ant          boolq            OK       acc=0.8538 (bs=8)
+64       qwen3-8b     mant         hellaswag        OK       acc=0.5238 acc_norm=0.7038 (bs=32)
+64       qwen3-8b     mant         piqa             OK       acc=0.7443 acc_norm=0.7530 (bs=32)
+64       qwen3-8b     mant         winogrande       OK       acc=0.6188 (bs=32)
+64       qwen3-8b     mant         arc_easy         OK       acc=0.7875 acc_norm=0.7441 (bs=32)
+64       qwen3-8b     mant         arc_challenge    OK       acc=0.4881 acc_norm=0.5162 (bs=32)
+64       qwen3-8b     mant         boolq            OK       acc=0.8404 (bs=8)
+64       qwen3-8b     meta-flint   hellaswag        OK       acc=0.5447 acc_norm=0.7223 (bs=32)
+64       qwen3-8b     meta-flint   piqa             OK       acc=0.7590 acc_norm=0.7737 (bs=32)
+64       qwen3-8b     meta-flint   winogrande       OK       acc=0.6732 (bs=32)
+64       qwen3-8b     meta-flint   arc_easy         OK       acc=0.8072 acc_norm=0.7866 (bs=32)
