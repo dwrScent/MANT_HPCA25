@@ -14,12 +14,14 @@ DEFAULT_MODEL_PATHS=(
 )
 DEFAULT_METHODS=("olive" "ant" "mant" "meta-flint" "fp16")
 DEFAULT_TASKS=(
-    "hellaswag"
-    "piqa"
-    "winogrande"
-    "arc_easy"
-    "arc_challenge"
-    "boolq"
+  "mmlu"
+  "gsm8k"
+  "hellaswag"
+  "piqa"
+  "winogrande"
+  "arc_easy"
+  "arc_challenge"
+  "boolq"
 )
 DEFAULT_GROUP_SIZES=(64 32)
 
@@ -126,7 +128,7 @@ from pathlib import Path
 task = sys.argv[1]
 log_file = Path(sys.argv[2])
 text = log_file.read_text(encoding="utf-8", errors="ignore")
-rows = []
+table_rows = []
 current_task = None
 header = None
 
@@ -152,7 +154,7 @@ for line in text.splitlines():
     if header is None:
         continue
 
-    task_idx = next((i for i, p in enumerate(header) if p in {"task", "tasks"}), None)
+    task_idx = next((i for i, p in enumerate(header) if p in {"task", "tasks", "group", "groups"}), None)
     metric_idx = header.index("metric")
     value_idx = header.index("value")
     if len(parts) <= max(metric_idx, value_idx):
@@ -163,8 +165,22 @@ for line in text.splitlines():
         current_task = task_name
     metric_name = parts[metric_idx]
     value = parts[value_idx]
-    if current_task == task and metric_name and value:
-        rows.append((metric_name, value))
+    if current_task and metric_name and value:
+        table_rows.append((current_task, metric_name, value))
+
+rows = [(metric_name, value) for task_name, metric_name, value in table_rows if task_name == task]
+if not rows:
+    grouped = {}
+    for task_name, metric_name, value in table_rows:
+        if not task_name.startswith(f"{task}_"):
+            continue
+        try:
+            number = float(value)
+        except ValueError:
+            continue
+        grouped.setdefault(metric_name, []).append(number)
+    if grouped:
+        rows = [(metric_name, str(sum(values) / len(values))) for metric_name, values in grouped.items()]
 
 if not rows:
     m = re.findall(r"(?m)^Task:\s*([^,]+),\s*PPL:\s*([0-9]+(?:\.[0-9]+)?)\s*$", text)
@@ -263,15 +279,6 @@ methods = sys.argv[11].split()
 models = sys.argv[12].split()
 tasks = sys.argv[13].split()
 
-primary_metric = {
-    "hellaswag": "acc_norm",
-    "piqa": "acc_norm",
-    "winogrande": "acc",
-    "arc_easy": "acc_norm",
-    "arc_challenge": "acc_norm",
-    "boolq": "acc",
-}
-
 metrics = {}
 statuses = {}
 logs = {}
@@ -314,14 +321,6 @@ def metric_value(group_size, model, method, task, metric):
         return status
     return ""
 
-def first_metric_value(group_size, model, method, task):
-    preferred = primary_metric.get(task, "acc")
-    for metric in [preferred, "acc_norm", "acc", "f1", "em", "ppl"]:
-        value = metric_value(group_size, model, method, task, metric)
-        if value != "":
-            return metric, value
-    return preferred, ""
-
 def average(values, percent=True):
     nums = []
     for value in values:
@@ -340,26 +339,17 @@ def md_table(headers, rows):
     out.extend("| " + " | ".join(row) + " |" for row in rows)
     return "\n".join(out)
 
-def downstream_table(group_size, model):
-    rows = []
-    for method in methods:
-        raw_values = []
-        cells = []
-        for task in tasks:
-            metric, value = first_metric_value(group_size, model, method, task)
-            raw_values.append(value if metric != "ppl" else "")
-            cell = format_value(value, percent=(metric != "ppl"), decimals=2 if metric != "ppl" else 3)
-            if cell and cell not in {"FAIL", "SKIP"} and metric not in {"", primary_metric.get(task, "acc")}:
-                cell = f"{cell} {metric}"
-            cells.append(cell)
-        rows.append([method, *cells, average(raw_values)])
-    return md_table(["Method", *tasks, "avg"], rows)
+def table_metric_value(group_size, model, method, task, metric_name):
+    value = metric_value(group_size, model, method, task, metric_name)
+    if value == "" and metric_name == "acc" and task == "gsm8k":
+        return metric_value(group_size, model, method, task, "exact_match")
+    return value
 
 def metric_detail_table(group_size, model, metric_name):
     rows = []
     has_any = False
     for method in methods:
-        raw_values = [metric_value(group_size, model, method, task, metric_name) for task in tasks]
+        raw_values = [table_metric_value(group_size, model, method, task, metric_name) for task in tasks]
         if any(value not in {"", "FAIL", "SKIP"} for value in raw_values):
             has_any = True
         rows.append([method, *[format_value(value) for value in raw_values], average(raw_values)])
@@ -392,6 +382,7 @@ lines = [
     f"- ReCoRD batch size: {record_batch_size}",
     f"- Models: {', '.join(models)}",
     f"- Tasks: {', '.join(tasks)}",
+    "- GSM8K accuracy uses exact_match.",
     f"- Log dir: {log_dir}",
     "",
 ]
@@ -399,7 +390,10 @@ lines = [
 for group_size in group_sizes:
     lines.extend([f"## Group Size {group_size}", ""])
     for model in models:
-        lines.extend([f"### {model}", "", "#### Primary Metric", "", downstream_table(group_size, model), ""])
+        lines.extend([f"### {model}", ""])
+        accuracy = metric_detail_table(group_size, model, "acc")
+        if accuracy:
+            lines.extend(["#### Accuracy", "", accuracy, ""])
         acc_norm = metric_detail_table(group_size, model, "acc_norm")
         if acc_norm:
             lines.extend(["#### Accuracy Norm", "", acc_norm, ""])
